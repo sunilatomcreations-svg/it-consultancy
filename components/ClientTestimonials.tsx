@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 const ClientTestimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -9,25 +10,29 @@ const ClientTestimonials = () => {
       id: 1,
       quote: "Engaging with TechNova IT Consultancy has been a game-changer for us. Their team took the time to deeply understand our legacy infrastructure and future growth plans, then delivered a scalable roadmap that aligned perfectly with our business goals. The execution was seamless: migration to the cloud was completed on schedule, cost overruns were minimal, and user disruption was practically zero. Their technical expertise paired with clear communication instilled confidence throughout the project lifecycle. I highly recommend them to any enterprise seeking a trusted partner for digital transformation.",
       author: "Anjali Mehra",
-      position: "CTO, TechNova Solutions"
+      position: "CTO, TechNova Solutions",
+      image: "https://randomuser.me/api/portraits/women/44.jpg"
     },
     {
       id: 2,
       quote: "Working with this consultancy transformed our entire approach to technology. Their innovative solutions and dedicated support helped us achieve remarkable growth and efficiency improvements across all our operations.",
       author: "Sarah Johnson",
-      position: "CEO, Innovation Labs"
+      position: "CEO, Innovation Labs",
+      image: "https://randomuser.me/api/portraits/women/65.jpg"
     },
     {
       id: 3,
       quote: "The level of expertise and professionalism displayed by their team exceeded our expectations. They delivered complex solutions on time and within budget while maintaining excellent communication throughout the process.",
       author: "Michael Chen",
-      position: "Director of IT, Global Corp"
+      position: "Director of IT, Global Corp",
+      image: "https://randomuser.me/api/portraits/men/32.jpg"
     },
     {
       id: 4,
       quote: "Their strategic guidance and technical implementation have been instrumental in our digital transformation journey. The results speak for themselves - improved efficiency, reduced costs, and enhanced customer satisfaction.",
       author: "Emily Rodriguez",
-      position: "VP of Operations, Future Tech"
+      position: "VP of Operations, Future Tech",
+      image: "https://randomuser.me/api/portraits/women/68.jpg"
     }
   ];
 
@@ -92,7 +97,13 @@ const ClientTestimonials = () => {
                     "{getTestimonialAtPosition(-1).quote}"
                   </p>
                   <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0" style={{ backgroundColor: '#F97316' }}></div>
+                    <Image 
+                      src={getTestimonialAtPosition(-1).image} 
+                      alt={getTestimonialAtPosition(-1).author}
+                      width={48} 
+                      height={48} 
+                      className="rounded-lg flex-shrink-0 object-cover"
+                    />
                     <div>
                       <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
                         {getTestimonialAtPosition(-1).author}
@@ -127,7 +138,13 @@ const ClientTestimonials = () => {
                     "{getTestimonialAtPosition(0).quote}"
                   </p>
                   <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0" style={{ backgroundColor: '#F97316' }}></div>
+                    <Image 
+                      src={getTestimonialAtPosition(0).image} 
+                      alt={getTestimonialAtPosition(0).author}
+                      width={48} 
+                      height={48} 
+                      className="rounded-lg flex-shrink-0 object-cover"
+                    />
                     <div>
                       <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
                         {getTestimonialAtPosition(0).author}
@@ -162,7 +179,13 @@ const ClientTestimonials = () => {
                     "{getTestimonialAtPosition(1).quote}"
                   </p>
                   <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0" style={{ backgroundColor: '#F97316' }}></div>
+                    <Image 
+                      src={getTestimonialAtPosition(1).image} 
+                      alt={getTestimonialAtPosition(1).author}
+                      width={48} 
+                      height={48} 
+                      className="rounded-lg flex-shrink-0 object-cover"
+                    />
                     <div>
                       <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
                         {getTestimonialAtPosition(1).author}
