@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   // Default settings - using static data instead of context to avoid import issues
@@ -159,12 +160,13 @@ const Footer = () => {
 
           {settings.showGetInTouch && (
             <div className="mt-8">
-              <button 
+              <Link 
+                href="/contact"
                 style={{ backgroundColor: '#6B2259' }} 
-                className="px-6 py-3 text-white font-semibold rounded hover:opacity-90 transition-opacity"
+                className="px-6 py-3 text-white font-semibold rounded hover:opacity-90 transition-opacity inline-block cursor-pointer"
               >
                 Get In Touch
-              </button>
+              </Link>
             </div>
           )}
         </div>
