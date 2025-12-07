@@ -14,9 +14,9 @@ const HeroText = () => {
             lineHeight: '1.2'
           }}
         >
-          We're architects of the digital future,<br />
-          crafting websites and apps that transcend<br />
-           screens and enter the realm of experience.
+          <span className="block">We're architects of the digital future,</span>
+          <span className="block">crafting websites and apps that transcend</span>
+          <span className="block">screens and enter the realm of experience.</span>
         </h1>
 
         {/* Subtext */}
