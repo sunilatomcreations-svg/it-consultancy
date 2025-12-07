@@ -2,23 +2,19 @@ import React from 'react';
 import Image from 'next/image';
 
 const PartnershipText = () => {
-  // Sample logo data - you can replace with your actual logos
+  // Sample logo data - replace with actual logos (11 logos = 4/4/3 layout on mobile)
   const logos = [
-    // Row 1 - 3 logos
-    '/home_page_assets/ikea-logo-color 1.png',
-    '/home_page_assets/ikea-logo-color 1.png',
-    '/home_page_assets/ikea-logo-color 1.png',
-    // Row 2 - 4 logos  
-    '/home_page_assets/ikea-logo-color 1.png',
-    '/home_page_assets/ikea-logo-color 1.png',
-    '/home_page_assets/ikea-logo-color 1.png',
-    '/home_page_assets/ikea-logo-color 1.png',
-    // Row 3 - 5 logos
     '/home_page_assets/ikea-logo-color 1.png',
     '/home_page_assets/ikea-logo-color 1.png',
     '/home_page_assets/ikea-logo-color 1.png',
     '/home_page_assets/ikea-logo-color 1.png',
     '/home_page_assets/ikea-logo-color 1.png',
+    '/home_page_assets/ikea-logo-color 1.png',
+    '/home_page_assets/ikea-logo-color 1.png',
+    '/home_page_assets/ikea-logo-color 1.png',
+    '/home_page_assets/ikea-logo-color 1.png',
+    '/home_page_assets/ikea-logo-color 1.png',
+    '/home_page_assets/ikea-logo-color 1.png'
   ];
 
   return (
@@ -36,16 +32,16 @@ Our partnership has redefined the way you<br className="hidden lg:block" /> expe
 
         {/* Logo Showcase */}
         <div className="space-y-4 md:space-y-6 lg:space-y-8">
-          {/* Row 1 - 5 logos */}
+          {/* Row 1 - 4 logos */}
           <div className="flex justify-center items-center gap-4 md:gap-8 lg:gap-16 flex-wrap">
-            {logos.slice(0, 5).map((logo, index) => (
-              <div key={`row1-${index}`} className="flex items-center justify-center\">
+            {logos.slice(0, 4).map((logo, index) => (
+              <div key={`row1-${index}`} className="flex items-center justify-center">
                 <Image
                   src={logo}
                   alt={`Partner logo ${index + 1}`}
                   width={80}
                   height={60}
-                  className="w-16 md:w-24 lg:w-32 h-auto object-contain opacity-70 hover:opacity-100 transition-opacity\"
+                  className="w-16 md:w-24 lg:w-32 h-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
@@ -53,29 +49,29 @@ Our partnership has redefined the way you<br className="hidden lg:block" /> expe
 
           {/* Row 2 - 4 logos */}
           <div className="flex justify-center items-center gap-4 md:gap-6 lg:gap-8 flex-wrap">
-            {logos.slice(5, 9).map((logo, index) => (
-              <div key={`row2-${index}`} className="flex items-center justify-center\">
+            {logos.slice(4, 8).map((logo, index) => (
+              <div key={`row2-${index}`} className="flex items-center justify-center">
                 <Image
                   src={logo}
-                  alt={`Partner logo ${index + 6}`}
+                  alt={`Partner logo ${index + 5}`}
                   width={80}
                   height={60}
-                  className="w-16 md:w-24 lg:w-32 h-auto object-contain opacity-70 hover:opacity-100 transition-opacity\"
+                  className="w-16 md:w-24 lg:w-32 h-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
           </div>
 
           {/* Row 3 - 3 logos */}
-          <div className="flex justify-center items-center gap-4 md:gap-6 lg:gap-8 flex-wrap\">
-            {logos.slice(9, 12).map((logo, index) => (
-              <div key={`row3-${index}`} className="flex items-center justify-center\">
+          <div className="flex justify-center items-center gap-4 md:gap-6 lg:gap-8 flex-wrap">
+            {logos.slice(8, 11).map((logo, index) => (
+              <div key={`row3-${index}`} className="flex items-center justify-center">
                 <Image
                   src={logo}
-                  alt={`Partner logo ${index + 10}`}
+                  alt={`Partner logo ${index + 9}`}
                   width={80}
                   height={60}
-                  className="w-16 md:w-24 lg:w-32 h-auto object-contain opacity-70 hover:opacity-100 transition-opacity\"
+                  className="w-16 md:w-24 lg:w-32 h-auto object-contain opacity-70 hover:opacity-100 transition-opacity"
                 />
               </div>
             ))}
