@@ -42,10 +42,9 @@ const FAQ = () => {
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <h2 
-          className="text-center text-gray-900 mb-12"
+          className="text-center text-gray-900 mb-6 md:mb-12 text-xl md:text-4xl"
           style={{
             fontFamily: 'DM Sans, sans-serif',
-            fontSize: '40px',
             fontWeight: '500',
             lineHeight: '1.2'
           }}
@@ -54,27 +53,27 @@ const FAQ = () => {
         </h2>
 
         {/* FAQ Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
           {faqs.map((faq, index) => (
             <div 
               key={index}
-              className="p-6 rounded-lg text-white cursor-pointer hover:opacity-90 transition-opacity"
+              className="p-3 md:p-6 rounded-lg text-white cursor-pointer hover:opacity-90 transition-opacity"
               style={{ backgroundColor: '#F97316' }}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-2 md:gap-4">
                 <div 
                   className="rounded flex items-center justify-center flex-shrink-0 mt-1"
                   style={{ 
                     backgroundColor: '#F97316',
-                    width: '34.07594680786133px',
-                    height: '34.07594680786133px'
+                    width: '24px',
+                    height: '24px'
                   }}
                 >
                   <Image
                     src="/home_page_assets/arrow-right.png"
                     alt="Arrow"
-                    width={34.07594680786133}
-                    height={34.07594680786133}
+                    width={24}
+                    height={24}
                     className="object-contain"
                     style={{ 
                       transform: 'rotate(0deg)',
@@ -82,7 +81,7 @@ const FAQ = () => {
                     }}
                   />
                 </div>
-                <p className="text-white font-medium leading-relaxed" style={{ fontSize: '22.4px' }}>
+                <p className="text-white font-medium leading-relaxed text-sm md:text-base" style={{ fontSize: 'inherit' }}>
                   {faq.question}
                 </p>
               </div>

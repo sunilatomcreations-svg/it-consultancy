@@ -6,17 +6,17 @@ const Testimonials = () => {
 
   const testimonials = [
     {
-      quote: "Engaging with TechNova IT Consultancy has been a game-changer for us. Their team took the time to deeply understand our legacy infrastructure and future growth plans, then delivered a scalable roadmap that aligned perfectly with our business goals. The execution was seamless; migration to the cloud was completed on schedule, cost overruns were minimal, and user disruption was practically zero. Their technical expertise paired with clear communication instilled confidence throughout the project lifecycle. I highly recommend them to any enterprise seeking a trusted partner for digital transformation.",
+      quote: "Game-changer for our legacy systems. Scalable roadmap, seamless migration, minimal disruption. Highly recommended for digital transformation.",
       author: "Anjali Mehra",
       position: "CTO, TechNova Solutions"
     },
     {
-      quote: "Our digital transformation journey with TechNova IT Consultancy exceeded all expectations. From the initial assessment to full implementation, their team demonstrated exceptional expertise in cloud architecture and enterprise solutions. They delivered a robust, secure platform that has improved our operational efficiency by 40%. The project was delivered on time and within budget, with ongoing support that gives us complete confidence in our technology infrastructure.",
+      quote: "Exceeded expectations. Robust, secure platform improved efficiency by 40%. Delivered on time, within budget, and great support.",
       author: "Michael Rodriguez", 
       position: "Director of Technology, InnovateCore"
     },
     {
-      quote: "TechNova IT Consultancy provided the strategic guidance and technical excellence we needed to modernize our entire IT ecosystem. Their comprehensive approach to cybersecurity and cloud migration helped us achieve compliance requirements while significantly reducing operational costs. The team's professionalism and deep industry knowledge made them an invaluable partner in our growth journey.",
+      quote: "Strategic guidance and technical excellence. Helped us achieve compliance and reduce costs. Invaluable partner in our growth.",
       author: "Sarah Thompson",
       position: "VP of Operations, GlobalTech Enterprises"
     }
@@ -46,7 +46,7 @@ const Testimonials = () => {
             lineHeight: '1.2'
           }}
         >
-          What Our Clients Say About Us
+          What
         </h2>
 
         {/* Testimonials Container */}
@@ -62,15 +62,15 @@ const Testimonials = () => {
                     return (
                       <div 
                         key={cardIndex}
-                        className="bg-white rounded-2xl p-10 max-w-2xl flex-1 min-h-[400px]"
+                        className="bg-white rounded-2xl p-4 md:p-8 max-w-xs md:max-w-xl flex-1 min-h-[220px] md:min-h-[350px]"
                       >
                         <div className="mb-8">
                           <p 
-                            className="text-gray-700 leading-relaxed"
+                            className="text-gray-700 leading-relaxed text-xs md:text-base"
                             style={{
                               fontFamily: 'DM Sans, sans-serif',
-                              fontSize: '16px',
-                              lineHeight: '1.7'
+                              fontSize: '13px',
+                              lineHeight: '1.5'
                             }}
                           >
                             "{testimonials[cardIndex].quote}"
