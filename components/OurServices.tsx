@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useService, serviceDetails } from '@/contexts/ServiceContext';
 
@@ -9,8 +9,33 @@ interface Service {
   title: string;
 }
 
+const serviceCardStyles = `
+  .service-card {
+    min-height: 130px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 768px) {
+    .service-card {
+      min-height: 180px;
+      aspect-ratio: 1.4 / 1;
+    }
+  }
+  .service-icon-container {
+    height: auto;
+    margin-top: auto;
+  }
+  @media (min-width: 768px) {
+    .service-icon-container {
+      margin-top: 45px;
+    }
+  }
+`;
+
 const OurServices = () => {
   const [currentPage, setCurrentPage] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const { setSelectedService } = useService();
   
   const handleServiceClick = (serviceTitle: string) => {
@@ -104,10 +129,11 @@ const OurServices = () => {
     {
       icon: (
         <svg viewBox="0 0 24 24" fill="currentColor" className="w-12 h-12">
-          <path d="M7.5,4A5.5,5.5 0 0,0 2,9.5C2,10 2.09,10.5 2.22,11H6.3L7.57,7.63C7.87,6.83 9.05,6.75 9.43,7.63L11.5,13L12.09,11.58C12.22,11.25 12.57,11 13,11H21.78C21.91,10.5 22,10 22,9.5A5.5,5.5 0 0,0 16.5,4C14.64,4 13.04,4.92 12,6.34C10.96,4.92 9.36,4 7.5,4M3,13A1,1 0 0,0 2,14A1,1 0 0,0 3,15H5V19A1,1 0 0,0 6,20H8A1,1 0 0,0 9,19V15H11V17A1,1 0 0,0 12,18H14A1,1 0 0,0 15,17V15H17V18A1,1 0 0,0 18,19H20A1,1 0 0,0 21,18V15H22A1,1 0 0,0 23,14A1,1 0 0,0 22,13H3Z"/>
+          <path d="M9 2L3 6v12l6 4 6-4 6 4V6l-6-4-6 4-6-4zm0 4l3 2 3-2 3 2v10l-3-2-3 2-3-2-3 2V8l3 2 3-2-3-2z" />
+          <path d="M9 11l2 1.2L9 13.4V11zm6 0v2.4l-2-1.2 2-1.2zM12 14.6l2 1.2-2 1.2-2-1.2 2-1.2z" />
         </svg>
       ),
-      title: "Data Analytics"
+      title: "Quality Assurance & Testing"
     },
     {
       icon: (
@@ -119,7 +145,17 @@ const OurServices = () => {
     },
   ];
 
-  const itemsPerPage = 8;
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+      setItemsPerPage(isMobile ? 4 : 8);
+      setCurrentPage(0); // reset to first page on breakpoint change
+    };
+
+    updateItemsPerPage();
+    window.addEventListener('resize', updateItemsPerPage);
+    return () => window.removeEventListener('resize', updateItemsPerPage);
+  }, []);
   const totalPages = Math.ceil(services.length / itemsPerPage);
   const currentServices = services.slice(
     currentPage * itemsPerPage,
@@ -128,6 +164,7 @@ const OurServices = () => {
 
   return (
     <section className="py-4 px-4" style={{ backgroundColor: '#F6F1EB' }}>
+      <style>{serviceCardStyles}</style>
       <div className="relative mx-2 my-3">
         <div 
           className="relative z-10 py-8 px-4"
@@ -139,10 +176,9 @@ const OurServices = () => {
           <div className="max-w-8xl mx-auto">
             {/* Title */}
             <h2 
-              className="text-center text-white mb-3"
+              className="text-center text-white mb-3 text-3xl md:text-4xl lg:text-5xl"
               style={{
                 fontFamily: 'DM Sans, sans-serif',
-                fontSize: '48px',
                 fontWeight: '500'
               }}
             >
@@ -150,16 +186,14 @@ const OurServices = () => {
             </h2>
 
             {/* Services Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
               {currentServices.map((service, index) => (
                 <div 
                   key={index}
-                  className="p-8 text-center cursor-pointer transition-transform duration-200 ease-in-out hover:transform hover:-translate-y-1 relative overflow-hidden"
+                  className="p-4 md:p-6 lg:p-8 text-center cursor-pointer transition-transform duration-200 ease-in-out hover:transform hover:-translate-y-1 relative overflow-hidden service-card"
                   style={{ 
                     backgroundColor: '#F6F1EB', 
-                    minHeight: '180px',
                     borderRadius: '24px',
-                    aspectRatio: '1.4/1',
                     boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
                     border: '1px solid rgba(0,0,0,0.02)'
                   }}
@@ -173,16 +207,15 @@ const OurServices = () => {
                 >
                   {/* Image or Icon */}
                   <div 
-                    className="mb-6 flex items-center justify-center"
-                    style={{ height: '60px' }}
+                    className="mb-3 md:mb-6 flex items-center justify-center service-icon-container"
                   >
                     {service.image ? (
                       <Image
                         src={service.image}
                         alt={service.title}
-                        width={48}
-                        height={48}
-                        className="object-contain"
+                        width={36}
+                        height={36}
+                        className="w-9 h-9 md:w-12 md:h-12 object-contain"
                       />
                     ) : (
                       <div className="text-black">
@@ -193,10 +226,9 @@ const OurServices = () => {
                   
                   {/* Title */}
                   <h3 
-                    className="text-black"
+                    className="text-black text-base md:text-lg lg:text-lg"
                     style={{
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '18px',
                       fontWeight: '500',
                       lineHeight: '1.3'
                     }}
