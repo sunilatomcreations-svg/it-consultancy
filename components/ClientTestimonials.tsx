@@ -50,7 +50,7 @@ const ClientTestimonials = () => {
   };
 
   return (
-    <section className="py-10 px-4" style={{ backgroundColor: '#F6F1EB' }}>
+    <section className="py-2 px-4" style={{ backgroundColor: '#F6F1EB' }}>
       <div className="max-w-full mx-auto">
         <div className="relative">
           {/* Purple background panel */}

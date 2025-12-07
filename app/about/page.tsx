@@ -20,22 +20,22 @@ export default function About() {
         </section>
   
 
-        <section className="pt-10 mb-5">
+        <section className="pt-5 mb-5">
            <div className="max-w-7xl mx-auto">
            <PartnershipText/>
            </div>
         </section>
 
       {/* Team Section */}
-      <section className="py-2 px-4">
+      <section className="py-2">
         <div className="max-w-9xl mx-auto">
             <ClientTestimonials/>
         </div>
       </section>
 
       {/* Company Stats */}
-      <section className="py-2 px-4" style={{ backgroundColor: '#F6F1EB' }}>
-        <div className="max-w-7xl mx-auto">
+      <section style={{ backgroundColor: '#F6F1EB' }}>
+        <div className="max-w-9xl mx-auto">
             <HeroText/>
             
         </div>
@@ -48,7 +48,7 @@ export default function About() {
       </section>
 
       {/* Contact CTA */}
-      <section className="py-16 px-4" style={{ backgroundColor: '#F6F1EB' }}>
+      <section style={{ backgroundColor: '#F6F1EB' }}>
         <div className="max-w-9xl mx-auto text-center">
 
             <FAQ/>
