@@ -32,7 +32,7 @@ const PartnershipText = () => {
             lineHeight: '1.2'
           }}
         >
-Our partnership has redefined the way you experience these global leaders.        </h2>
+Our partnership has redefined the way you<br className="hidden lg:block" /> experience these global leaders.        </h2>
 
         {/* Logo Showcase */}
         <div className="space-y-4 md:space-y-6 lg:space-y-8">

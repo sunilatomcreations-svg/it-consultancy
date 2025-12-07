@@ -3,18 +3,21 @@ import Link from 'next/link';
 
 const HeroText = () => {
   return (
-    <section className="py-8 md:py-12 lg:py-16 px-4 md:px-6 lg:px-8" style={{ backgroundColor: '#F6F1EB' }}>
+    <section className="py-8 md:py-12 lg:py-5 px-4 md:px-6 lg:px-8" style={{ backgroundColor: '#F6F1EB' }}>
       <div className="max-w-6xl mx-auto text-center">
         {/* Main Headline */}
         <h1 
-          className="text-gray-900 mb-6 md:mb-8 leading-tight select-none text-xl md:text-3xl lg:text-5xl"
+          className="text-gray-900 mb-6 md:mb-8 leading-tight select-none text-lg md:text-3xl lg:text-5xl"
           style={{
             fontFamily: 'DM Sans, sans-serif',
             fontWeight: '400',
             lineHeight: '1.2'
           }}
         >
-We're architects of the digital future,<br /> crafting websites and apps that transcend<br /> screens and enter the realm of experience.        </h1>
+          We're architects of the digital future,<br className="hidden lg:block" />
+          crafting websites and apps thattranscend<br className="hidden lg:block" />
+           screens and enter the realm of experience.
+        </h1>
 
         {/* Subtext */}
         <p 
@@ -35,7 +38,7 @@ We're architects of the digital future,<br /> crafting websites and apps that tr
             className="px-4 md:px-6 py-2 md:py-3 text-white font-semibold rounded-lg hover:opacity-90 transition-opacity hover:cursor-pointer inline-block text-sm md:text-base"
             style={{ backgroundColor: '#F97316', fontFamily: 'DM Sans, sans-serif' }}
           >
-            Get IT Consultation
+         Talk to Our Experts
           </Link>
         </div>
       </div>
