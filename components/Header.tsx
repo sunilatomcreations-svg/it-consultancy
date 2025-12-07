@@ -13,8 +13,8 @@ const Header = () => {
   return (
     <>
       <Sidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      <header className="fixed top-4 left-0 right-0 z-40 flex justify-center">
-        <nav className="max-w-4xl px-4 py-1.5 rounded-full shadow-xl border border-white/20" 
+      <header className="fixed top-2 md:top-4 left-0 right-0 z-40 flex justify-center px-2 md:px-0">
+        <nav className="max-w-4xl w-auto px-3 md:px-4 py-1.5 rounded-full shadow-xl border border-white/20" 
              style={{
                backgroundColor: 'rgba(255, 255, 255, 0.25)',
                backdropFilter: 'blur(10px)',

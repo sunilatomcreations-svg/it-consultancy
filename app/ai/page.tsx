@@ -7,7 +7,7 @@ import FAQ from '@/components/FAQ';
 
 const AIPage = () => {
   return (
-    <main className="min-h-screen bg-[#F6F1EB]">
+    <main className="min-h-screen bg-[#F6F1EB] overflow-x-hidden">
       <Header />
       
       <div style={{ paddingTop: '70px' }}>

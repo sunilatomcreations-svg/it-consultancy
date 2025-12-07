@@ -17,7 +17,7 @@ import { ServiceProvider } from "@/contexts/ServiceContext";
 export default function Home() {
   return (
     <ServiceProvider>
-      <main className="min-h-screen bg-[#F6F1EB]">
+      <main className="min-h-screen bg-[#F6F1EB] overflow-x-hidden">
         <Header />
         
         {/* Hero Section */}

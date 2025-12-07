@@ -11,7 +11,7 @@ import { ServiceProvider } from '@/contexts/ServiceContext';
 const ServicesPage = () => {
   return (
     <ServiceProvider>
-      <main className="min-h-screen bg-[#F6F1EB]">
+      <main className="min-h-screen bg-[#F6F1EB] overflow-x-hidden">
         <Header />
 
         <div style={{ paddingTop: '70px' }}>

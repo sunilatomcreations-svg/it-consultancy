@@ -11,7 +11,7 @@ import WhoWeAreBanner from '@/components/WhoWeAreBanner';
 
 export default function About() {
   return (
-    <main className="min-h-screen bg-[#F6F1EB]">
+    <main className="min-h-screen bg-[#F6F1EB] overflow-x-hidden">
       <Header />
 
         <section className="mt-18">

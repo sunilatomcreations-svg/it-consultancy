@@ -55,15 +55,14 @@ const ClientTestimonials = () => {
         <div className="relative">
           {/* Purple background panel */}
           <div 
-            className="rounded-3xl p-12"
+            className="rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-12"
             style={{ backgroundColor: '#6B2259' }}
           >
             {/* Title */}
             <h2 
-              className="text-center text-white mb-12"
+              className="text-center text-white mb-6 md:mb-12 text-xl md:text-4xl lg:text-5xl"
               style={{
                 fontFamily: 'DM Sans, sans-serif',
-                fontSize: '48px',
                 fontWeight: '500',
                 lineHeight: '1.2'
               }}
@@ -73,42 +72,36 @@ const ClientTestimonials = () => {
 
             {/* Testimonials Container */}
             <div className="relative overflow-hidden">
-              <div className="flex justify-center" style={{ width: '100%', gap: '32px' }}>
+              <div className="flex justify-center gap-3 md:gap-8" style={{ width: '100%' }}>
                 {/* Half-visible first testimonial */}
                 <div
-                  className="flex-shrink-0 p-6 rounded-3xl opacity-30 transition-opacity duration-500 flex flex-col"
+                  className="hidden md:flex flex-shrink-0 p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-opacity duration-500 flex-col w-[80px] md:w-[200px] h-[300px] md:h-[460px]"
                   style={{ 
-                    backgroundColor: '#F6F1EB',
-                    width: '200px',
-                    height: '460px'
+                    backgroundColor: '#F6F1EB'
                   }}
                 >
                   <p 
-                    className="text-gray-800 mb-6 leading-relaxed flex-1 overflow-hidden"
+                    className="text-gray-800 mb-3 md:mb-6 leading-relaxed flex-1 overflow-hidden text-xs md:text-sm line-clamp-3 md:line-clamp-4"
                     style={{
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '14px',
-                      lineHeight: '1.6',
-                      display: '-webkit-box',
-                      WebkitLineClamp: '4',
-                      WebkitBoxOrient: 'vertical'
+                      lineHeight: '1.6'
                     }}
                   >
                     "{getTestimonialAtPosition(-1).quote}"
                   </p>
-                  <div className="flex items-center gap-4 mt-auto">
+                  <div className="flex items-center gap-2 md:gap-4 mt-auto">
                     <Image 
                       src={getTestimonialAtPosition(-1).image} 
                       alt={getTestimonialAtPosition(-1).author}
                       width={48} 
                       height={48} 
-                      className="rounded-lg flex-shrink-0 object-cover"
+                      className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex-shrink-0 object-cover"
                     />
                     <div>
-                      <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
+                      <div className="font-semibold text-gray-900 text-sm md:text-base" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(-1).author}
                       </div>
-                      <div className="text-gray-600" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px' }}>
+                      <div className="text-gray-600 text-xs md:text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(-1).position}
                       </div>
                     </div>
@@ -117,39 +110,33 @@ const ClientTestimonials = () => {
 
                 {/* First fully visible testimonial */}
                 <div
-                  className="flex-shrink-0 p-6 rounded-3xl opacity-100 transition-opacity duration-500 flex flex-col"
+                  className="flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-opacity duration-500 flex flex-col w-[180px] md:w-[500px] h-[300px] md:h-[460px]"
                   style={{ 
-                    backgroundColor: '#F6F1EB',
-                    width: '500px',
-                    height: '460px'
+                    backgroundColor: '#F6F1EB'
                   }}
                 >
                   <p 
-                    className="text-gray-800 mb-6 leading-relaxed flex-1 overflow-hidden"
+                    className="text-gray-800 mb-3 md:mb-6 leading-relaxed flex-1 overflow-hidden text-xs md:text-sm line-clamp-3 md:line-clamp-4"
                     style={{
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '14px',
-                      lineHeight: '1.6',
-                      display: '-webkit-box',
-                      WebkitLineClamp: '4',
-                      WebkitBoxOrient: 'vertical'
+                      lineHeight: '1.6'
                     }}
                   >
                     "{getTestimonialAtPosition(0).quote}"
                   </p>
-                  <div className="flex items-center gap-4 mt-auto">
+                  <div className="flex items-center gap-2 md:gap-4 mt-auto">
                     <Image 
                       src={getTestimonialAtPosition(0).image} 
                       alt={getTestimonialAtPosition(0).author}
                       width={48} 
                       height={48} 
-                      className="rounded-lg flex-shrink-0 object-cover"
+                      className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex-shrink-0 object-cover"
                     />
                     <div>
-                      <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
+                      <div className="font-semibold text-gray-900 text-sm md:text-base" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(0).author}
                       </div>
-                      <div className="text-gray-600" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px' }}>
+                      <div className="text-gray-600 text-xs md:text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(0).position}
                       </div>
                     </div>
@@ -158,39 +145,33 @@ const ClientTestimonials = () => {
 
                 {/* Second fully visible testimonial */}
                 <div
-                  className="flex-shrink-0 p-6 rounded-3xl opacity-100 transition-opacity duration-500 flex flex-col"
+                  className="flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-opacity duration-500 flex flex-col w-[210px] md:w-[500px] h-[300px] md:h-[460px]"
                   style={{ 
-                    backgroundColor: '#F6F1EB',
-                    width: '500px',
-                    height: '460px'
+                    backgroundColor: '#F6F1EB'
                   }}
                 >
                   <p 
-                    className="text-gray-800 mb-6 leading-relaxed flex-1 overflow-hidden"
+                    className="text-gray-800 mb-3 md:mb-6 leading-relaxed flex-1 overflow-hidden text-xs md:text-sm line-clamp-3 md:line-clamp-4"
                     style={{
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '14px',
-                      lineHeight: '1.6',
-                      display: '-webkit-box',
-                      WebkitLineClamp: '4',
-                      WebkitBoxOrient: 'vertical'
+                      lineHeight: '1.6'
                     }}
                   >
                     "{getTestimonialAtPosition(1).quote}"
                   </p>
-                  <div className="flex items-center gap-4 mt-auto">
+                  <div className="flex items-center gap-2 md:gap-4 mt-auto">
                     <Image 
                       src={getTestimonialAtPosition(1).image} 
                       alt={getTestimonialAtPosition(1).author}
                       width={48} 
                       height={48} 
-                      className="rounded-lg flex-shrink-0 object-cover"
+                      className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex-shrink-0 object-cover"
                     />
                     <div>
-                      <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
+                      <div className="font-semibold text-gray-900 text-sm md:text-base" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(1).author}
                       </div>
-                      <div className="text-gray-600" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px' }}>
+                      <div className="text-gray-600 text-xs md:text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(1).position}
                       </div>
                     </div>
@@ -198,35 +179,28 @@ const ClientTestimonials = () => {
                 </div>
 
                 {/* Half-visible last testimonial */}
-                <div
-                  className="flex-shrink-0 p-6 rounded-3xl opacity-30 transition-opacity duration-500 flex flex-col"
+                <div 
+                  className="flex-shrink-0 w-[80px] md:w-[200px] h-[300px] md:h-[460px] p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-opacity duration-500 flex flex-col"
                   style={{ 
-                    backgroundColor: '#F6F1EB',
-                 
-                    width: '200px',
-                    height: '460px'
+                    backgroundColor: '#F6F1EB'
                   }}
                 >
                   <p 
-                    className="text-gray-800 mb-6 leading-relaxed flex-1 overflow-hidden"
+                    className="text-gray-800 mb-3 md:mb-6 leading-relaxed flex-1 overflow-hidden text-xs md:text-sm line-clamp-3 md:line-clamp-4"
                     style={{
                       fontFamily: 'DM Sans, sans-serif',
-                      fontSize: '14px',
-                      lineHeight: '1.6',
-                      display: '-webkit-box',
-                      WebkitLineClamp: '4',
-                      WebkitBoxOrient: 'vertical'
+                      lineHeight: '1.6'
                     }}
                   >
                     "{getTestimonialAtPosition(2).quote}"
                   </p>
-                  <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-12 h-12 rounded-lg flex-shrink-0" style={{ backgroundColor: '#F97316' }}></div>
+                  <div className="flex items-center gap-2 md:gap-4 mt-auto">
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg flex-shrink-0" style={{ backgroundColor: '#F97316' }}></div>
                     <div>
-                      <div className="font-semibold text-gray-900" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '16px' }}>
+                      <div className="font-semibold text-gray-900 text-sm md:text-base" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(2).author}
                       </div>
-                      <div className="text-gray-600" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '14px' }}>
+                      <div className="text-gray-600 text-xs md:text-sm" style={{ fontFamily: 'DM Sans, sans-serif' }}>
                         {getTestimonialAtPosition(2).position}
                       </div>
                     </div>
@@ -239,14 +213,14 @@ const ClientTestimonials = () => {
             <div className="flex justify-center gap-4 mt-8">
               <button
                 onClick={prevSlide}
-                className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center text-white font-bold text-base md:text-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
                 style={{ backgroundColor: '#F97316' }}
               >
                 ←
               </button>
               <button
                 onClick={nextSlide}
-                className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center text-white font-bold text-base md:text-lg hover:opacity-90 transition-opacity hover:cursor-pointer"
                 style={{ backgroundColor: '#F97316' }}
               >
                 →
