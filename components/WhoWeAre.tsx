@@ -1,9 +1,100 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 const WhoWeAre = () => {
+  const [counters, setCounters] = useState({
+    projects: 0,
+    clients: 0,
+    countries: 0,
+    nps: 0
+  });
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          // Reset counters to 0
+          setCounters({
+            projects: 0,
+            clients: 0,
+            countries: 0,
+            nps: 0
+          });
+
+          // Animate Projects (22,000)
+          const projectsTarget = 22000;
+          const projectsDuration = 2000;
+          const projectsIncrement = projectsTarget / (projectsDuration / 16);
+          let projectsCurrent = 0;
+          
+          const projectsInterval = setInterval(() => {
+            projectsCurrent += projectsIncrement;
+            if (projectsCurrent >= projectsTarget) {
+              projectsCurrent = projectsTarget;
+              clearInterval(projectsInterval);
+            }
+            setCounters(prev => ({ ...prev, projects: Math.floor(projectsCurrent) }));
+          }, 16);
+
+          // Animate Clients (8,000)
+          const clientsTarget = 8000;
+          const clientsDuration = 2000;
+          const clientsIncrement = clientsTarget / (clientsDuration / 16);
+          let clientsCurrent = 0;
+          
+          const clientsInterval = setInterval(() => {
+            clientsCurrent += clientsIncrement;
+            if (clientsCurrent >= clientsTarget) {
+              clientsCurrent = clientsTarget;
+              clearInterval(clientsInterval);
+            }
+            setCounters(prev => ({ ...prev, clients: Math.floor(clientsCurrent) }));
+          }, 16);
+
+          // Animate Countries (23)
+          const countriesTarget = 23;
+          const countriesDuration = 1500;
+          const countriesIncrement = countriesTarget / (countriesDuration / 16);
+          let countriesCurrent = 0;
+          
+          const countriesInterval = setInterval(() => {
+            countriesCurrent += countriesIncrement;
+            if (countriesCurrent >= countriesTarget) {
+              countriesCurrent = countriesTarget;
+              clearInterval(countriesInterval);
+            }
+            setCounters(prev => ({ ...prev, countries: Math.floor(countriesCurrent) }));
+          }, 16);
+
+          // Animate NPS (9)
+          const npsTarget = 9;
+          const npsDuration = 1500;
+          const npsIncrement = npsTarget / (npsDuration / 16);
+          let npsCurrent = 0;
+          
+          const npsInterval = setInterval(() => {
+            npsCurrent += npsIncrement;
+            if (npsCurrent >= npsTarget) {
+              npsCurrent = npsTarget;
+              clearInterval(npsInterval);
+            }
+            setCounters(prev => ({ ...prev, nps: Math.floor(npsCurrent) }));
+          }, 16);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="py-2 md:py-30 lg:py-2 px-4 md:px-6 lg:px-8" style={{ backgroundColor: '#F6F1EB' }}>
       <div className="max-w-9xl mx-auto">
@@ -36,7 +127,7 @@ const WhoWeAre = () => {
 
             {/* Bottom row: stats left, CTA right */}
             <div className="mt-auto flex flex-col md:flex-row items-start md:items-end justify-between gap-6 md:gap-4">
-              <div className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+              <div ref={statsRef} className="grid grid-cols-2 gap-4 md:gap-6 lg:gap-8">
                 <div>
                   <div 
                     className="text-white mb-2 text-lg md:text-2xl lg:text-4xl"
@@ -45,7 +136,7 @@ const WhoWeAre = () => {
                       fontWeight: '600'
                     }}
                   >
-                    22,000+
+                    {counters.projects.toLocaleString()}+
                   </div>
                   <div 
                     className="text-white/80 text-xs md:text-sm"
@@ -65,7 +156,7 @@ const WhoWeAre = () => {
                       fontWeight: '600'
                     }}
                   >
-                    8,000+
+                    {counters.clients.toLocaleString()}+
                   </div>
                   <div 
                     className="text-white/80 text-xs md:text-sm"
@@ -85,7 +176,7 @@ const WhoWeAre = () => {
                       fontWeight: '600'
                     }}
                   >
-                    23+
+                    {counters.countries}+
                   </div>
                   <div 
                     className="text-white/80 text-xs md:text-sm"
@@ -105,7 +196,7 @@ const WhoWeAre = () => {
                       fontWeight: '600'
                     }}
                   >
-                    9+
+                    {counters.nps}+
                   </div>
                   <div 
                     className="text-white/80 text-xs md:text-sm"
@@ -128,15 +219,209 @@ const WhoWeAre = () => {
             </div>
           </div>
 
-          {/* Right Side - Image */}
-          <div className="h-[400px] md:min-h-[400px] lg:min-h-[520px] rounded-3xl overflow-hidden">
-            <Image
-              src="/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png"
-              alt="Who We Are Image"
-              width={600}
-              height={200}
-              className="w-full h-full object-cover"
-            />
+          {/* Right Side - Image and Team Section */}
+          <div className="flex flex-col gap-0">
+            {/* Top Half - Image */}
+            <div className="h-[250px] md:h-[300px] rounded-t-3xl overflow-hidden relative">
+              <Image
+                src="/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png"
+                alt="Who We Are Image"
+                width={600}
+                height={300}
+                className="w-full h-full object-cover"
+              />
+              {/* Logo Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold" style={{ fontFamily: 'DM Sans, sans-serif' }}>
+                  LOGO
+                </h2>
+              </div>
+            </div>
+
+            {/* Bottom Half - Team Avatars */}
+            <div className="bg-gray-100 rounded-b-3xl p-8 md:p-10 lg:p-12 relative min-h-[300px] overflow-hidden">
+              {/* Title */}
+              <h3 
+                className="text-center text-2xl md:text-3xl lg:text-4xl mb-8 text-gray-700 relative z-10"
+                style={{
+                  fontFamily: 'DM Sans, sans-serif',
+                  fontWeight: '500',
+                  lineHeight: '1.2'
+                }}
+              >
+                Small Team<br />Big Results
+              </h3>
+
+              {/* Sliding Avatars Animation */}
+              <style dangerouslySetInnerHTML={{__html: `
+                @keyframes slideLeft {
+                  0% {
+                    transform: translateX(0);
+                  }
+                  100% {
+                    transform: translateX(-50%);
+                  }
+                }
+                @keyframes slideRight {
+                  0% {
+                    transform: translateX(-50%);
+                  }
+                  100% {
+                    transform: translateX(0);
+                  }
+                }
+              `}} />
+              
+              {/* First Row - Sliding Left */}
+              <div className="absolute top-28 lg:top-36 left-0 right-0 flex items-center">
+                <div 
+                  className="flex gap-6"
+                  style={{
+                    animation: 'slideLeft 20s linear infinite',
+                    width: 'max-content'
+                  }}
+                >
+                  {/* First set of avatars */}
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=1" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=2" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=3" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=4" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=5" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=6" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=7" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=8" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=9" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=10" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  
+                  {/* Duplicate set for seamless loop */}
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=1" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=2" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=3" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=4" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=5" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=6" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=7" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=8" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=9" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=10" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Second Row - Sliding Right */}
+              <div className="absolute bottom-12 lg:bottom-5 left-0 right-0 flex items-center">
+                <div 
+                  className="flex gap-6"
+                  style={{
+                    animation: 'slideRight 20s linear infinite',
+                    width: 'max-content'
+                  }}
+                >
+                  {/* First set of avatars */}
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=11" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=12" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=13" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=14" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=15" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=16" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=17" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=18" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=19" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=20" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  
+                  {/* Duplicate set for seamless loop */}
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=11" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=12" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=13" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=14" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=15" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=16" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=17" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=18" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=19" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                  <div className="w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                    <Image src="https://i.pravatar.cc/64?img=20" alt="Team member" width={64} height={64} className="w-full h-full object-cover" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

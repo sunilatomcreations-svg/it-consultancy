@@ -25,10 +25,24 @@ const serviceCardStyles = `
   .service-icon-container {
     height: auto;
     margin-top: auto;
+    margin-bottom: 10;
+    transition: margin-top 0.3s ease, margin-bottom 0.3s ease;
+  }
+  .service-card h3 {
+    transition: transform 0.3s ease;
   }
   @media (min-width: 768px) {
     .service-icon-container {
       margin-top: 45px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .service-card:hover .service-icon-container {
+      margin-top: 25px;
+      margin-bottom: 20px;
+    }
+    .service-card:hover h3 {
+      transform: translateY(40px);
     }
   }
 `;

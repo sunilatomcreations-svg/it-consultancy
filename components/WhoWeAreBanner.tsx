@@ -1,7 +1,94 @@
 'use client';
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 export default function WhoWeAreBanner() {
+  const [counters, setCounters] = useState({
+    projects: 0,
+    clients: 0,
+    nps: 0,
+    countries: 0
+  });
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          
+          // Animate Projects (22,000)
+          const projectsDuration = 2000;
+          const projectsTarget = 22000;
+          const projectsIncrement = projectsTarget / (projectsDuration / 16);
+          let projectsCurrent = 0;
+          
+          const projectsInterval = setInterval(() => {
+            projectsCurrent += projectsIncrement;
+            if (projectsCurrent >= projectsTarget) {
+              projectsCurrent = projectsTarget;
+              clearInterval(projectsInterval);
+            }
+            setCounters(prev => ({ ...prev, projects: Math.floor(projectsCurrent) }));
+          }, 16);
+
+          // Animate Clients (8,000)
+          const clientsDuration = 2000;
+          const clientsTarget = 8000;
+          const clientsIncrement = clientsTarget / (clientsDuration / 16);
+          let clientsCurrent = 0;
+          
+          const clientsInterval = setInterval(() => {
+            clientsCurrent += clientsIncrement;
+            if (clientsCurrent >= clientsTarget) {
+              clientsCurrent = clientsTarget;
+              clearInterval(clientsInterval);
+            }
+            setCounters(prev => ({ ...prev, clients: Math.floor(clientsCurrent) }));
+          }, 16);
+
+          // Animate NPS (9)
+          const npsDuration = 1500;
+          const npsTarget = 9;
+          const npsIncrement = npsTarget / (npsDuration / 16);
+          let npsCurrent = 0;
+          
+          const npsInterval = setInterval(() => {
+            npsCurrent += npsIncrement;
+            if (npsCurrent >= npsTarget) {
+              npsCurrent = npsTarget;
+              clearInterval(npsInterval);
+            }
+            setCounters(prev => ({ ...prev, nps: Math.floor(npsCurrent) }));
+          }, 16);
+
+          // Animate Countries (23)
+          const countriesDuration = 1500;
+          const countriesTarget = 23;
+          const countriesIncrement = countriesTarget / (countriesDuration / 16);
+          let countriesCurrent = 0;
+          
+          const countriesInterval = setInterval(() => {
+            countriesCurrent += countriesIncrement;
+            if (countriesCurrent >= countriesTarget) {
+              countriesCurrent = countriesTarget;
+              clearInterval(countriesInterval);
+            }
+            setCounters(prev => ({ ...prev, countries: Math.floor(countriesCurrent) }));
+          }, 16);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
   return (
     <div className="relative w-full">
       {/* Hero Banner Section */}
@@ -31,29 +118,29 @@ export default function WhoWeAreBanner() {
       </div>
 
       {/* Statistics Cards */}
-      <div className="max-w-6xl mx-auto px-8 mt-4 md:-mt-8 relative z-20">
+      <div ref={statsRef} className="max-w-6xl mx-auto px-8 mt-4 md:-mt-8 relative z-20">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {/* Projects Delivered */}
           <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">22,000+</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.projects.toLocaleString()}+</div>
             <div className="text-xs md:text-lg opacity-90">Projects Delivered</div>
           </div>
 
           {/* Clients Served */}
           <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">8,000+</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.clients.toLocaleString()}+</div>
             <div className="text-xs md:text-lg opacity-90">Clients Served</div>
           </div>
 
           {/* Average NPS */}
           <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">9+</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.nps}+</div>
             <div className="text-xs md:text-lg opacity-90">Average NPS</div>
           </div>
 
           {/* Countries Served */}
           <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">23+</div>
+            <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.countries}+</div>
             <div className="text-xs md:text-lg opacity-90">Countries Served</div>
           </div>
         </div>

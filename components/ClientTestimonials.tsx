@@ -1,9 +1,11 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 const ClientTestimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
   
   const testimonials = [
     {
@@ -36,12 +38,33 @@ const ClientTestimonials = () => {
     }
   ];
 
+  // Auto-scroll effect
+  useEffect(() => {
+    if (isAutoScrolling) {
+      autoScrollRef.current = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+      }, 3000); // Move every 3 seconds
+    }
+
+    return () => {
+      if (autoScrollRef.current) {
+        clearInterval(autoScrollRef.current);
+      }
+    };
+  }, [isAutoScrolling, testimonials.length]);
+
   const nextSlide = () => {
+    setIsAutoScrolling(false);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    // Resume auto-scroll after 5 seconds
+    setTimeout(() => setIsAutoScrolling(true), 5000);
   };
 
   const prevSlide = () => {
+    setIsAutoScrolling(false);
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
+    // Resume auto-scroll after 5 seconds
+    setTimeout(() => setIsAutoScrolling(true), 5000);
   };
 
   const getTestimonialAtPosition = (offset: number) => {
@@ -72,10 +95,16 @@ const ClientTestimonials = () => {
 
             {/* Testimonials Container */}
             <div className="relative overflow-hidden">
-              <div className="flex justify-center gap-3 md:gap-8" style={{ width: '100%' }}>
+              <div 
+                className="flex gap-3 md:gap-8 transition-transform duration-700 ease-in-out" 
+                style={{ 
+                  width: '100%',
+                  transform: `translateX(-${currentIndex * 10}px)`
+                }}
+              >
                 {/* Half-visible first testimonial */}
                 <div
-                  className="hidden md:flex flex-shrink-0 p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-opacity duration-500 flex-col w-[80px] md:w-[200px] h-[300px] md:h-[460px]"
+                  className="hidden md:flex flex-shrink-0 p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-all duration-700 ease-in-out flex-col w-[80px] md:w-[200px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -110,7 +139,7 @@ const ClientTestimonials = () => {
 
                 {/* First fully visible testimonial */}
                 <div
-                  className="flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-opacity duration-500 flex flex-col w-[180px] md:w-[500px] h-[300px] md:h-[460px]"
+                  className="flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[180px] md:w-[500px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -145,7 +174,7 @@ const ClientTestimonials = () => {
 
                 {/* Second fully visible testimonial */}
                 <div
-                  className="flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-opacity duration-500 flex flex-col w-[210px] md:w-[500px] h-[300px] md:h-[460px]"
+                  className="flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[210px] md:w-[500px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -180,7 +209,7 @@ const ClientTestimonials = () => {
 
                 {/* Half-visible last testimonial */}
                 <div 
-                  className="flex-shrink-0 w-[80px] md:w-[200px] h-[300px] md:h-[460px] p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-opacity duration-500 flex flex-col"
+                  className="flex-shrink-0 w-[80px] md:w-[200px] h-[300px] md:h-[460px] p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-all duration-700 ease-in-out flex flex-col"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}

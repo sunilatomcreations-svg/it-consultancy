@@ -76,47 +76,36 @@ const Footer = () => {
   };
 
   return (
-    <div className="relative mx-0 md:mx-4 lg:mx-6 my-0 md:my-2">
-      {/* Mobile: Simple rectangle */}
+    <div className="relative mx-0 md:mx-4 lg:mx-6 my-0 md:my-2 min-h-[500px]">
+      {/* Purple background for mobile */}
+      <div className="md:hidden absolute inset-0 bg-[#6B2259]"></div>
+      
+      {/* Background with smooth chamfer clip-path - Desktop only */}
       <svg 
-        className="absolute inset-0 w-full h-full md:hidden" 
-        viewBox="0 0 100 100" 
+        className="hidden md:block absolute top-0 left-0 right-0 w-full"
+        style={{
+          maxWidth: '100%',
+          height: '620px',
+        }}
+        viewBox="0 0 399 159"
         preserveAspectRatio="none"
-        fill="#6B2259"
       >
-        <rect x="0" y="0" width="100" height="100" />
+        <path 
+          d="M 40 0 L 375 0 Q 399 0 399 24 L 399 119 Q 399 127 393.34 132.66 L 372.66 153.34 Q 367 159 359 159 L 24 159 Q 0 159 0 135 L 0 40 Q 0 32 5.66 26.34 L 26.34 5.66 Q 32 0 40 0 Z"
+          fill="#6B2259"
+        />
       </svg>
       
-      {/* Tablet/Desktop: Angled polygon */}
-      <svg 
-        className="hidden md:block absolute inset-0 w-full h-full" 
-        viewBox="0 0 100 100" 
-        preserveAspectRatio="none"
-        fill="#6B2259"
-      >
-        <path d="M5,0 
-       L100,0 
-       L100,10 
-       L100,90 
-       L95,100 
-       L15,100 
-       L0,100 
-       L0,100 
-       L0,10 
-       Z" 
- />
-      </svg>
-      
-      <div className="relative z-10 p-1 md:p-3 lg:p-6">
-        <div className="max-w-8xl mt-5 md:mt-22 mb-5 md:mb-22 mx-auto">
+      <div className="relative z-10 p-2 md:p-3 lg:p-6">
+        <div className="max-w-7xl mt-5 md:mt-20 mb-5 md:mb-22 mx-0 md:mx-auto">
         <div 
           style={{ 
             backgroundColor: '#F6F1EB',
             borderRadius: `${settings.borderRadius}px`
           }} 
-          className="mx-0 md:mx-2 lg:mx-4 p-2 md:p-6 lg:p-10"
+          className="mx-2 md:mx-0 p-2 md:p-6 lg:py-5 lg:px-8"
         >
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-6">
             
             {settings.sections.map((section) => (
               <div key={section.id}>

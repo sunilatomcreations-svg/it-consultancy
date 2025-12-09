@@ -1,158 +1,200 @@
 "use client"
-import React, { useEffect, useRef } from "react";
-
-/*
-  RipplePanels.jsx
-  - A small React component (Next.js friendly) that reproduces the three-panel layout in the screenshot.
-  - Each panel shows an image (you will replace the default image paths with your images) with a vertical "ripple / displacement" effect
-  - Uses an SVG filter (feTurbulence + feDisplacementMap) applied to each <image> element
-  - Small animation subtly varies the turbulence to give the wavy look
-
-  Usage:
-    1. Drop this file into your Next.js project's components/ folder.
-    2. Import and use: import RipplePanels from "~/components/RipplePanels";
-       <RipplePanels />
-
-  Notes:
-    - The demo uses local path: /mnt/data/10f061c4-bcc1-4aa8-8a2e-b8d3dfd53324.png (replace with your image URLs or imports)
-    - If you prefer next/image, you can adapt the <image> href to use a preloaded src or use <svg> with a pattern.
-    - Tailwind CSS classes are used for quick layout. If you don't have Tailwind, replace classes with equivalent CSS rules.
-*/
+import React, { useState } from "react";
+import Image from "next/image";
 
 const DEFAULT_IMAGES = [
-  "/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png",
-  "/mnt/data/10f061c4-bcc1-4aa8-8a2e-b8d3dfd53324.png",
-  "/mnt/data/10f061c4-bcc1-4aa8-8a2e-b8d3dfd53324.png",
+  "/home_page_assets/andreea-avramescu-wR56AUlEsE4-unsplash.jpg",
+  "/home_page_assets/headway-F2KRf_QfCqw-unsplash.jpg",
+  "/home_page_assets/alex-kotliarskyi-QBpZGqEMsKg-unsplash.jpg",
 ];
 
 export default function RipplePanels({ images = DEFAULT_IMAGES }) {
-  // refs to each feTurbulence so we can animate baseFrequency
-  const turbulenceRefs = useRef<(SVGFETurbulenceElement | null)[]>([]);
-
-  useEffect(() => {
-    let rafId: number | null = null;
-    let t = 0;
-
-    function animate() {
-      t += 0.016; // approx per frame
-      turbulenceRefs.current.forEach((el, i) => {
-        if (!el) return;
-        // subtle oscillation of baseFrequency for vertical waves
-        const baseX = 0.0005 + i * 0.00025; // tiny horizontal frequency per panel
-        const baseY = 0.035 + i * 0.01; // vertical frequency
-        const oscillation = Math.abs(Math.sin(t * (0.5 + i * 0.2))) * 0.02; // 0 - 0.02
-        const newVal = `${(baseX + oscillation).toFixed(6)} ${(baseY).toFixed(6)}`;
-        try {
-          el.setAttribute("baseFrequency", newVal);
-        } catch (e) {
-          // ignore
-        }
-      });
-      rafId = requestAnimationFrame(animate);
-    }
-
-    rafId = requestAnimationFrame(animate);
-    return () => {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-      }
-    };
-  }, []);
+  const [hoveredPanel, setHoveredPanel] = useState<number | null>(null);
+  const [mobileActiveImage, setMobileActiveImage] = useState(0);
 
   return (
-    <div className="bg-F6F1EB w-full min-h-[300px] md:min-h-[350px] lg:min-h-[450px] p-4 md:p-6 lg:p-8 flex items-stretch justify-between gap-2 md:gap-4 mt-14 md:mt-12">
+    <div className="bg-F6F1EB w-full p-4 md:p-6 lg:p-8 mt-14 md:mt-12 mb-5 md:mb-10 relative">
+      {/* Image Panels Container */}
+      <div className="flex items-stretch gap-2 md:gap-4 h-[500px] md:h-[680px] relative">
       {/* Left big panel */}
-      <div className="flex-1 min-h-[250px] md:min-h-[350px] lg:min-h-[450px] rounded-2xl overflow-hidden shadow-lg">
-        <SVGPanel
-          src={images[0]}
-          filterId="ripple-left"
-          turbulenceRef={(el) => (turbulenceRefs.current[0] = el)}
+      <div 
+        className={`rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
+          hoveredPanel === null 
+            ? 'flex-1' 
+            : hoveredPanel === 0 
+            ? 'flex-1' 
+            : 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+        }`}
+        onMouseEnter={() => setHoveredPanel(0)}
+        onMouseLeave={() => setHoveredPanel(null)}
+      >
+        <Image
+          src={images[mobileActiveImage]}
+          alt="Banner Image 1"
+          fill
+          className="object-cover opacity-90"
+          priority
         />
+        
+        {/* Mobile Navigation Arrows - Only visible on mobile */}
+        {mobileActiveImage < images.length - 1 && (
+          <button
+            onClick={() => setMobileActiveImage(mobileActiveImage + 1)}
+            className="md:hidden absolute right-4 bottom-14 z-20 bg-white bg-opacity-60 hover:bg-opacity-80 rounded-lg p-2 transition-all duration-300"
+            aria-label="Next image"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gray-800">
+              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+        
+        {mobileActiveImage > 0 && (
+          <button
+            onClick={() => setMobileActiveImage(mobileActiveImage - 1)}
+            className="md:hidden absolute left-4 bottom-14 z-20 bg-white bg-opacity-60 hover:bg-opacity-80 rounded-lg p-2 transition-all duration-300"
+            aria-label="Previous image"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gray-800">
+              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </button>
+        )}
+        
+        {/* Overlapping Text Section - First Image */}
+        <div className={`absolute bottom-16 md:bottom-12 lg:bottom-16 left-8 md:left-12 lg:left-16 z-10 max-w-xl md:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
+          ((hoveredPanel === 0 || hoveredPanel === null) && mobileActiveImage === 0) || (hoveredPanel === 0 && window.innerWidth >= 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+          <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6">
+            <span className="text-white">IT Consultancy Services</span>
+            <br />
+            <span className="text-white">that fuel your AI-powered future.</span>
+          </h1>
+          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-3 md:px-8 rounded-md transition-colors duration-300 text-sm md:text-base">
+            Get IT Consultation
+          </button>
+        </div>
+        
+        {/* Overlapping Text Section - Second Image (Mobile) */}
+        <div className={`md:hidden absolute inset-0 flex flex-col items-center justify-center px-6 md:px-8 z-10 transition-opacity duration-700 ${
+          mobileActiveImage === 1 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+          <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
+            <span className="text-white">Digital Transformation</span>
+            <br />
+            <span className="text-white">for modern businesses.</span>
+          </h1>
+          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-3 md:px-8 rounded-md transition-colors duration-300 text-sm md:text-base">
+            Explore Solutions
+          </button>
+        </div>
+        
+        {/* Overlapping Text Section - Third Image (Mobile) */}
+        <div className={`md:hidden absolute bottom-16 right-8 z-10 max-w-xl transition-opacity duration-700 ${
+          mobileActiveImage === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+          <h1 className="text-2xl font-bold leading-tight mb-4 text-right">
+            <span className="text-white">Technology Excellence</span>
+            <br />
+            <span className="text-white">delivering results.</span>
+          </h1>
+          <div className="flex justify-end">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-2 md:px-6 rounded-md transition-colors duration-300 text-sm md:text-base">
+              Learn More
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Middle tall narrow */}
-      <div className="w-[80px] md:w-[130px] lg:w-[180px] min-h-[250px] md:min-h-[350px] lg:min-h-[450px] rounded-2xl overflow-hidden shadow-lg">
-        <SVGPanel
+      <div 
+        className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
+          hoveredPanel === 1 
+            ? 'flex-1' 
+            : hoveredPanel === null
+            ? 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+            : 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+        }`}
+        onMouseEnter={() => setHoveredPanel(1)}
+        onMouseLeave={() => setHoveredPanel(null)}
+      >
+        <Image
           src={images[1]}
-          filterId="ripple-mid"
-          turbulenceRef={(el) => (turbulenceRefs.current[1] = el)}
+          alt="Banner Image 2"
+          fill
+          className="object-cover opacity-90"
+          priority
         />
+        {/* Centered Overlapping Text Section */}
+        <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 md:px-8 z-10 transition-opacity duration-700 ${
+          hoveredPanel === 1 || (mobileActiveImage === 1 && window.innerWidth < 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+          <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
+            <span className="text-white">Digital Transformation</span>
+            <br />
+            <span className="text-white">for modern businesses.</span>
+          </h1>
+          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-md transition-colors duration-300">
+            Explore Solutions
+          </button>
+        </div>
       </div>
 
       {/* Right narrow */}
-      <div className="w-[60px] md:w-[100px] lg:w-[120px] min-h-[250px] md:min-h-[350px] lg:min-h-[450px] rounded-2xl overflow-hidden shadow-lg">
-        <SVGPanel
+      <div 
+        className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
+          hoveredPanel === 2 
+            ? 'flex-1' 
+            : hoveredPanel === null
+            ? 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'
+            : 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'
+        }`}
+        onMouseEnter={() => setHoveredPanel(2)}
+        onMouseLeave={() => setHoveredPanel(null)}
+      >
+        <Image
           src={images[2]}
-          filterId="ripple-right"
-          turbulenceRef={(el) => (turbulenceRefs.current[2] = el)}
+          alt="Banner Image 3"
+          fill
+          className="object-cover opacity-90"
+          priority
         />
+        {/* Right Corner Overlapping Text Section */}
+        <div className={`absolute bottom-8 md:bottom-12 lg:bottom-16 right-8 md:right-12 lg:right-16 z-10 max-w-xl md:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
+          hoveredPanel === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+          <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-right">
+            <span className="text-white">Technology Excellence</span>
+            <br />
+            <span className="text-white">delivering results.</span>
+          </h1>
+          <div className="flex justify-end">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-md transition-colors duration-300">
+              Learn More
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Mobile Carousel Indicators - Only visible on mobile */}
+      <div className="md:hidden absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setMobileActiveImage(index)}
+            className="transition-all duration-300"
+            style={{
+              width: mobileActiveImage === index ? '24px' : '8px',
+              height: '8px',
+              borderRadius: '4px',
+              backgroundColor: mobileActiveImage === index ? '#F97316' : '#FFFFFF',
+              opacity: mobileActiveImage === index ? 1 : 0.5
+            }}
+            aria-label={`Go to image ${index + 1}`}
+          />
+        ))}
+      </div>
       </div>
     </div>
   );
 }
-
-interface SVGPanelProps {
-  src: string;
-  filterId: string;
-  turbulenceRef: (el: SVGFETurbulenceElement | null) => void;
-}
-
-function SVGPanel({ src, filterId, turbulenceRef }: SVGPanelProps) {
-  // the svg will fill the wrapper. set viewBox to maintain aspect ratio of how you want the image scaled
-  return (
-    <svg className="w-full h-full block" preserveAspectRatio="xMidYMid slice" viewBox="0 0 600 400" role="img" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id={filterId} x="-20%" y="-20%" width="140%" height="140%">
-          {/* fractalNoise creates the displacement source */}
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.001 0.05"
-            numOctaves="2"
-            stitchTiles="stitch"
-            result="turbulence"
-            ref={(el) => {
-              if (!el) return;
-              // feTurbulence doesn't accept ref in React normally. We'll attach via attribute in parent using turbulenceRef callback instead.
-            }}
-          />
-          {/* displace the image by the turbulence */}
-          <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="36" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-
-        {/* Clip path to get very rounded corners in SVG itself (helps on some browsers) */}
-        <clipPath id={`${filterId}-clip`}>
-          <rect x="0" y="0" width="100%" height="100%" rx="24" ry="24" />
-        </clipPath>
-      </defs>
-
-      {/* Background fill (in case image has transparent parts) */}
-      <rect width="100%" height="100%" fill="#f0ebe5" clipPath={`url(#${filterId}-clip)`} />
-
-      {/* The <image> element which shows your photo. The filter is applied here. */}
-      {/* Note: Some React setups may escape href — using xlinkHref is an alternative in older svg specs. */}
-      <image
-        href={src}
-        width="100%"
-        height="100%"
-        preserveAspectRatio="xMidYMid slice"
-        clipPath={`url(#${filterId}-clip)`}
-        style={{ filter: `url(#${filterId})` }}
-      />
-
-      {/* A subtle vertical stripe overlay to mimic the corrugated look (optional) */}
-      <rect width="100%" height="100%" clipPath={`url(#${filterId}-clip)`} fill="url(#stripes)" opacity="0.06" />
-
-      <defs>
-        <pattern id="stripes" width="6" height="6" patternUnits="userSpaceOnUse">
-          <rect x="0" y="0" width="3" height="6" fill="#000" />
-        </pattern>
-      </defs>
-    </svg>
-  );
-}
-
-/*
-  Extra instructions:
-  - To ensure the animation hook can access the <feTurbulence> nodes, replace the <feTurbulence> line with a manual ID and in useEffect use document.querySelector(`#${filterId} feTurbulence`). The example above uses a global animation loop writing to an array of refs; if needed adapt to querySelector in your environment.
-  - If you want sharper ridged vertical lines like in the reference, increase feDisplacementMap scale and adjust the pattern overlay opacity.
-*/
