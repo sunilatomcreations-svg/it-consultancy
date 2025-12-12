@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 
 const DEFAULT_IMAGES = [
@@ -11,11 +11,44 @@ const DEFAULT_IMAGES = [
 export default function RipplePanels({ images = DEFAULT_IMAGES }) {
   const [hoveredPanel, setHoveredPanel] = useState<number | null>(null);
   const [mobileActiveImage, setMobileActiveImage] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+  const touchCurrentX = useRef<number | null>(null);
+  const SWIPE_THRESHOLD = 50; // px
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchCurrentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchCurrentX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current === null || touchCurrentX.current === null) return;
+    const delta = touchCurrentX.current - touchStartX.current;
+    if (Math.abs(delta) > SWIPE_THRESHOLD) {
+      if (delta < 0) {
+        // swiped left -> next
+        setMobileActiveImage((prev) => Math.min(prev + 1, images.length - 1));
+      } else {
+        // swiped right -> prev
+        setMobileActiveImage((prev) => Math.max(prev - 1, 0));
+      }
+    }
+    touchStartX.current = null;
+    touchCurrentX.current = null;
+  };
 
   return (
     <div className="bg-F6F1EB w-full p-4 md:p-6 lg:p-8 mt-14 md:mt-12 mb-5 md:mb-10 relative">
       {/* Image Panels Container */}
-      <div className="flex items-stretch gap-2 md:gap-4 h-[500px] md:h-[680px] relative">
+      <div
+        className="flex items-stretch gap-2 md:gap-4 h-[500px] md:h-[680px] relative"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
       {/* Left big panel */}
       <div 
         className={`rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
