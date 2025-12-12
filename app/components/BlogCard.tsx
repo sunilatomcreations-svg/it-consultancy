@@ -2,7 +2,15 @@
 
 import { motion } from 'framer-motion';
 
-export default function BlogCard({ image, tag, title, summary, author }) {
+interface BlogCardProps {
+  image: string;
+  tag: string;
+  title: string;
+  summary: string;
+  author: string;
+}
+
+export default function BlogCard({ image, tag, title, summary, author }: BlogCardProps) {
   return (
     <motion.div 
       className="bg-white rounded-lg shadow-md overflow-hidden"

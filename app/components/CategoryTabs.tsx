@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-export default function CategoryTabs({ selected, onChange }) {
+interface CategoryTabsProps {
+  selected: string;
+  onChange: (category: string) => void;
+}
+
+export default function CategoryTabs({ selected, onChange }: CategoryTabsProps) {
   const tabs = ['All', 'Blogs', 'Guides', 'Templates'];
   return (
     <div className="mt-10 flex justify-center space-x-4">

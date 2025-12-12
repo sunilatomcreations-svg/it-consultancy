@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 import { ArrowLeft, ExternalLink, Calendar, Building, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -152,7 +153,7 @@ export default function ProjectDetail() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="font-display text-4xl font-bold mb-4">Project Not Found</h1>
-          <Link to="/portfolio">
+          <Link href="/portfolio">
             <Button className="gradient-cta text-accent-foreground rounded-full">
               Back to Portfolio
             </Button>
@@ -166,7 +167,7 @@ export default function ProjectDetail() {
     <div className="min-h-screen bg-background">
       {/* Back Button */}
       <div className="container-custom pt-8">
-        <Link to="/portfolio" className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
+        <Link href="/portfolio" className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
           <ArrowLeft size={18} />
           <span>Back to Portfolio</span>
         </Link>

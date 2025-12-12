@@ -1,4 +1,5 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "next/navigation";
+import Link from "next/link";
 import { ArrowLeft, Clock, User, Calendar, Share2, Bookmark, ThumbsUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -569,7 +570,7 @@ export default function BlogPost() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="font-display text-4xl font-bold mb-4">Article Not Found</h1>
-          <Link to="/blog">
+          <Link href="/blog">
             <Button className="gradient-cta text-accent-foreground rounded-full">
               Back to Blog
             </Button>
@@ -588,7 +589,7 @@ export default function BlogPost() {
     <div className="min-h-screen bg-background">
       {/* Back Button */}
       <div className="container-custom pt-8">
-        <Link to="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
+        <Link href="/blog" className="inline-flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors">
           <ArrowLeft size={18} />
           <span>Back to Blog</span>
         </Link>
@@ -715,7 +716,7 @@ export default function BlogPost() {
               {relatedPosts.map((relatedPost) => (
                 <Link
                   key={relatedPost.id}
-                  to={`/blog/${relatedPost.slug}`}
+                  href={`/blog/${relatedPost.slug}`}
                   className="glass-card rounded-2xl overflow-hidden group"
                 >
                   <div className="relative overflow-hidden aspect-video">

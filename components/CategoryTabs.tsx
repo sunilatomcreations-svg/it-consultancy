@@ -2,7 +2,12 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
-export default function CategoryTabs({ selected, onChange }) {
+interface CategoryTabsProps {
+  selected: string;
+  onChange: (category: string) => void;
+}
+
+export default function CategoryTabs({ selected, onChange }: CategoryTabsProps) {
   const tabs = ['All', 'Blogs', 'Guides', 'Templates'];
   return (
     <motion.div className="mt-10 flex justify-center space-x-4"
