@@ -141,6 +141,22 @@ export const serviceDetails: Record<string, ServiceDetail> = {
     description: "We develop secure, transparent blockchain solutions including smart contracts, DeFi applications, and cryptocurrency platforms that leverage distributed ledger technology for enhanced security and transparency.",
     tagline: "Building the decentralized future",
     features: ["Smart Contract Development", "DeFi Solutions", "Cryptocurrency Platforms"]
+  },
+  "Quality Assurance & Testing": {
+    id: "qa-testing",
+    title: "Quality Assurance",
+    subtitle: "& Testing",
+    description: "We provide comprehensive quality assurance and testing services including automated testing, performance testing, security testing, and manual testing to ensure your software meets the highest standards of quality and reliability.",
+    tagline: "Ensuring excellence through rigorous testing",
+    features: ["Automated Testing", "Performance Testing", "Security Testing"]
+  },
+  "E-commerce Solutions": {
+    id: "ecommerce",
+    title: "E-commerce",
+    subtitle: "Solutions",
+    description: "We build scalable, secure e-commerce platforms with seamless payment integration, inventory management, and customer experience optimization to drive online sales and business growth.",
+    tagline: "Empowering your online retail success",
+    features: ["Custom E-commerce Development", "Payment Gateway Integration", "Inventory Management Systems"]
   }
 };
 

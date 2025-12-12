@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 interface SidebarProps {
   isOpen: boolean;
@@ -8,6 +9,11 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
+  const pathname = usePathname();
+
+  const linkBase = 'text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors';
+  const activeClass = 'text-[#F97316] font-semibold';
+
   return (
     <>
       {/* Overlay */}
@@ -45,28 +51,28 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
           <nav className="flex flex-col space-y-6 flex-1">
             <Link
               href="/"
-              className="text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors"
+              className={`${linkBase} ${pathname === '/' || pathname?.startsWith('/home') ? activeClass : ''}`}
               onClick={onClose}
             >
               Home
             </Link>
             <Link
               href="/about"
-              className="text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors"
+              className={`${linkBase} ${pathname === '/about' ? activeClass : ''}`}
               onClick={onClose}
             >
               About
             </Link>
             <Link
               href="/services"
-              className="text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors"
+              className={`${linkBase} ${pathname?.startsWith('/services') ? activeClass : ''}`}
               onClick={onClose}
             >
               Services
             </Link>
             <Link
               href="/industries"
-              className="text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors"
+              className={`${linkBase} ${pathname?.startsWith('/industries') ? activeClass : ''}`}
               onClick={onClose}
             >
               Industries
@@ -77,12 +83,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             >
               Portfolio
             </a>
-            <a
-              href="#"
-              className="text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors"
+            <Link
+              href="/resources"
+              className={`${linkBase} ${pathname?.startsWith('/resources') ? activeClass : ''}`}
+              onClick={onClose}
             >
               Resources
-            </a>
+            </Link>
           </nav>
 
           {/* Contact Button */}

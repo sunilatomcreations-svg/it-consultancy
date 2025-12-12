@@ -11,15 +11,116 @@ const AIServicesHero = () => {
     "/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png",
   ];
 
+  // Map each service to an image (place images under public/home_page_assets)
+  const serviceImages: Record<string, string> = {
+    // Using Pexels direct image URLs (high-quality, free for commercial use)
+    "AI Development": "https://images.pexels.com/photos/8566474/pexels-photo-8566474.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Strategy & Advisory": "https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Autonomous Agents": "https://images.pexels.com/photos/8438951/pexels-photo-8438951.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Custom AI Solutions": "https://images.pexels.com/photos/5467590/pexels-photo-5467590.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Predictive Analysis": "https://images.pexels.com/photos/590020/pexels-photo-590020.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Visual Intelligence": "https://images.pexels.com/photos/8090143/pexels-photo-8090143.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Operational AI & MLOps": "https://images.pexels.com/photos/8566579/pexels-photo-8566579.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+    "Ethical AI Governance": "https://images.pexels.com/photos/18475682/pexels-photo-18475682.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260",
+  };
+
   const aiServices = [
     "AI Development",
-    "Strategy & Advisory", 
+    "Strategy & Advisory",
     "Autonomous Agents",
     "Custom AI Solutions",
     "Predictive Analysis",
     "Visual Intelligence",
     "Operational AI & MLOps",
     "Ethical AI Governance"
+  ];
+
+  // Cards to display in the moving strip (12 cards total)
+  const movingCards = [
+    {
+      title: 'Reactive Machines (Level 1 AI)',
+      subtitle: 'Simple AI that reacts to inputs. No memory.',
+      example: 'Example: IBM Deep Blue, basic game AIs.',
+      logo: '/1.png',
+      bullets: ['Reacts to current inputs only', 'No learning or stored memory', 'Fast, deterministic behavior']
+    },
+    {
+      title: 'Limited Memory AI (Level 2 AI)',
+      subtitle: 'Learns from past data and short-term memory.',
+      example: 'Example: ChatGPT, self-driving car models.',
+      logo: '/2.png',
+      bullets: ['Uses historical data', 'Model updates over time', 'Common in modern systems']
+    },
+    {
+      title: 'Theory of Mind AI (Level 3 AI)',
+      subtitle: 'Understands emotions, beliefs, intentions (research).',
+      example: 'Not yet fully achieved; active research area.',
+      logo: '/3.png',
+      bullets: ['Modeling human mental states', 'Requires complex reasoning', 'Mostly experimental']
+    },
+    {
+      title: 'Self-Aware AI (Level 4 AI)',
+      subtitle: 'Consciousness and self-awareness (hypothetical).',
+      example: 'Does not exist yet.',
+      logo: '/4.png',
+      bullets: ['Hypothetical', 'Raises deep ethical questions', 'Subject of long-term research']
+    },
+    {
+      title: 'Narrow AI (Weak AI)',
+      subtitle: 'Specialized for one task.',
+      example: 'Example: Face recognition, spam filters.',
+      logo: '/5.png',
+      bullets: ['Performs a single task well', 'Not generalizable', 'Widely used in industry']
+    },
+    {
+      title: 'General AI (AGI)',
+      subtitle: 'Understands and learns anything a human can.',
+      example: 'Still under development.',
+      logo: '/6.png',
+      bullets: ['Human-like flexibility', 'Research milestone', 'Significant technical challenges']
+    },
+    {
+      title: 'Superintelligent AI (ASI)',
+      subtitle: 'Surpasses human intelligence (hypothetical).',
+      example: 'Futuristic concept.',
+      logo: '/7.png',
+      bullets: ['Greater-than-human capabilities', 'Ethical/safety concerns', 'Long-term speculation']
+    },
+    {
+      title: 'Machine Learning',
+      subtitle: 'Systems that learn from data.',
+      example: 'Includes supervised, unsupervised, reinforcement learning.',
+      logo: '/8.png',
+      bullets: ['Learns patterns from examples', 'Requires labeled or unlabeled data', 'Basis for many AI systems']
+    },
+    {
+      title: 'Deep Learning',
+      subtitle: 'Neural networks with many layers.',
+      example: 'Used for vision, NLP, audio, etc.',
+      logo: '/9.png',
+      bullets: ['High-capacity models', 'Needs lots of data', 'Drives state-of-the-art results']
+    },
+    {
+      title: 'Natural Language Processing (NLP)',
+      subtitle: 'Understands and generates human language.',
+      example: 'Chatbots, summarization, translation.',
+      logo: '/10.png',
+      bullets: ['Text understanding and generation', 'Semantic & syntactic modeling', 'Key to many AI apps']
+    },
+    {
+      title: 'Computer Vision',
+      subtitle: 'Interprets images and video.',
+      example: 'Object detection, image segmentation.',
+      logo: '/11.png',
+      bullets: ['Image feature learning', 'Detection & recognition', 'Used in quality control, safety']
+    },
+    {
+      title: 'Robotics / Autonomous Systems',
+      subtitle: 'Robots, drones, and automation systems.',
+      example: 'Factory automation, autonomous vehicles.',
+      logo: '/12.png',
+      bullets: ['Physical actuation & sensing', 'Planning and control', 'Integrates many AI subsystems']
+    }
   ];
 
   const serviceContent = {
@@ -79,36 +180,33 @@ const AIServicesHero = () => {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-orange-50 to-purple-50 overflow-hidden">
-      {/* Static Panels Section */}
-      <div className="bg-[#F6F1EB] w-full min-h-[380px] p-6 flex items-stretch justify-between gap-4">
-         <div className="w-[180px] rounded-2xl overflow-hidden shadow-lg">
-          <img
-            src={aiImages[1]}
-            alt="AI Services"
-            className="w-full h-full object-cover"
-          />
-        </div>
-           {/* Right narrow */}
-        <div className="w-[120px] rounded-2xl overflow-hidden shadow-lg">
-          <img
-            src={aiImages[2]}
-            alt="AI Services"
-            className="w-full h-full object-cover"
-          />
-        </div>
-        {/* Left big panel */}
-        <div className="flex-1 rounded-2xl overflow-hidden shadow-lg">
-          <img
-            src={aiImages[0]}
-            alt="AI Services"
-            className="w-full h-full object-cover"
-          />
-        </div>
+      {/* Replaced Banner */}
+      <div
+        className="rounded-lg hero-section w-full max-w-[1500px] h-[300px] md:h-[450px] flex items-center pl-4 md:pl-[60px] relative mx-auto"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right, rgba(255,255,255,0.9) 20%, rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="absolute right-0 top-0 h-full w-[30%] md:w-[55%] opacity-75"
+          style={{
+            background:
+              "repeating-linear-gradient(90deg, rgba(255,128,0,0.8) 0px, rgba(255,128,0,0.7) 20px, rgba(245,100,0,0.7) 40px)",
+          }}
+        ></div>
 
-        {/* Middle tall narrow */}
-       
-
-     
+        <div className="hero-text max-w-[90%] md:max-w-[600px] z-10 text-gray-900">
+          <h1 className="text-2xl md:text-3xl lg:text-[48px] font-extrabold leading-[1.1] text-gray-900">
+            <span className="text-[#ff3a2e]">AI Development Services</span> that fuel your AI-powered future.
+          </h1>
+          <p className="mt-3 md:mt-5 text-sm md:text-base lg:text-[18px] text-gray-800">
+            A trusted <strong>AI development company</strong>, we bring deep expertise in
+            all AI domains, turning innovative visions into scalable, real-world
+            solutions.
+          </p>
+        </div>
       </div>
 
       {/* Background Pattern */}
@@ -158,9 +256,19 @@ const AIServicesHero = () => {
                 opacity: '0.1'
               }}
             />
-            
-            {/* Wavy Pattern Overlay */}
-            <div className="absolute inset-0 opacity-30">
+
+            {/* Image that changes with selected service */}
+            <div className="absolute inset-0">
+              <img
+                src={serviceImages[selectedService] ?? aiImages[0]}
+                alt={selectedService}
+                className="w-full h-full object-cover transition-transform duration-700 ease-in-out transform"
+                style={{ filter: 'contrast(1.02) saturate(0.95)' }}
+              />
+            </div>
+
+            {/* Wavy Pattern Overlay (kept on top) */}
+            <div className="absolute inset-0 opacity-30 pointer-events-none">
               <svg 
                 className="w-full h-full object-cover" 
                 viewBox="0 0 400 400" 
@@ -168,24 +276,24 @@ const AIServicesHero = () => {
                 preserveAspectRatio="xMidYMid slice"
               >
                 <defs>
-                  <pattern id="waves" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <pattern id="waves-hero" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
                     <path 
                       d="M0 20 Q10 10 20 20 T40 20" 
                       stroke="#F97316" 
                       strokeWidth="2" 
                       fill="none" 
-                      opacity="0.3"
+                      opacity="0.12"
                     />
                     <path 
                       d="M0 30 Q10 20 20 30 T40 30" 
                       stroke="#6B2259" 
                       strokeWidth="1.5" 
                       fill="none" 
-                      opacity="0.2"
+                      opacity="0.08"
                     />
                   </pattern>
                 </defs>
-                <rect width="100%" height="100%" fill="url(#waves)" />
+                <rect width="100%" height="100%" fill="url(#waves-hero)" />
               </svg>
             </div>
           </div>
@@ -198,7 +306,7 @@ const AIServicesHero = () => {
             <div className="space-y-6">
               {/* Title */}
               <h2 
-                className="text-4xl md:text-5xl font-bold leading-tight"
+                className="text-2xl md:text-5xl font-bold leading-tight"
                 style={{
                   fontFamily: 'DM Sans, sans-serif',
                   fontWeight: '700'
@@ -209,10 +317,9 @@ const AIServicesHero = () => {
 
               {/* Description */}
               <p 
-                className="text-white/90 text-lg leading-relaxed"
+                className="text-white/90 text-base md:text-lg leading-relaxed"
                 style={{
                   fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '18px',
                   lineHeight: '1.6'
                 }}
               >
@@ -221,10 +328,9 @@ const AIServicesHero = () => {
 
               {/* Tagline */}
               <p 
-                className="text-orange-300 text-lg font-medium italic"
+                className="text-orange-300 text-sm md:text-lg font-medium italic"
                 style={{
-                  fontFamily: 'DM Sans, sans-serif',
-                  fontSize: '16px'
+                  fontFamily: 'DM Sans, sans-serif'
                 }}
               >
                 {serviceContent[selectedService as keyof typeof serviceContent].tagline}
@@ -261,11 +367,10 @@ const AIServicesHero = () => {
                       className="flex items-center space-x-3"
                     >
                       <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                      <span 
-                        className="text-white/90"
+                        <span 
+                        className="text-white/90 text-sm md:text-base"
                         style={{
-                          fontFamily: 'DM Sans, sans-serif',
-                          fontSize: '16px'
+                          fontFamily: 'DM Sans, sans-serif'
                         }}
                       >
                         {feature}
@@ -281,7 +386,7 @@ const AIServicesHero = () => {
 
       {/* Moving Orange Divs Section */}
       <div className="relative w-full h-52 overflow-hidden bg-transparent mt-8">
-        <style jsx>{`
+        <style jsx global>{`
           @keyframes slideLeftInfinite {
             0% {
               transform: translateX(0);
@@ -296,61 +401,47 @@ const AIServicesHero = () => {
           <div 
             className="flex space-x-6"
             style={{
-              animation: 'slideLeftInfinite 30s linear infinite',
-              width: 'max-content'
+              animation: 'slideLeftInfinite 40s linear infinite',
+              width: '9333px'
             }}
           >
-            {/* First set of divs with fixed dimensions */}
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            
-            {/* Duplicate set for seamless infinite loop */}
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
-            <div 
-              className="rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 flex-shrink-0 shadow-lg"
-              style={{ width: '365.22px', height: '200px' }}
-            ></div>
+            {[...movingCards, ...movingCards].map((card, idx) => (
+              <div
+                key={idx}
+                className="rounded-2xl bg-white flex-shrink-0 shadow-lg overflow-hidden"
+                style={{ width: '365.22px', height: '200px' }}
+              >
+                <div className="p-4 h-full flex flex-col" style={{ boxSizing: 'border-box' }}>
+                  <div className="flex items-start gap-3">
+                    <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden p-1">
+                      {card.logo ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={card.logo}
+                          alt={`${card.title} logo`}
+                          className="object-contain"
+                          style={{ display: 'block', maxWidth: '155%', maxHeight: '255%' }}
+                        />
+                      ) : (
+                        <span className="text-gray-400 text-sm">Logo</span>
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-sm md:text-base font-semibold text-gray-900">{card.title}</h4>
+                      <p className="text-xs md:text-sm text-gray-600">{card.subtitle}</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-2 text-xs md:text-sm text-gray-700">{card.example}</p>
+
+                  <ul className="mt-2 text-xs md:text-sm text-gray-700 space-y-1 list-inside" style={{ paddingLeft: 8 }}>
+                    {card.bullets.map((b, i) => (
+                      <li key={i}>• {b}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -360,10 +451,9 @@ const AIServicesHero = () => {
         <div className="max-w-7xl mx-auto">
           {/* Title */}
           <h2 
-            className="text-center mb-12 text-gray-900"
+            className="text-center mb-12 text-gray-900 text-2xl md:text-[48px]"
             style={{
               fontFamily: 'DM Sans, sans-serif',
-              fontSize: '48px',
               fontWeight: '600',
               lineHeight: '1.2'
             }}
@@ -374,16 +464,17 @@ const AIServicesHero = () => {
           </h2>
 
           {/* Grid of Solutions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center max-w-6xl mx-auto">
             {/* FinTech Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="FinTech AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
@@ -392,240 +483,284 @@ const AIServicesHero = () => {
                   FinTech
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI enables predictive analytics for fraud detection, personalized financial recommendations, and automated trading systems.
                 </p>
               </div>
             </div>
 
+            {/* HealthTech Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="HealthTech AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  HealthTech
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI-driven diagnostics, personalized treatment plans, and predictive health monitoring for improved patient outcomes.
                 </p>
               </div>
             </div>
 
+            {/* Retail Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Retail AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Retail
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI-powered inventory management, customer behavior analysis, and dynamic pricing for enhanced retail experiences.
                 </p>
               </div>
             </div>
 
-            {/* Second Row */}
+            {/* Manufacturing Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Manufacturing AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Manufacturing
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI optimizes supply chains, predictive maintenance, and quality control for efficient production processes.
                 </p>
               </div>
             </div>
 
+            {/* Education Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Education AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Education
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI enhances personalized learning, adaptive assessments, and intelligent tutoring systems for better education.
                 </p>
               </div>
             </div>
 
+            {/* Transportation Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/2127733/pexels-photo-2127733.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Transportation AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Transportation
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI enables autonomous vehicles, route optimization, and predictive maintenance for smarter transportation.
                 </p>
               </div>
             </div>
 
-            {/* Third Row */}
+            {/* Energy Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Energy AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Energy
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI optimizes energy consumption, predictive analytics for grid management, and renewable energy forecasting.
                 </p>
               </div>
             </div>
 
+            {/* Real Estate Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Real Estate AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Real Estate
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI-driven property valuation, market analysis, and virtual tours for enhanced real estate experiences.
                 </p>
               </div>
             </div>
 
+            {/* Entertainment Solutions */}
             <div className="space-y-2 mb-8">
-              <div 
-                className="w-20 h-20 rounded-lg bg-orange-500"
-                style={{ backgroundColor: '#F97316' }}
-              ></div>
+              <img
+                src="https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Entertainment AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
               <div>
                 <h3 
-                  className="text-xl font-semibold text-gray-900 mb-3"
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     fontWeight: '600'
                   }}
                 >
-                  FinTech
+                  Entertainment
                 </h3>
                 <p 
-                  className="text-gray-600 text-sm"
+                  className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
                     lineHeight: '1.2',
                     maxWidth: '200px'
                   }}
                 >
-                  Enables real-time demand forecasting, dynamic pricing, and personalized product recommendations.A
+                  AI creates personalized content recommendations, generative art, and immersive experiences in entertainment.
+                </p>
+              </div>
+            </div>
+
+            {/* Insurance Solutions - Mobile Only */}
+            <div className="space-y-2 mb-8 block md:hidden">
+              <img
+                src="https://images.pexels.com/photos/3184293/pexels-photo-3184293.jpeg?auto=compress&cs=tinysrgb&w=400"
+                alt="Insurance AI Solutions"
+                className="w-20 h-20 rounded-lg object-cover"
+              />
+              <div>
+                <h3 
+                  className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
+                  style={{
+                    fontFamily: 'DM Sans, sans-serif',
+                    fontWeight: '600'
+                  }}
+                >
+                  Insurance
+                </h3>
+                <p 
+                  className="text-gray-600 text-sm md:text-base"
+                  style={{
+                    fontFamily: 'DM Sans, sans-serif',
+                    lineHeight: '1.2',
+                    maxWidth: '200px'
+                  }}
+                >
+                  AI enhances risk assessment, claims processing, and fraud detection in the insurance industry.
                 </p>
               </div>
             </div>
@@ -638,10 +773,9 @@ const AIServicesHero = () => {
         <div className="max-w-9xl mx-auto">
           {/* Title */}
           <h2 
-            className="text-center mb-12 text-gray-900"
+            className="text-center mb-12 text-gray-900 text-2xl md:text-[48px]"
             style={{
               fontFamily: 'DM Sans, sans-serif',
-              fontSize: '48px',
               fontWeight: '600',
               lineHeight: '1.2'
             }}
@@ -650,47 +784,49 @@ const AIServicesHero = () => {
             Your Transformation.
           </h2>
 
+          <style jsx>{`
+            @media (max-width: 1023px) {
+              .ai-amplified-grid {
+                display: grid;
+                grid-template-areas: "left right" "center center";
+                gap: 1rem;
+                justify-items: center;
+              }
+              .left-col { grid-area: left; }
+              .center-img { grid-area: center; }
+              .right-img { grid-area: right; }
+            }
+          `}</style>
+
           {/* Grid Layout */}
-          <div className="flex justify-center items-center gap-4">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-4 ai-amplified-grid">
             {/* Left Column - Two stacked rectangles */}
-            <div className="flex flex-col gap-2">
-              <div 
-                className="rounded-2xl"
-                style={{ 
-                  backgroundColor: '#F97316',
-                  width: '300px',
-                  height: '300px'
-                }}
-              ></div>
-              <div 
-                className="rounded-2xl"
-                style={{ 
-                  backgroundColor: '#F97316',
-                  width: '300px',
-                  height: '300px'
-                }}
-              ></div>
+            <div className="flex flex-col gap-2 left-col">
+              <img
+                src="/Screenshot 2025-12-10 234726.png"
+                alt="AI Amplified 1"
+                className="rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
+              />
+              <img
+                src="/Screenshot 2025-12-10 234811.png"
+                alt="AI Amplified 2"
+                className="rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
+              />
             </div>
 
             {/* Center Rectangle - Large */}
-            <div 
-              className="rounded-2xl"
-              style={{ 
-                backgroundColor: '#F97316',
-                width: '600px',
-                height: '600px'
-              }}
-            ></div>
+            <img
+              src="/Screenshot 2025-12-10 234832.png"
+              alt="AI Amplified 3"
+              className="rounded-2xl object-cover w-116 h-80 lg:w-[600px] lg:h-[600px] center-img"
+            />
 
             {/* Right Rectangle - Tall */}
-            <div 
-              className="rounded-2xl"
-              style={{ 
-                backgroundColor: '#F97316',
-                width: '300px',
-                height: '600px'
-              }}
-            ></div>
+            <img
+              src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400"
+              alt="AI Amplified 4"
+              className="rounded-2xl object-cover w-64 h-128 lg:w-[300px] lg:h-[600px] right-img"
+            />
           </div>
         </div>
       </div>

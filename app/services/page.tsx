@@ -20,17 +20,69 @@ const ServicesPage = () => {
         
         {/* Services Section */}
         <OurServices />
-        <Servicesdetails />
-
-        {/* Service Testimonials Section */}
+        
+        {/* AI Development Services */}
+        <Servicesdetails serviceName="AI Development Services" />
         <ServiceTestimonial />
-        <Servicesdetails />
 
-        {/* Service Testimonials Section */}
+        {/* App Development */}
+        <Servicesdetails serviceName="App Development" />
         <ServiceTestimonial />
-        <Servicesdetails />
 
-        {/* Service Testimonials Section */}
+        {/* Software Development */}
+        <Servicesdetails serviceName="Software Development" />
+        <ServiceTestimonial />
+
+        {/* Digital Transformation */}
+        <Servicesdetails serviceName="Digital Transformation" />
+        <ServiceTestimonial />
+
+        {/* Ideation and Design Strategy */}
+        <Servicesdetails serviceName="Ideation and Design Strategy" />
+        <ServiceTestimonial />
+
+        {/* IT Consultancy */}
+        <Servicesdetails serviceName="IT Consultancy" />
+        <ServiceTestimonial />
+
+        {/* DevOps */}
+        <Servicesdetails serviceName="DevOps" />
+        <ServiceTestimonial />
+
+        {/* Cloud Managed Services */}
+        <Servicesdetails serviceName="Cloud Managed Services" />
+        <ServiceTestimonial />
+
+        {/* Web Development */}
+        <Servicesdetails serviceName="Web Development" />
+        <ServiceTestimonial />
+
+        {/* Cybersecurity Solutions */}
+        <Servicesdetails serviceName="Cybersecurity Solutions" />
+        <ServiceTestimonial />
+
+        {/* Data Analytics */}
+        <Servicesdetails serviceName="Data Analytics" />
+        <ServiceTestimonial />
+
+        {/* Digital Marketing */}
+        <Servicesdetails serviceName="Digital Marketing" />
+        <ServiceTestimonial />
+
+        {/* UI/UX Design */}
+        <Servicesdetails serviceName="UI/UX Design" />
+        <ServiceTestimonial />
+
+        {/* Blockchain Development */}
+        <Servicesdetails serviceName="Blockchain Development" />
+        <ServiceTestimonial />
+
+        {/* Quality Assurance & Testing */}
+        <Servicesdetails serviceName="Quality Assurance & Testing" />
+        <ServiceTestimonial />
+
+        {/* E-commerce Solutions */}
+        <Servicesdetails serviceName="E-commerce Solutions" />
         <ServiceTestimonial />
         
         {/* FAQ Section */}

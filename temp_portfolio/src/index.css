@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 270 20% 98%;
+    --foreground: 315 52% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 315 52% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 315 52% 15%;
+
+    --primary: 315 52% 28%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 30% 95%;
+    --secondary-foreground: 315 52% 28%;
+
+    --muted: 270 20% 94%;
+    --muted-foreground: 315 30% 45%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 270 20% 90%;
+    --input: 270 20% 90%;
+    --ring: 315 52% 28%;
+
+    --radius: 1rem;
+
+    /* Custom theme colors */
+    --brand-purple: 315 52% 28%;
+    --brand-purple-light: 315 40% 45%;
+    --brand-orange: 25 95% 53%;
+    --brand-orange-light: 25 95% 65%;
+    --gradient-start: 25 95% 53%;
+    --gradient-end: 315 52% 28%;
+    
+    /* Glassmorphism */
+    --glass-bg: 0 0% 100% / 0.7;
+    --glass-border: 0 0% 100% / 0.3;
+  }
+
+  .dark {
+    --background: 315 40% 8%;
+    --foreground: 270 20% 98%;
+
+    --card: 315 35% 12%;
+    --card-foreground: 270 20% 98%;
+
+    --popover: 315 35% 12%;
+    --popover-foreground: 270 20% 98%;
+
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 315 30% 18%;
+    --secondary-foreground: 270 20% 98%;
+
+    --muted: 315 25% 20%;
+    --muted-foreground: 270 15% 70%;
+
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 315 25% 20%;
+    --input: 315 25% 20%;
+    --ring: 25 95% 53%;
+
+    --glass-bg: 315 35% 12% / 0.8;
+    --glass-border: 315 35% 20% / 0.5;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-accent/20 via-background to-primary/20;
+  }
+
+  .gradient-cta {
+    @apply bg-gradient-to-r from-accent to-primary;
+  }
+
+  .glass {
+    @apply backdrop-blur-xl bg-card/70 border border-border/50;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-lg bg-card/80 border border-border/30 shadow-xl;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}

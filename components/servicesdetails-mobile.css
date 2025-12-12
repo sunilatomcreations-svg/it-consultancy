@@ -1,0 +1,54 @@
+  .slide-in-left-btn,
+  .slide-in-left-desc {
+    animation: slideInLeftBtn 1.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  }
+  @keyframes slideInLeftBtn {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+@media (max-width: 767px) {
+  .servicesdetails-mobile {
+    padding-left: 24px !important;
+  }
+  .servicesdetails-mobile-right {
+    text-align: right !important;
+    overflow: hidden;
+  }
+  .servicesdetails-mobile-btn {
+    justify-content: flex-end !important;
+    display: flex !important;
+  }
+  .servicesdetails-mobile-grid {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .servicesdetails-mobile-right {
+    order: 1 !important;
+  }
+   .servicesdetails-mobile-left {
+     order: 2 !important;
+     text-align: left !important;
+    padding-right: 140px !important;
+  }
+}
+.slide-in-right-all {
+  animation: slideInRightAll 1.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  display: inline-block;
+}
+@keyframes slideInRightAll {
+  0% {
+    transform: translateX(150%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+  

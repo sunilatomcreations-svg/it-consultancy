@@ -76,7 +76,7 @@ const Footer = () => {
   };
 
   return (
-    <div className="relative mx-0 md:mx-4 lg:mx-6 my-0 md:my-2 min-h-[500px]">
+    <div className="relative mx-0 md:mx-4 lg:mx-6 my-0 md:my-2 min-h-[500px] bg-[#F6F1EB]">
       {/* Purple background for mobile */}
       <div className="md:hidden absolute inset-0 bg-[#6B2259]"></div>
       

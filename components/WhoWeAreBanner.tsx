@@ -11,6 +11,7 @@ export default function WhoWeAreBanner() {
   });
   const [hasAnimated, setHasAnimated] = useState(false);
   const statsRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -89,19 +90,37 @@ export default function WhoWeAreBanner() {
     return () => observer.disconnect();
   }, [hasAnimated]);
 
+  useEffect(() => {
+    // Ensure video plays
+    if (videoRef.current) {
+      videoRef.current.play().catch(err => console.error('Video play failed:', err));
+    }
+  }, []);
+
   return (
     <div className="relative w-full">
       {/* Hero Banner Section */}
       <div 
-        className="relative h-[400px] md:h-[550px] bg-cover bg-center bg-no-repeat rounded-lg mx-4 md:mx-8 mb-8 md:mb-16 overflow-hidden"
-        style={{
-          backgroundImage: "url('/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png')"
-        }}
+        className="relative h-[400px] md:h-[550px] rounded-lg mx-4 md:mx-8 mb-8 md:mb-16 overflow-hidden"
       >
+        {/* Video Background */}
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover opacity-100"
+          onError={(e) => console.error('Video failed to load:', e)}
+          onLoadedData={() => console.log('Video loaded successfully')}
+        >
+          <source src="https://res.cloudinary.com/dae90vgu0/video/upload/v1765310271/3255390-uhd_3840_2160_25fps_bs2e9e.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-40"  style={{
-          backgroundImage: "url('/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png')"
-        }}></div>
+
         
         {/* Content */}
         <div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 md:px-8">

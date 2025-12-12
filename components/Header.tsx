@@ -2,9 +2,17 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Sidebar from './Sidebar';
+import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const pathname = usePathname();
+
+  const linkBase = 'hover:text-gray-800 font-medium';
+  const activeClass = 'text-[#F97316] font-semibold';
+
+  const linkClass = (match: boolean | undefined) => `${linkBase} ${match ? activeClass : 'text-gray-800'}`;
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -39,15 +47,14 @@ const Header = () => {
 
             {/* Navigation Menu */}
             <div className="hidden md:flex items-center space-x-4">
-              
               {/* Home Link */}
-              <Link href="/" className="text-black hover:text-gray-800 font-medium">
+              <Link href="/" className={linkClass(pathname === '/' || pathname?.startsWith('/home')) }>
                 Home
               </Link>
 
               {/* About Dropdown */}
               <div className="relative group">
-                <Link href="/about" className="flex items-center text-black hover:text-gray-800 font-medium">
+                <Link href="/about" className={`flex items-center ${linkClass(pathname?.startsWith('/about'))}`}>
                   About
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -56,34 +63,26 @@ const Header = () => {
               </div>
 
               {/* Services Link */}
-              <Link href="/services" className="text-black hover:text-gray-800 font-medium">
+              <Link href="/services" className={linkClass(pathname?.startsWith('/services'))}>
                 Services
               </Link>
 
               {/* Industries Link */}
-              <Link href="/industries" className="text-black hover:text-gray-800 font-medium">
+              <Link href="/industries" className={linkClass(pathname?.startsWith('/industries'))}>
                 Industries
               </Link>
 
               {/* Portfolio Dropdown */}
-              <div className="relative group">
-                <button className="flex items-center text-black hover:text-gray-800 font-medium">
-                  Portfolio
-                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
-
-              {/* Resources Dropdown */}
-              <div className="relative group">
-                <button className="flex items-center text-black hover:text-gray-800 font-medium">
-                  Resources
-                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-              </div>
+              <Link href="/portfolio" className={linkClass(pathname?.startsWith('/portfolio'))}>
+                Portfolio
+              </Link>
+              {/* Resources Link */}
+              <Link
+                href="/resources"
+                className={linkClass(pathname?.startsWith('/resources'))}
+              >
+                Resources
+              </Link>
 
               {/* Contact Button */}
               <div className="relative">
@@ -95,7 +94,7 @@ const Header = () => {
                 >
                   <path d="M4,0 L96,0 L100,4 L100,28 L96,32 L4,32 L0,28 L0,4 Z" />
                 </svg>
-                <Link href="/contact" className="relative z-10 px-6 py-1 text-white font-semibold hover:opacity-90 transition-opacity block">
+                <Link href="/contact" className={`relative z-10 px-6 py-1 text-white font-semibold hover:opacity-90 transition-opacity block ${pathname === '/contact' ? 'ring-2 ring-offset-1 ring-[#F97316]' : ''}`}>
                   Contact
                 </Link>
               </div>

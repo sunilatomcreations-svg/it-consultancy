@@ -7,9 +7,9 @@ import Industriesanimations from '@/components/Industriesanimations';
 
 export default function IndustriesPage() {
   return (
-    <main>
+    <main className='bg-[#F6F1EB]'>
       <Header />
-      <div style={{ paddingTop: '70px' }}><WhoWeAre /></div>
+      <div style={{ paddingTop: '70px' }} className='bg-[#F6F1EB]'><WhoWeAre /></div>
         <Industries />
       <Industriesanimations />
       

@@ -56,6 +56,11 @@ const OurServices = () => {
     const serviceDetail = serviceDetails[serviceTitle];
     if (serviceDetail) {
       setSelectedService(serviceDetail);
+      // Scroll to the service section
+      const element = document.getElementById(serviceDetail.id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   };
   

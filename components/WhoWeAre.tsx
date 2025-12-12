@@ -222,20 +222,16 @@ const WhoWeAre = () => {
           {/* Right Side - Image and Team Section */}
           <div className="flex flex-col gap-0">
             {/* Top Half - Image */}
-            <div className="h-[250px] md:h-[300px] rounded-t-3xl overflow-hidden relative">
+            <div className="h-[250px] md:h-[300px] rounded-t-3xl overflow-hidden relative flex items-center justify-center">
               <Image
-                src="/home_page_assets/1e487d84c290c40e1af587b4ecb02a2f7d915255 (1).png"
+                src="/70730ab86b76f312c94261995a5a5f645367a125 (1).png"
                 alt="Who We Are Image"
-                width={600}
-                height={300}
-                className="w-full h-full object-cover"
+                width={375}
+                height={375}
+                className="object-cover max-h-[450px]"
               />
               {/* Logo Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
-                <h2 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold" style={{ fontFamily: 'DM Sans, sans-serif' }}>
-                  LOGO
-                </h2>
-              </div>
+             
             </div>
 
             {/* Bottom Half - Team Avatars */}
@@ -251,6 +247,14 @@ const WhoWeAre = () => {
               >
                 Small Team<br />Big Results
               </h3>
+
+              {/* Foggy Effect Overlays */}
+              <div className="absolute inset-0 pointer-events-none z-20">
+                {/* Left Fog */}
+                <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-gray-100 via-gray-100/90 via-gray-100/60 via-gray-100/30 to-transparent"></div>
+                {/* Right Fog */}
+                <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-gray-100 via-gray-100/90 via-gray-100/60 via-gray-100/30 to-transparent"></div>
+              </div>
 
               {/* Sliding Avatars Animation */}
               <style dangerouslySetInnerHTML={{__html: `

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Image from 'next/image';
+import "../styles/servicetestimonial-mobile.css";
 
 const ServiceTestimonial = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,12 +56,12 @@ const ServiceTestimonial = () => {
         <div className="relative">
           {/* Purple background panel */}
           <div 
-            className="rounded-3xl p-12"
+            className="rounded-3xl p-12 servicetestimonial-purple-mobile"
             style={{ backgroundColor: '#6B2259' }}
           >
             {/* Title */}
             <h2 
-              className="text-center text-white mb-12"
+              className="text-center text-white mb-12 servicetestimonial-heading-mobile"
               style={{
                 fontFamily: 'DM Sans, sans-serif',
                 fontSize: '48px',
@@ -118,28 +119,38 @@ const ServiceTestimonial = () => {
                   return (
                     <div
                       key={testimonial.id}
-                      className="absolute rounded-3xl flex flex-col"
+                      className={`absolute rounded-3xl flex flex-col servicetestimonial-card-mobile${position === 0 ? ' servicetestimonial-card-center-mobile' : ''}`}
                       style={{ 
                         backgroundColor: '#F6F1EB',
                         width: width,
                         height: height,
                         padding: position === 0 ? '32px' : '24px',
                         zIndex: zIndex,
-                        transform: `translateX(${translateX}px) scale(${scale})`,
                         opacity: opacity,
                         transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)',
                         top: '50%',
                         left: '50%',
-                        marginLeft: position === 0 ? '-350px' : '-190px',
                         marginTop: position === 0 ? '-250px' : '-175px',
                         transformOrigin: 'center center',
                         willChange: 'transform, opacity',
                         backfaceVisibility: 'hidden',
-                        WebkitFontSmoothing: 'antialiased'
+                        WebkitFontSmoothing: 'antialiased',
+                        // Center the middle card for mobile screens
+                        ...(position === 0 ? {
+                          transform: typeof window !== 'undefined' && window.innerWidth <= 640
+                            ? 'translate(-50%, -50%) scale(1)'
+                            : `translateX(${translateX}px) scale(${scale})`,
+                          marginLeft: typeof window !== 'undefined' && window.innerWidth <= 640
+                            ? '0'
+                            : '-350px',
+                        } : {
+                          transform: `translateX(${translateX}px) scale(${scale})`,
+                          marginLeft: '-190px',
+                        })
                       }}
                     >
                       <p 
-                        className="text-gray-800 mb-4 leading-relaxed flex-1 overflow-hidden"
+                        className="text-gray-800 mb-4 leading-relaxed flex-1 overflow-hidden servicetestimonial-quote-mobile"
                         style={{
                           fontFamily: 'DM Sans, sans-serif',
                           fontSize: '16px',
@@ -152,7 +163,9 @@ const ServiceTestimonial = () => {
                           WebkitFontSmoothing: 'antialiased'
                         }}
                       >
-                        "{testimonial.quote}"
+                        {typeof window !== 'undefined' && window.innerWidth <= 640
+                          ? `"${testimonial.quote.slice(0, Math.floor(testimonial.quote.length * 0.75))}..."`
+                          : `"${testimonial.quote}"`}
                       </p>
                       <div className="flex items-center gap-3 mt-auto">
                         <Image 
@@ -164,7 +177,7 @@ const ServiceTestimonial = () => {
                         />
                         <div>
                           <div 
-                            className="font-semibold text-gray-900" 
+                            className="font-semibold text-gray-900 servicetestimonial-author-mobile" 
                             style={{ 
                               fontFamily: 'DM Sans, sans-serif', 
                               fontSize: '18px'
@@ -173,7 +186,7 @@ const ServiceTestimonial = () => {
                             {testimonial.author}
                           </div>
                           <div 
-                            className="text-gray-600" 
+                            className="text-gray-600 servicetestimonial-position-mobile" 
                             style={{ 
                               fontFamily: 'DM Sans, sans-serif', 
                               fontSize: '16px'
@@ -190,7 +203,7 @@ const ServiceTestimonial = () => {
             </div>
 
             {/* Navigation Arrows */}
-            <div className="flex justify-center gap-4 mt-12">
+            <div className="flex justify-center gap-4 mt-12 servicetestimonial-nav-mobile">
               <button 
                 onClick={prevSlide}
                 className="w-12 h-12 rounded flex items-center justify-center text-white hover:opacity-80 cursor-pointer transition-opacity"

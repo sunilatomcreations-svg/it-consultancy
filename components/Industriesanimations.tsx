@@ -2,7 +2,7 @@ import React from 'react';
 
 const Industriesanimations = () => {
   return (
-    <div className="w-full px-2 md:px-4 py-4 md:py-8">
+    <div className="w-full px-2 md:px-4 py-4 md:py-8 bg-[#F6F1EB]">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 w-full">
         
         {/* Column 1 - 4 divs */}

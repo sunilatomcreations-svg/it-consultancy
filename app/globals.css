@@ -1,47 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: 270 20% 98%;
+  --foreground: 315 52% 15%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 315 52% 15%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 315 52% 15%;
+
+  --primary: 315 52% 28%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 270 30% 95%;
+  --secondary-foreground: 315 52% 28%;
+
+  --muted: 270 20% 94%;
+  --muted-foreground: 315 30% 45%;
+
+  --accent: 25 95% 53%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 270 20% 90%;
+  --input: 270 20% 90%;
+  --ring: 315 52% 28%;
+
+  --radius: 1rem;
+
+  /* Custom theme colors */
+  --brand-purple: 315 52% 28%;
+  --brand-purple-light: 315 40% 45%;
+  --brand-orange: 25 95% 53%;
+  --brand-orange-light: 25 95% 65%;
+  --gradient-start: 25 95% 53%;
+  --gradient-end: 315 52% 28%;
+  
+  /* Glassmorphism */
+  --glass-bg: 0 0% 100% / 0.7;
+  --glass-border: 0 0% 100% / 0.3;
+}
+
+.dark {
+  --background: 315 40% 8%;
+  --foreground: 270 20% 98%;
+
+  --card: 315 35% 12%;
+  --card-foreground: 270 20% 98%;
+
+  --popover: 315 35% 12%;
+  --popover-foreground: 270 20% 98%;
+
+  --primary: 25 95% 53%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 315 30% 18%;
+  --secondary-foreground: 270 20% 98%;
+
+  --muted: 315 25% 20%;
+  --muted-foreground: 270 15% 70%;
+
+  --accent: 25 95% 53%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 62.8% 45%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 315 25% 20%;
+  --input: 315 25% 20%;
+  --ring: 25 95% 53%;
+
+  --glass-bg: 315 35% 12% / 0.8;
+  --glass-border: 315 35% 20% / 0.5;
 }
 
 * {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  border-color: hsl(var(--border));
 }
 
 html {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: #F6F1EB;
-  color: var(--foreground);
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  @apply bg-background text-foreground font-sans antialiased;
+  font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+@layer utilities {
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent;
+  }
+
+  .gradient-bg {
+    @apply bg-gradient-to-br from-accent/20 via-background to-primary/20;
+  }
+
+  .gradient-cta {
+    @apply bg-gradient-to-r from-accent to-primary;
+  }
+
+  .glass {
+    @apply backdrop-blur-xl bg-card/70 border border-border/50;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-lg bg-card/80 border border-border/30 shadow-xl;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
 }
 
-p, span, div, a, button, input, textarea, select, label, li, td, th {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
+@layer components {
+  .section-padding {
+    @apply py-20 md:py-28 lg:py-32;
+  }
 
-/* Override any utility classes */
-.font-sans {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-}
-
-/* Override any custom fonts */
-[class*="font-"], [style*="font-family"] {
-  font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
 }
 
 /* Custom Smooth Chamfer Shape */
