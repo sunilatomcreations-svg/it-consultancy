@@ -77,12 +77,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             >
               Industries
             </Link>
-            <a
-              href="#"
-              className="text-gray-800 hover:text-gray-900 font-medium text-lg transition-colors"
+            <Link
+              href="/portfolio"
+              className={`${linkBase} ${pathname?.startsWith('/portfolio') ? activeClass : ''}`}
+              onClick={onClose}
             >
               Portfolio
-            </a>
+            </Link>
             <Link
               href="/resources"
               className={`${linkBase} ${pathname?.startsWith('/resources') ? activeClass : ''}`}
