@@ -96,7 +96,7 @@ const ClientTestimonials = () => {
             {/* Testimonials Container */}
             <div className="relative overflow-hidden">
               <div 
-                className="flex gap-3 md:gap-8 transition-transform duration-700 ease-in-out" 
+                className="flex gap-1 md:gap-3 transition-transform duration-700 ease-in-out" 
                 style={{ 
                   width: '100%',
                   transform: `translateX(-${currentIndex * 10}px)`

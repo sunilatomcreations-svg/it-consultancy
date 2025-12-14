@@ -219,7 +219,7 @@ const AIServicesHero = () => {
         </div>
 
         {/* Main Content Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 items-stretch">
           {/* Left Side - Background Pattern */}
           <div className="relative h-96 lg:h-full min-h-[400px] rounded-2xl overflow-hidden">
             {/* Geometric Pattern Background */}
