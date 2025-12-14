@@ -56,7 +56,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
     <div className="bg-F6F1EB w-full p-4 md:p-6 lg:p-8 mt-14 md:mt-12 mb-5 md:mb-10 relative">
       {/* Image Panels Container */}
       <div
-        className="flex items-stretch gap-2 md:gap-4 h-[500px] md:h-[680px] relative"
+        className="flex items-stretch gap-2 md:gap-2 h-[500px] md:h-[680px] relative"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -163,7 +163,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
             active === 1
               ? 'flex-1'
-              : 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+                : 'flex-[0_0_80px] md:flex-[0_0_200px] lg:flex-[0_0_260px]'
         }`}
         onMouseEnter={() => setHoveredPanel(1)}
         onMouseLeave={() => setHoveredPanel(null)}
