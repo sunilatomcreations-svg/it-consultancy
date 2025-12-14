@@ -72,13 +72,19 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         onMouseEnter={() => setHoveredPanel(0)}
         onMouseLeave={() => setHoveredPanel(null)}
       >
-        {/* Use mobileActiveImage only on small screens; on md+ show the first image */}
+        {/* Mobile: show the current mobile image; Desktop: always show the first image to avoid flicker */}
         <Image
-          key={`left-${isMobile ? mobileActiveImage : 0}`}
-          src={isMobile ? images[mobileActiveImage] : images[0]}
-          alt="Banner Image 1"
+          src={images[mobileActiveImage]}
+          alt="Banner Image mobile"
           fill
-          className="object-cover opacity-90"
+          className="object-cover opacity-90 md:hidden"
+          priority
+        />
+        <Image
+          src={images[0]}
+          alt="Banner Image desktop"
+          fill
+          className="object-cover opacity-90 hidden md:block"
           priority
         />
         
@@ -171,7 +177,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         />
         {/* Centered Overlapping Text Section */}
         <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 md:px-8 z-10 transition-opacity duration-700 ${
-           active === 1 || (mobileActiveImage === 1 && window.innerWidth < 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          active === 1 || (isMobile && mobileActiveImage === 1) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
             <span className="text-white">Transform with AI</span>
