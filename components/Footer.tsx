@@ -2,76 +2,14 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { referData } from '../referData';
 
 const Footer = () => {
-  // Default settings - using static data instead of context to avoid import issues
+  // Load footer sections from referData
   const settings = {
     borderRadius: 8,
     padding: 40,
-    sections: [
-      {
-        id: 'company',
-        title: 'Our Company',
-        items: [
-          'About',
-          'Core Team', 
-          'Careers',
-          'CSR',
-          'How We Work'
-        ],
-        hasViewMore: false
-      },
-      {
-        id: 'services',
-        title: 'Services',
-        items: [
-          'Digital Transformation',
-          'Consulting',
-          'Mobile App Development',
-          'Software Development',
-          'Cloud Services',
-          'Managed IT Services'
-        ],
-        hasViewMore: true
-      },
-      {
-        id: 'technologies',
-        title: 'Technologies',
-        items: [
-          'Artificial Intelligence',
-          'RPA',
-          'IoT (Internet of Things)',
-          'AR/VR',
-          'Blockchain',
-          'Cybersecurity'
-        ],
-        hasViewMore: true
-      },
-      {
-        id: 'industries',
-        title: 'Industries',
-        items: [
-          'Healthcare',
-          'Finance',
-          'Automotive',
-          'Education',
-          'On-Demand',
-          'eCommerce'
-        ],
-        hasViewMore: true
-      },
-      {
-        id: 'resources',
-        title: 'Resources',
-        items: [
-          'Blogs',
-          'Press Releases',
-          'Guides',
-          'Client Testimonials'
-        ],
-        hasViewMore: false
-      }
-    ],
+    sections: referData,
     showGetInTouch: true
   };
 
@@ -118,7 +56,7 @@ const Footer = () => {
                   {section.title}
                 </div>
                 <ul className="space-y-1 md:space-y-2">
-                  {section.items.map((item, index) => (
+                  {section.items && section.items.map((item: any, index: number) => (
                     <li key={index} className="flex items-center min-h-[44px] md:min-h-0">
                       <svg 
                         className="w-2 h-2 md:w-3 md:h-3 mr-2 md:mr-3 flex-shrink-0"
@@ -126,25 +64,33 @@ const Footer = () => {
                         fill="#F97316"
                         style={{ transform: 'rotate(45deg)' }}
                       >
-                        <path d="M12 2L19 6.5V17.5L12 22L5 17.5V6.5L12 2Z" rx="2" />
+                        <path d="M12 2L19 6.5V17.5L12 22L5 17.5V6.5L12 2Z" />
                       </svg>
-                      <span className="text-gray-700 text-sm md:text-base">{item}</span>
+                      {item && typeof item === 'object' ? (
+                        item.href ? (
+                          <Link href={item.href} className="text-gray-700 text-sm md:text-base">{item.label}</Link>
+                        ) : (
+                          <span className="text-gray-700 text-sm md:text-base">{item.label}</span>
+                        )
+                      ) : (
+                        <span className="text-gray-700 text-sm md:text-base">{String(item)}</span>
+                      )}
                     </li>
                   ))}
                 </ul>
-                {section.hasViewMore && (
+                {section.viewMore && (
                   <div className="mt-3 md:mt-4 flex items-center">
-                    <a href="#" className="text-gray-700 underline flex items-center text-sm md:text-base min-h-[44px] md:min-h-0">
-                      View More
+                    <Link href={section.viewMore.href} className="text-gray-700 underline flex items-center text-sm md:text-base min-h-[44px] md:min-h-0">
+                      {section.viewMore.label}
                       <svg 
                         className="w-2 h-2 md:w-3 md:h-3 ml-2 flex-shrink-0"
                         viewBox="0 0 24 24"
                         fill="#F97316"
                         style={{ transform: 'rotate(45deg)' }}
                       >
-                        <path d="M12 2L19 6.5V17.5L12 22L5 17.5V6.5L12 2Z" rx="2" />
+                        <path d="M12 2L19 6.5V17.5L12 22L5 17.5V6.5L12 2Z" />
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 )}
               </div>

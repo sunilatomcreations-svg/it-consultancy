@@ -1,21 +1,33 @@
 "use client"
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 const DEFAULT_IMAGES = [
-  "/home_page_assets/andreea-avramescu-wR56AUlEsE4-unsplash.jpg",
-  "/home_page_assets/headway-F2KRf_QfCqw-unsplash.jpg",
-  "/home_page_assets/alex-kotliarskyi-QBpZGqEMsKg-unsplash.jpg",
+  "/photo-1518770660439-4636190af475.avif",
+  "/pexels-michelangelo-buonarroti-8728560.jpg",
+  "/pexels-pavel-danilyuk-8294604.jpg",
 ];
 
-export default function RipplePanels({ images = DEFAULT_IMAGES }) {
+export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
   const [hoveredPanel, setHoveredPanel] = useState<number | null>(null);
-  const [mobileActiveImage, setMobileActiveImage] = useState(0);
+  const [mobileActiveImage, setMobileActiveImage] = useState(2);
+  // default active panel on desktop is the 3rd panel (index 2)
+  const active = hoveredPanel === null ? 2 : hoveredPanel;
   const touchStartX = useRef<number | null>(null);
   const touchCurrentX = useRef<number | null>(null);
   const SWIPE_THRESHOLD = 50; // px
 
-  const handleTouchStart = (e: React.TouchEvent) =>   {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    // run once on mount
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchCurrentX.current = e.touches[0].clientX;
   };
@@ -52,17 +64,18 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       {/* Left big panel */}
       <div 
         className={`rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
-          hoveredPanel === null 
-            ? 'flex-1' 
-            : hoveredPanel === 0 
-            ? 'flex-1' 
-            : 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+            // On mobile keep the left panel full width     (carousel). On md+ collapse when not active.
+            active === 0
+              ? 'flex-1'
+              : 'flex-1 md:flex-[0_0_130px] lg:flex-[0_0_180px]'
         }`}
         onMouseEnter={() => setHoveredPanel(0)}
         onMouseLeave={() => setHoveredPanel(null)}
       >
+        {/* Use mobileActiveImage only on small screens; on md+ show the first image */}
         <Image
-          src={images[mobileActiveImage]}
+          key={`left-${isMobile ? mobileActiveImage : 0}`}
+          src={isMobile ? images[mobileActiveImage] : images[0]}
           alt="Banner Image 1"
           fill
           className="object-cover opacity-90"
@@ -96,15 +109,15 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         
         {/* Overlapping Text Section - First Image */}
         <div className={`absolute bottom-16 md:bottom-12 lg:bottom-16 left-8 md:left-12 lg:left-16 z-10 max-w-xl md:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
-          ((hoveredPanel === 0 || hoveredPanel === null) && mobileActiveImage === 0) || (hoveredPanel === 0 && window.innerWidth >= 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          active === 0 && (!isMobile || mobileActiveImage === 0) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6">
-            <span className="text-white">IT Consultancy Services</span>
+            <span className="text-white">Responsible AI</span>
             <br />
-            <span className="text-white">that fuel your AI-powered future.</span>
+            <span className="text-white">Ethical, secure, and auditable models.</span>
           </h1>
           <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-3 md:px-8 rounded-md transition-colors duration-300 text-sm md:text-base">
-            Get IT Consultation
+            Learn About Our AI Practices
           </button>
         </div>
         
@@ -113,12 +126,12 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
           mobileActiveImage === 1 ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
-            <span className="text-white">Digital Transformation</span>
+            <span className="text-white">Transform with AI</span>
             <br />
-            <span className="text-white">for modern businesses.</span>
+            <span className="text-white">From pilot to production — faster and safer.</span>
           </h1>
           <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-3 md:px-8 rounded-md transition-colors duration-300 text-sm md:text-base">
-            Explore Solutions
+            Discover AI Use Cases
           </button>
         </div>
         
@@ -127,13 +140,13 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
           mobileActiveImage === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl font-bold leading-tight mb-4 text-right">
-            <span className="text-white">Technology Excellence</span>
+            <span className="text-white">AI Consulting & Engineering</span>
             <br />
-            <span className="text-white">delivering results.</span>
+            <span className="text-white">Production-grade AI solutions that scale.</span>
           </h1>
           <div className="flex justify-end">
             <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-2 md:px-6 rounded-md transition-colors duration-300 text-sm md:text-base">
-              Learn More
+              Request AI Consultation
             </button>
           </div>
         </div>
@@ -142,11 +155,9 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       {/* Middle tall narrow */}
       <div 
         className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
-          hoveredPanel === 1 
-            ? 'flex-1' 
-            : hoveredPanel === null
-            ? 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
-            : 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+            active === 1
+              ? 'flex-1'
+              : 'flex-[0_0_80px] md:flex-[0_0_130px] lg:flex-[0_0_180px]'
         }`}
         onMouseEnter={() => setHoveredPanel(1)}
         onMouseLeave={() => setHoveredPanel(null)}
@@ -160,15 +171,15 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         />
         {/* Centered Overlapping Text Section */}
         <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 md:px-8 z-10 transition-opacity duration-700 ${
-          hoveredPanel === 1 || (mobileActiveImage === 1 && window.innerWidth < 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+           active === 1 || (mobileActiveImage === 1 && window.innerWidth < 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
-            <span className="text-white">Digital Transformation</span>
+            <span className="text-white">Transform with AI</span>
             <br />
-            <span className="text-white">for modern businesses.</span>
+            <span className="text-white">From pilot to production — faster and safer.</span>
           </h1>
           <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-md transition-colors duration-300">
-            Explore Solutions
+            Discover AI Use Cases
           </button>
         </div>
       </div>
@@ -176,11 +187,9 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       {/* Right narrow */}
       <div 
         className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
-          hoveredPanel === 2 
-            ? 'flex-1' 
-            : hoveredPanel === null
-            ? 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'
-            : 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'
+            active === 2
+              ? 'flex-1'
+              : 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'
         }`}
         onMouseEnter={() => setHoveredPanel(2)}
         onMouseLeave={() => setHoveredPanel(null)}
@@ -194,16 +203,16 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         />
         {/* Right Corner Overlapping Text Section */}
         <div className={`absolute bottom-8 md:bottom-12 lg:bottom-16 right-8 md:right-12 lg:right-16 z-10 max-w-xl md:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
-          hoveredPanel === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+           active === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-right">
-            <span className="text-white">Technology Excellence</span>
+            <span className="text-white">Responsible AI</span>
             <br />
-            <span className="text-white">delivering results.</span>
+            <span className="text-white">Ethical, secure, and auditable models.</span>
           </h1>
           <div className="flex justify-end">
             <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-md transition-colors duration-300">
-              Learn More
+              Learn About Our AI Practices
             </button>
           </div>
         </div>

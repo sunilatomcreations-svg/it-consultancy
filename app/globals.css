@@ -62,7 +62,7 @@
   --brand-orange-light: 25 95% 65%;
   --gradient-start: 25 95% 53%;
   --gradient-end: 315 52% 28%;
-  
+
   /* Glassmorphism */
   --glass-bg: 0 0% 100% / 0.7;
   --glass-border: 0 0% 100% / 0.3;
@@ -149,6 +149,7 @@ body {
       opacity: 1;
       transform: translateY(0);
     }
+
     from {
       opacity: 0;
       transform: translateY(20px);
@@ -169,8 +170,19 @@ body {
 /* Custom Smooth Chamfer Shape */
 .smooth-chamfer-box {
   /* Scalable polygon-based chamfer shape */
-  clip-path: polygon(
-    10% 0%, 94% 0%, 96% 2%, 100% 15%, 100% 75%, 98% 83%, 93% 96%, 88% 100%, 
-    6% 100%, 4% 98%, 0% 85%, 0% 25%, 2% 17%, 7% 4%
-  );
+  clip-path: polygon(10% 0%, 94% 0%, 96% 2%, 100% 15%, 100% 75%, 98% 83%, 93% 96%, 88% 100%,
+      6% 100%, 4% 98%, 0% 85%, 0% 25%, 2% 17%, 7% 4%);
+}
+
+/* The Magic: Responsive Path Clipping */
+.magic-path-clip {
+  /* Responsive polygon that mimics the path formula: M 80 0 L (W - 24) 0 Q W 0 W 24 L W (H - 80) Q W (H - 60) (W - 14.1) (H - 45.9) L (W - 45.9) (H - 14.1) Q (W - 60) H (W - 80) H L 24 H Q 0 H 0 (H - 24) L 0 80 Q 0 60 14.1 45.9 L 45.9 14.1 Q 60 0 80 0 Z */
+  clip-path: polygon(26.7% 0%, 92% 0%, 96% 5.5%, 100% 10.9%, 100% 82%, 98% 87%, 94.7% 93.6%,
+      84.7% 100%, 8% 100%, 4% 95%, 0% 89.1%, 0% 18%, 2% 13%, 5.3% 6.4%, 15.3% 0%);
+}
+
+/* The Magic Formula: Dynamic Path Clipping */
+.magic-formula {
+  /* Formula: M 80 0 L (W - 24) 0 Q W 0 W 24 L W (H - 80) Q W (H - 60) (W - 14.1) (H - 45.9) L (W - 45.9) (H - 14.1) Q (W - 60) H (W - 80) H L 24 H Q 0 H 0 (H - 24) L 0 80 Q 0 60 14.1 45.9 L 45.9 14.1 Q 60 0 80 0 Z */
+  clip-path: path('M 80 0 L (W - 24) 0 Q W 0 W 24 L W (H - 80) Q W (H - 60) (W - 14.1) (H - 45.9) L (W - 45.9) (H - 14.1) Q (W - 60) H (W - 80) H L 24 H Q 0 H 0 (H - 24) L 0 80 Q 0 60 14.1 45.9 L 45.9 14.1 Q 60 0 80 0 Z');
 }

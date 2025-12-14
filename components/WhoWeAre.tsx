@@ -210,7 +210,7 @@ const WhoWeAre = () => {
               </div>
 
               <Link 
-                href="/contact"
+                href="/about"
                 className="md:shrink-0 px-5 md:px-6 lg:px-8 py-2 md:py-3 rounded-lg text-white font-semibold hover:opacity-90 transition-opacity hover:cursor-pointer text-sm md:text-base"
                 style={{ backgroundColor: '#F97316' }}
               >

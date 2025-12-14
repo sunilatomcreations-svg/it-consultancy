@@ -1,11 +1,15 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Sidebar from './Sidebar';
+import InsightsGrid from './InsightsGrid';
+import OutsightGrid from './OutsightGrid';
 import { usePathname } from 'next/navigation';
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const closeTimer = useRef<number | null>(null);
 
   const pathname = usePathname();
 
@@ -17,6 +21,24 @@ const Header = () => {
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
+
+  const open = (name: string) => {
+    if (closeTimer.current) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+    setOpenDropdown(name);
+  };
+
+  const close = () => {
+    closeTimer.current = window.setTimeout(() => setOpenDropdown(null), 180);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (closeTimer.current) window.clearTimeout(closeTimer.current);
+    };
+  }, []);
 
   return (
     <>
@@ -47,42 +69,78 @@ const Header = () => {
 
             {/* Navigation Menu */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* Home Link */}
-              <Link href="/" className={linkClass(pathname === '/' || pathname?.startsWith('/home')) }>
-                Home
-              </Link>
+              {/* Home Link (no dropdown) */}
+              <div className="relative">
+                <Link href="/" className={`flex items-center ${linkClass(pathname === '/' || pathname?.startsWith('/home')) }`}>Home</Link>
+              </div>
 
-              {/* About Dropdown */}
-              <div className="relative group">
-                <Link href="/about" className={`flex items-center ${linkClass(pathname?.startsWith('/about'))}`}>
-                  About
+              {/* About Link (no dropdown) */}
+              <div className="relative">
+                <Link href="/about" className={`flex items-center ${linkClass(pathname?.startsWith('/about'))}`}>About</Link>
+              </div>
+
+              {/* Services Link */}
+              <div className="relative" onMouseEnter={() => open('services')} onMouseLeave={close}>
+                <Link href="/services" className={`flex items-center ${linkClass(pathname?.startsWith('/services'))}`}>
+                  Services
                   <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </Link>
+                <div
+                  className={`${openDropdown === 'services' ? 'block' : 'hidden'} md:group-hover:block absolute top-full mt-0 z-50 origin-top-left`}
+                  style={{ left: '50%', transform: 'translateX(calc(-50% + 200px)) translateY(24px)' }}
+                  onMouseEnter={() => open('services')}
+                  onMouseLeave={close}
+                >
+                  <div className="bg-white rounded-xl shadow-lg ring-1 ring-black/5 overflow-hidden w-[1050px] max-w-[90vw]" style={{ maxHeight: '75vh', overflowY: 'auto' }}>
+                    <OutsightGrid variant="services" />
+                  </div>
+                </div>
               </div>
 
-              {/* Services Link */}
-              <Link href="/services" className={linkClass(pathname?.startsWith('/services'))}>
-                Services
-              </Link>
-
-              {/* Industries Link */}
-              <Link href="/industries" className={linkClass(pathname?.startsWith('/industries'))}>
-                Industries
-              </Link>
-
+              {/* Industries Link (no dropdown) */}
+              <div className="relative">
+                <Link href="/industries" className={`flex items-center ${linkClass(pathname?.startsWith('/industries'))}`}>Industries</Link>
+              </div>
+              {/* Resources Dropdown */}
               {/* Portfolio Dropdown */}
-              <Link href="/portfolio" className={linkClass(pathname?.startsWith('/portfolio'))}>
-                Portfolio
-              </Link>
-              {/* Resources Link */}
-              <Link
-                href="/resources"
-                className={linkClass(pathname?.startsWith('/resources'))}
-              >
-                Resources
-              </Link>
+              <div className="relative" onMouseEnter={() => open('portfolio')} onMouseLeave={close}>
+                <Link href="/portfolio" className={`flex items-center ${linkClass(pathname?.startsWith('/portfolio'))}`}>
+                  <span>Portfolio</span>
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Link>
+                <div
+                  className={`${openDropdown === 'portfolio' ? 'block' : 'hidden'} md:group-hover:block absolute top-full left-0 mt-0 z-50 origin-top-left`}
+                  style={{ transform: 'translateX(-60%) translateY(24px)' }}
+                  onMouseEnter={() => open('portfolio')}
+                  onMouseLeave={close}
+                >
+                  <div className="bg-white rounded-xl shadow-lg ring-1 ring-black/5 overflow-hidden w-[1050px] max-w-[90vw]" style={{ maxHeight: '75vh', overflowY: 'auto' }}>
+                    <InsightsGrid variant="portfolio" />
+                  </div>
+                </div>
+              </div>
+              <div className="relative" onMouseEnter={() => open('resources')} onMouseLeave={close}>
+                <Link href="/resources" className={`flex items-center ${linkClass(pathname?.startsWith('/resources'))}`}>
+                  <span>Resources</span>
+                  <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </Link>
+                <div
+                  className={`${openDropdown === 'resources' ? 'block' : 'hidden'} md:group-hover:block absolute top-full left-0 mt-0 z-50 origin-top-left`}
+                  style={{ transform: 'translateX(-60%) translateY(24px)' }}
+                  onMouseEnter={() => open('resources')}
+                  onMouseLeave={close}
+                >
+                  <div className="bg-white rounded-xl shadow-lg ring-1 ring-black/5 overflow-hidden w-[1050px] max-w-[90vw]" style={{ maxHeight: '75vh', overflowY: 'auto' }}>
+                    <InsightsGrid variant="resources" />
+                  </div>
+                </div>
+              </div>
 
               {/* Contact Button */}
               <div className="relative">

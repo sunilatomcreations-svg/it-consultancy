@@ -34,13 +34,13 @@ export default function About() {
       </section>
 
       {/* Company Stats */}
-      <section style={{ backgroundColor: '#F6F1EB' }}>
+      <section id="hero-text" style={{ backgroundColor: '#F6F1EB' }}>
         <div className="max-w-9xl mx-auto">
             <HeroText/>
             
         </div>
       </section>
-            <section className="py-5 px-4" style={{ backgroundColor: '#F6F1EB' }}>
+            <section id="gallery" className="py-5 px-4" style={{ backgroundColor: '#F6F1EB' }}>
         <div className="max-w-9xl mx-auto">
             <Gallery/>
          

@@ -180,35 +180,14 @@ const AIServicesHero = () => {
 
   return (
     <section className="relative min-h-screen bg-gradient-to-br from-orange-50 to-purple-50 overflow-hidden">
+      {/* Anchor targets for footer/links */}
+      <div id="ai" />
+      <div id="autonomous-agents" />
+      <div id="mlops" />
+      <div id="visual-intelligence" />
+      <div id="ethical-ai" />
       {/* Replaced Banner */}
-      <div
-        className="rounded-lg hero-section w-full max-w-[1500px] h-[300px] md:h-[450px] flex items-center pl-4 md:pl-[60px] relative mx-auto"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, rgba(255,255,255,0.9) 20%, rgba(0,0,0,0.1)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1600&q=80')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute right-0 top-0 h-full w-[30%] md:w-[55%] opacity-75"
-          style={{
-            background:
-              "repeating-linear-gradient(90deg, rgba(255,128,0,0.8) 0px, rgba(255,128,0,0.7) 20px, rgba(245,100,0,0.7) 40px)",
-          }}
-        ></div>
-
-        <div className="hero-text max-w-[90%] md:max-w-[600px] z-10 text-gray-900">
-          <h1 className="text-2xl md:text-3xl lg:text-[48px] font-extrabold leading-[1.1] text-gray-900">
-            <span className="text-[#ff3a2e]">AI Development Services</span> that fuel your AI-powered future.
-          </h1>
-          <p className="mt-3 md:mt-5 text-sm md:text-base lg:text-[18px] text-gray-800">
-            A trusted <strong>AI development company</strong>, we bring deep expertise in
-            all AI domains, turning innovative visions into scalable, real-world
-            solutions.
-          </p>
-        </div>
-      </div>
-
+ 
       {/* Background Pattern */}
       <div 
         className="absolute inset-0 opacity-10"

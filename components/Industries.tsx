@@ -34,6 +34,10 @@ const Industries = () => {
     }
   ];
 
+  function slugify(s: string) {
+    return s.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-');
+  }
+
   return (
     <section className="py-16 px-4" style={{ backgroundColor: '#F6F1EB' }}>
       <div className="max-w-7xl mx-auto">
@@ -53,7 +57,7 @@ const Industries = () => {
         {/* Industries Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-8 lg:gap-x-12 gap-y-8 md:gap-y-10 px-4">
           {industries.map((industry, index) => (
-            <div key={index} className="space-y-4 max-w-full overflow-hidden">
+            <div key={index} id={slugify(industry.title)} className="space-y-4 max-w-full overflow-hidden">
               {/* Orange line */}
               <div 
                 className="w-90 h-2.5 rounded"

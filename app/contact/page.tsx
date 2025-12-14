@@ -47,11 +47,18 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 bg-[#F6F1EB]">
       <Header />
       
       {/* Contact Form Section */}
-      <div className="pt-24 pb-16 px-4">
+      <div className="bg-[#F6F1EB] pt-24 pb-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-6">
+            <div className="bg-orange-50 border-l-4 border-orange-500 text-orange-800 px-4 py-3 rounded-md">
+              <p className="font-semibold">We're available 24×7</p>
+              <p className="text-sm">Our team is available around the clock — contact us any time and we'll respond promptly.</p>
+            </div>
+          </div>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
@@ -193,6 +200,7 @@ const ContactPage = () => {
 
       <FAQ />
       <Footer />
+      </div>
     </div>
   );
 };

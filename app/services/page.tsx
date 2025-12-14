@@ -17,10 +17,10 @@ const ServicesPage = () => {
         <div style={{ paddingTop: '70px' }}>
           <ServicesTop />
         </div>
-        
+
         {/* Services Section */}
         <OurServices />
-        
+
         {/* AI Development Services */}
         <Servicesdetails serviceName="AI Development Services" />
         <ServiceTestimonial />
@@ -84,10 +84,10 @@ const ServicesPage = () => {
         {/* E-commerce Solutions */}
         <Servicesdetails serviceName="E-commerce Solutions" />
         <ServiceTestimonial />
-        
+
         {/* FAQ Section */}
         <FAQ />
-        
+
         <Footer />
       </main>
     </ServiceProvider>

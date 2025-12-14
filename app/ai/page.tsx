@@ -4,15 +4,19 @@ import AIServicesHero from '@/components/AIServicesHero';
 import Industries from '@/components/Industries';
 import Footer from '@/components/Footer';
 import FAQ from '@/components/FAQ';
+import RipplePanels from '@/components/Home_banner1';
+import Airippleapnnel from '@/components/airippleapnnel';
 
 const AIPage = () => {
   return (
     <main className="min-h-screen bg-[#F6F1EB] overflow-x-hidden">
       <Header />
       
-      <div style={{ paddingTop: '70px' }}>
+       <Airippleapnnel />
+       
+      
         <AIServicesHero />
-      </div>
+      
 
       <Industries/>
       <FAQ/>
