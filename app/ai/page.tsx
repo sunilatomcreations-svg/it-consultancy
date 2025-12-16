@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Header from '@/components/Header';
 import AIServicesHero from '@/components/AIServicesHero';
 import Industries from '@/components/Industries';
@@ -12,10 +12,12 @@ const AIPage = () => {
     <main className="min-h-screen bg-[#F6F1EB] overflow-x-hidden">
       <Header />
       
-       <Airippleapnnel />
+       <Airippleapnnel /> 
        
       
-        <AIServicesHero />
+       <Suspense fallback={<div />}> 
+         <AIServicesHero />
+       </Suspense>
       
 
       <Industries/>

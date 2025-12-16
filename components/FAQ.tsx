@@ -1,5 +1,6 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { buildPathMedium } from '../lib/clipPath';
 import Image from 'next/image';
 
 const FAQ = () => {
@@ -52,8 +53,48 @@ const FAQ = () => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
+  const rootRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const root = rootRef.current;
+    if (!root) return;
+    const els = Array.from(root.querySelectorAll<HTMLElement>('.clip-card'));
+
+    const measureOnce = (el: HTMLElement, attempts = 0) => {
+      const rect = el.getBoundingClientRect();
+      const W = rect.width;
+      const H = rect.height;
+      if ((W < 10 || H < 10) && attempts < 8) {
+        requestAnimationFrame(() => measureOnce(el, attempts + 1));
+        return;
+      }
+      const p = buildPathMedium(W || el.clientWidth || el.offsetWidth, H || el.clientHeight || el.offsetHeight);
+      el.style.clipPath = p;
+      // @ts-ignore
+      el.style.webkitClipPath = p;
+    };
+
+    els.forEach((el) => measureOnce(el));
+
+    const observers: ResizeObserver[] = [];
+    if ((window as any).ResizeObserver) {
+      els.forEach((el) => {
+        const ro = new (window as any).ResizeObserver(() => measureOnce(el));
+        ro.observe(el);
+        observers.push(ro);
+      });
+    } else {
+      const onResize = () => els.forEach((el) => measureOnce(el));
+      window.addEventListener('resize', onResize);
+      return () => window.removeEventListener('resize', onResize);
+    }
+
+    return () => observers.forEach((ro) => ro.disconnect());
+  }, []);
+
   return (
-    <section className="py-16 px-4 bg-[#F6F1EB]">
+    <section ref={rootRef} className="py-16 px-4 bg-[#F6F1EB]">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <h2 
@@ -76,7 +117,7 @@ const FAQ = () => {
               return (
                 <div 
                   key={index}
-                  className="rounded-lg overflow-hidden"
+                  className="rounded-lg overflow-hidden clip-card"
                 >
                   <div 
                     className="p-3 md:p-6 text-white cursor-pointer hover:opacity-90 transition-opacity"
@@ -84,8 +125,8 @@ const FAQ = () => {
                     onClick={() => toggleFAQ(index)}
                   >
                     <div className="flex items-start gap-2 md:gap-4">
-                      <div 
-                        className="rounded flex items-center justify-center flex-shrink-0 mt-1 transition-transform duration-300"
+                        <div 
+                        className="rounded flex items-center justify-center flex-shrink-0 mt-8 md:mt-1 ml-2 md:ml-4 transition-transform duration-300"
                         style={{ 
                           backgroundColor: '#F97316',
                           width: '24px',
@@ -148,7 +189,7 @@ const FAQ = () => {
               return (
                 <div 
                   key={index}
-                  className="rounded-lg overflow-hidden"
+                  className="rounded-lg overflow-hidden clip-card"
                 >
                   <div 
                     className="p-3 md:p-6 text-white cursor-pointer hover:opacity-90 transition-opacity"
@@ -156,8 +197,8 @@ const FAQ = () => {
                     onClick={() => toggleFAQ(index)}
                   >
                     <div className="flex items-start gap-2 md:gap-4">
-                      <div 
-                        className="rounded flex items-center justify-center flex-shrink-0 mt-1 transition-transform duration-300"
+                        <div 
+                        className="rounded flex items-center justify-center flex-shrink-0 mt-8 md:mt-1 ml-2 md:ml-4 transition-transform duration-300"
                         style={{ 
                           backgroundColor: '#F97316',
                           width: '24px',

@@ -27,6 +27,8 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // Panel sizing and clip-path are handled globally via the `clip-card` class.
+
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchCurrentX.current = e.touches[0].clientX;
@@ -53,7 +55,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
   };
 
   return (
-    <div className="bg-F6F1EB w-full p-4 md:p-6 lg:p-8 mt-14 md:mt-12 mb-5 md:mb-10 relative">
+    <div className="bg-[#f6f1eb ] w-full p-4 md:p-6 lg:p-8 mt-14 md:mt-12 mb-2 md:mb-2 relative">
       {/* Image Panels Container */}
       <div
         className="flex items-stretch gap-2 md:gap-2 h-[500px] md:h-[680px] relative"
@@ -62,8 +64,9 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         onTouchEnd={handleTouchEnd}
       >
       {/* Left big panel */}
-      <div 
-        className={`rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
+      <div
+        data-clip="big"
+        className={`clip-card rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
             // On mobile keep the left panel full width     (carousel). On md+ collapse when not active.
             active === 0
               ? 'flex-1'
@@ -159,8 +162,9 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
       </div>
 
       {/* Middle tall narrow */}
-      <div 
-        className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
+      <div
+        data-clip="big"
+        className={`clip-card hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
             active === 1
               ? 'flex-1'
                 : 'flex-[0_0_80px] md:flex-[0_0_200px] lg:flex-[0_0_260px]'
@@ -191,8 +195,9 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
       </div>
 
       {/* Right narrow */}
-      <div 
-        className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
+      <div
+        data-clip="big"
+        className={`clip-card hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml:auto h-[450px] md:h-[680px] ${
             active === 2
               ? 'flex-1'
               : 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'

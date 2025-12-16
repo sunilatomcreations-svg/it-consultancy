@@ -101,7 +101,7 @@ const WhoWeAre = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center">
           {/* Left Side - Purple Section */}
           <div 
-            className="p-6 md:p-8 lg:p-10 rounded-3xl text-white flex flex-col h-full"
+            className="clip-card p-6 md:p-8 lg:p-10 rounded-3xl text-white flex flex-col h-full"
             style={{ backgroundColor: '#6B2259' }}
           >
             <h2 

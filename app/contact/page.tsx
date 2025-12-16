@@ -98,7 +98,7 @@ const ContactPage = () => {
                     <input
                       type="tel"
                       name="phoneNumber"
-                      placeholder="Phone Number"
+                      placeholder="Phone Number"  
                       value={formData.phoneNumber}
                       onChange={handleInputChange}
                       className="w-full px-0 py-3 text-gray-900 placeholder-gray-600 bg-transparent border-0 border-b-2 border-orange-500 focus:ring-0 focus:border-orange-600 outline-none"
@@ -170,7 +170,8 @@ const ContactPage = () => {
                 <div>
                   <button
                     type="submit"
-                    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded font-medium transition-colors"
+                    data-clip="small"
+                    className="clip-card bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded font-medium transition-colors"
                   >
                     Submit
                   </button>
@@ -181,7 +182,7 @@ const ContactPage = () => {
 
             {/* Right Side - Image/Visual */}
             <div className="flex justify-center">
-              <div className="w-full max-w-md h-96 bg-gradient-to-r from-orange-200 to-gray-200 rounded-3xl flex items-center justify-center">
+              <div className="clip-card w-full max-w-md h-96 bg-gradient-to-r from-orange-200 to-gray-200 rounded-3xl flex items-center justify-center">
                 <div className="text-center text-gray-600">
                   <div className="w-24 h-24 bg-orange-500 rounded-full mx-auto mb-4 flex items-center justify-center">
                     <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">

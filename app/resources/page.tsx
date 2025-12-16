@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { buildPathMedium } from '../../lib/clipPath';
 
 const categories = ["All", "Cloud", "Security", "AI & ML", "DevOps", "Industry News"];
 
@@ -109,6 +110,56 @@ export default function Resources() {
   const [activeCategory, setActiveCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState("");
 
+  useLayoutEffect(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>('.clip-card'));
+    if (!els.length) return;
+
+    const measureEl = (el: HTMLElement) => {
+      const W = el.clientWidth || el.offsetWidth || 0;
+      const H = el.clientHeight || el.offsetHeight || 0;
+      try {
+        const p = buildPathMedium(W, H);
+        el.style.clipPath = p;
+        // @ts-ignore
+        el.style.webkitClipPath = p;
+      } catch (e) {}
+    };
+
+    els.forEach((el) => measureEl(el));
+
+    let ro: ResizeObserver | null = null;
+    if (typeof window !== 'undefined' && (window as any).ResizeObserver) {
+      ro = new (window as any).ResizeObserver(() => {
+        els.forEach((el) => requestAnimationFrame(() => measureEl(el)));
+      });
+      els.forEach((el) => ro && ro.observe(el));
+    }
+
+    const imgCleanups: Array<() => void> = [];
+    els.forEach((el) => {
+      const imgs = el.querySelectorAll('img');
+      imgs.forEach((img) => {
+        const h = () => requestAnimationFrame(() => measureEl(el));
+        img.addEventListener('load', h);
+        imgCleanups.push(() => img.removeEventListener('load', h));
+      });
+    });
+
+    // final delayed re-measure to cover late fonts/styles
+    const tid = window.setTimeout(() => els.forEach((el) => requestAnimationFrame(() => measureEl(el))), 140);
+
+    return () => {
+      if (ro) {
+        try {
+          els.forEach((el) => ro && ro.unobserve(el));
+        } catch (e) {}
+        try { ro.disconnect(); } catch (e) {}
+      }
+      imgCleanups.forEach((c) => c());
+      window.clearTimeout(tid);
+    };
+  }, []);
+
   const filteredPosts = posts.filter((post) => {
     const matchesCategory = activeCategory === "All" || post.category === activeCategory;
     const matchesSearch = post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -197,7 +248,7 @@ export default function Resources() {
                 <img
                   src={featuredPost.image}
                   alt={featuredPost.title}
-                  className="w-full h-full object-cover"
+                  className="clip-card w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4">
                   <span className="px-4 py-2 rounded-full bg-[#F97316] text-white text-sm font-semibold">
@@ -273,7 +324,8 @@ export default function Resources() {
             {filteredPosts.map((post, index) => (
               <motion.div
                 key={post.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+                className="clip-card bg-white rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+                data-clip="medium"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}

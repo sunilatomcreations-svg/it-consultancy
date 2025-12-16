@@ -22,7 +22,7 @@ const Industriesanimations = () => {
         {/* Column 1 - 4 divs */}
         <div className="flex flex-col space-y-2 md:space-y-4">
           {/* Sports Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[175px] md:h-[350px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[175px] md:h-[350px]">
             <img
               src="https://images.pexels.com/photos/163452/basketball-dunk-blue-game-163452.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Basketball player in action"
@@ -37,7 +37,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Sports Quote */}
-          <div className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
+          <div className="clip-card bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
               <div className="block md:hidden">
                 <blockquote className="text-gray-700 italic text-sm" style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: '64%'}}>
                   "Analytics lifted our win rate 35% and engagement 200%."
@@ -49,7 +49,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Social Networking */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[255px] md:h-[510px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[255px] md:h-[510px]">
             <img
               src="https://images.pexels.com/photos/3184430/pexels-photo-3184430.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="People collaborating on social media"
@@ -64,7 +64,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Social Networking Quote */}
-          <div className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
+          <div className="clip-card bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
               <div className="block md:hidden">
                 <blockquote className="text-gray-700 italic text-sm" style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: '64%'}}>
                   "User retention +150%; authentic community connections."
@@ -79,7 +79,7 @@ const Industriesanimations = () => {
         {/* Column 2 - 3 divs */}
         <div className="flex flex-col space-y-2 md:space-y-4">
           {/* Fitness Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[260px] md:h-[495px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[260px] md:h-[495px]">
             <img
               src="https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Fitness and wellness equipment"
@@ -94,7 +94,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Fitness Quote */}
-          <div className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
+          <div className="clip-card bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
               <div className="block md:hidden">
                 <blockquote className="text-gray-700 italic text-sm" style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: '64%'}}>
                   "300% user growth in 8 months; 95% program completion."
@@ -106,7 +106,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Events Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[256px] md:h-[512px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[256px] md:h-[512px]">
             <img
               src="https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Corporate event with audience"
@@ -124,7 +124,7 @@ const Industriesanimations = () => {
         {/* Column 3 - 4 divs */}
         <div className="flex flex-col space-y-2 md:space-y-4">
           {/* Agriculture Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[130px] md:h-[260px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[130px] md:h-[260px]">
             <img
               src="https://images.pexels.com/photos/226587/pexels-photo-226587.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Modern agricultural technology"
@@ -139,7 +139,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Agriculture Quote */}
-          <div className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
+          <div className="clip-card bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
               <div className="block md:hidden">
                 <blockquote className="text-gray-700 italic text-sm" style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: '64%'}}>
                   "Crop yields +40% and water use -30% with precision AgTech."
@@ -151,7 +151,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Restaurant Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[300px] md:h-[600px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[300px] md:h-[600px]">
             <img
               src="https://images.pexels.com/photos/260922/pexels-photo-260922.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Modern restaurant interior"
@@ -166,7 +166,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Restaurant Quote */}
-          <div className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
+          <div className="clip-card bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
               <div className="block md:hidden">
                 <blockquote className="text-gray-700 italic text-sm" style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: '64%'}}>
                   "Efficiency +60%; customer rating rose to 4.7/5."
@@ -181,7 +181,7 @@ const Industriesanimations = () => {
         {/* Column 4 - 4 divs */}
         <div className="flex flex-col space-y-2 md:space-y-4">
           {/* SaaS Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[300px] md:h-[600px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[300px] md:h-[600px]">
             <img
               src="https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Modern office with technology"
@@ -196,7 +196,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* SaaS Quote */}
-          <div className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
+          <div className="clip-card bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow p-2 md:p-4 flex items-center justify-center text-center h-[80px] md:h-[130px]">
               <div className="block md:hidden">
                 <blockquote className="text-gray-700 italic text-sm" style={{display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', fontSize: '64%'}}>
                   "Operational costs -45%; productivity increased company-wide."
@@ -208,7 +208,7 @@ const Industriesanimations = () => {
           </div>
           
           {/* Entertainment Industry */}
-          <div className="relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[130px] md:h-[260px]">
+          <div className="clip-card relative rounded-lg shadow-md border hover:shadow-lg transition-shadow overflow-hidden h-[130px] md:h-[260px]">
             <img
               src="https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=800"
               alt="Entertainment and media production"

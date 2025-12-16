@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import ClipCardsClient from '../components/ClipCardsClient';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
         className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} antialiased`}
         style={{ fontFamily: 'var(--font-plus-jakarta-sans)' }}
       >
+        <ClipCardsClient />
         {children}
       </body>
     </html>

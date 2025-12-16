@@ -209,7 +209,7 @@ const OurServices = () => {
               {currentServices.map((service, index) => (
                 <div 
                   key={index}
-                  className="p-4 md:p-6 lg:p-8 text-center cursor-pointer transition-transform duration-200 ease-in-out hover:transform hover:-translate-y-1 relative overflow-hidden service-card"
+                  className="clip-card p-4 md:p-6 lg:p-8 text-center cursor-pointer transition-transform duration-200 ease-in-out hover:transform hover:-translate-y-1 relative overflow-hidden service-card"
                   style={{ 
                     backgroundColor: '#F6F1EB', 
                     borderRadius: '24px',

@@ -56,7 +56,7 @@ export default function InsightsGrid({ variant = 'portfolio' }: InsightsGridProp
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               {items.map((it, idx) => (
                 <Link href={it.href || '#'} key={idx} className="block">
-                  <article className="flex items-start gap-2 p-1 md:p-2 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow">
+                  <article className="clip-card group flex items-start gap-2 p-1 md:p-2 bg-white rounded-md shadow-sm hover:shadow-md transition-shadow hover:bg-[#6B2259]">
                     <div className="w-16 h-12 md:w-20 md:h-14 overflow-hidden rounded-sm flex-shrink-0">
                       {it.image ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -66,11 +66,11 @@ export default function InsightsGrid({ variant = 'portfolio' }: InsightsGridProp
                       )}
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-sm font-medium text-gray-900">{it.title}</h4>
-                      {it.category && <div className="text-[10px] text-[#F97316] mt-0.5">{it.category}</div>}
-                      <p className="mt-1 text-xs text-gray-700 leading-snug">{it.desc}</p>
+                      <h4 className="text-sm font-medium text-gray-900 group-hover:text-white">{it.title}</h4>
+                      {it.category && <div className="text-[10px] text-[#F97316] mt-0.5 group-hover:text-white">{it.category}</div>}
+                      <p className="mt-1 text-xs text-gray-700 leading-snug group-hover:text-white/90">{it.desc}</p>
                       <div className="mt-1">
-                        <span className="text-xs text-[#F97316] underline">Read more</span>
+                        <span className="text-xs text-[#F97316] underline group-hover:text-white">Read more</span>
                       </div>
                     </div>
                   </article>
@@ -81,7 +81,7 @@ export default function InsightsGrid({ variant = 'portfolio' }: InsightsGridProp
 
           {/* Right: featured card */}
           <Link href={featured.href || '#'} className="block">
-            <aside className="rounded-lg bg-[#6B2259] text-white p-3 flex flex-col hover:shadow-md transition-shadow">
+            <aside className="clip-card rounded-lg bg-[#6B2259] text-white p-3 flex flex-col hover:shadow-md transition-shadow">
               <h3 className="text-sm font-semibold mb-2">{featured.title}</h3>
 
               <div className="rounded overflow-hidden flex-1 shadow-inner" style={{minHeight: 110}}>

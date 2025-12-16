@@ -1,10 +1,12 @@
-'use client';
+ 'use client';
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import { useLayoutEffect } from 'react';
 import { ArrowLeft, ExternalLink, Calendar, Building, CheckCircle } from "lucide-react";
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import { buildPathMedium } from '../../../lib/clipPath';
 
 const projects = [
   {
@@ -151,6 +153,51 @@ export default function ProjectDetail() {
   const { slug } = useParams();
   const project = projects.find((p) => p.slug === slug);
 
+  // client-side clip-path application for .clip-card
+  useLayoutEffect(() => {
+    function applyClip() {
+      const els = Array.from(document.querySelectorAll('.clip-card')) as HTMLElement[];
+      els.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const W = Math.max(0, rect.width || el.offsetWidth);
+        const H = Math.max(0, rect.height || el.offsetHeight);
+        try {
+          const path = buildPathMedium(W, H);
+          el.style.clipPath = path;
+          (el.style as any).webkitClipPath = path;
+        } catch (e) {
+          // ignore
+        }
+      });
+    }
+
+    applyClip();
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(applyClip) : null;
+    const els = Array.from(document.querySelectorAll('.clip-card')) as HTMLElement[];
+    if (ro) els.forEach((el) => ro.observe(el));
+
+    const imgLoadHandlers: Array<{ img: HTMLImageElement; fn: () => void }> = [];
+    document.querySelectorAll('img').forEach((img) => {
+      if (!(img as HTMLImageElement).complete) {
+        const fn = () => applyClip();
+        img.addEventListener('load', fn);
+        imgLoadHandlers.push({ img: img as HTMLImageElement, fn });
+      }
+    });
+
+    const timeout = window.setTimeout(applyClip, 500);
+
+    return () => {
+      if (ro) {
+        els.forEach((el) => ro.unobserve(el));
+        ro.disconnect();
+      }
+      imgLoadHandlers.forEach(({ img, fn }) => img.removeEventListener('load', fn));
+      clearTimeout(timeout);
+    };
+  }, [slug]);
+
   if (!project) {
     return (
       <div className="min-h-screen bg-[#F6F1EB] flex items-center justify-center">
@@ -215,11 +262,11 @@ export default function ProjectDetail() {
             </div>
 
             {/* Metrics Card */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
+            <div className="clip-card bg-white rounded-2xl p-8 shadow-lg">
               <h3 className="font-bold text-xl mb-6">Key Results</h3>
               <div className="grid grid-cols-2 gap-6">
                 {Object.entries(project.metrics).map(([key, value]) => (
-                  <div key={key} className="text-center p-4 rounded-xl bg-gray-50">
+                  <div key={key} className="clip-card text-center p-4 rounded-xl bg-gray-50">
                     <div className="font-bold text-3xl text-[#F97316] mb-1">
                       {value}
                     </div>
@@ -235,7 +282,7 @@ export default function ProjectDetail() {
       {/* Project Image */}
       <section className="pb-12">
         <div className="container mx-auto px-4">
-          <div className="rounded-3xl overflow-hidden">
+          <div className="clip-card rounded-3xl overflow-hidden">
             <img
               src={project.image}
               alt={project.title}
@@ -282,7 +329,7 @@ export default function ProjectDetail() {
 
             {/* Sidebar */}
             <div>
-              <div className="bg-white rounded-2xl p-6 shadow-lg sticky top-8">
+              <div className="clip-card bg-white rounded-2xl p-6 shadow-lg sticky top-8">
                 <h3 className="font-bold text-lg mb-4">Technologies Used</h3>
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
@@ -311,3 +358,4 @@ export default function ProjectDetail() {
     </div>
   );
 }
+

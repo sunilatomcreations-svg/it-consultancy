@@ -11,15 +11,15 @@ const ServicesTop = () => {
                         <img 
                             src="/pexels-brett-sayles-5408005.jpg" 
                             alt="Service 1"
-                            className="w-full h-full object-cover rounded-lg shadow-md"
+                            className="clip-card w-full h-full object-cover rounded-lg shadow-md"
                         />
                     </div>
                     
-                    <div className="w-full md:w-auto md:flex-1 h-[400px] md:h-[703px] relative" style={{ maxWidth: '1015px' }}>
+                    <div className="clip-card w-full md:w-auto md:flex-1 h-[400px] md:h-[703px] relative" style={{ maxWidth: '1015px' }}>
                         <img 
                             src="/pexels-ron-lach-9783812.jpg" 
                             alt="Service 2"
-                            className="w-full h-full object-cover rounded-lg shadow-md"
+                            className="clip-card w-full h-full object-cover rounded-lg shadow-md"
                         />
                         {/* Overlay */}
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-900/80 via-purple-800/70 to-blue-900/80 rounded-lg flex flex-col items-center justify-center text-white px-4 md:px-8">
@@ -53,7 +53,7 @@ const ServicesTop = () => {
                         <img 
                             src="/pexels-tara-winstead-8386437.jpg" 
                             alt="Service 3"
-                            className="w-full h-full object-cover rounded-lg shadow-md"
+                            className="clip-card w-full h-full object-cover rounded-lg shadow-md"
                         />
                     </div>
                 </div>

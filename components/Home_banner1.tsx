@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect, useCallback } from "react";
 import Image from "next/image";
 
 const DEFAULT_IMAGES = [
@@ -14,6 +14,122 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
   const touchStartX = useRef<number | null>(null);
   const touchCurrentX = useRef<number | null>(null);
   const SWIPE_THRESHOLD = 50; // px
+
+  
+
+  // clip-path refs and state for the three panels (do not change classes/widths/heights)
+  const leftRef = useRef<HTMLDivElement | null>(null);
+  const middleRef = useRef<HTMLDivElement | null>(null);
+  const rightRef = useRef<HTMLDivElement | null>(null);
+
+  const [leftClip, setLeftClip] = useState<string | undefined>(undefined);
+  const [middleClip, setMiddleClip] = useState<string | undefined>(undefined);
+  const [rightClip, setRightClip] = useState<string | undefined>(undefined);
+
+  const buildPath = (W: number, H: number) =>
+    `path('M 80 0 L ${W - 24} 0 Q ${W} 0 ${W} 24 L ${W} ${H - 80} Q ${W} ${H - 60} ${W - 14.1} ${H - 45.9} L ${W - 45.9} ${H - 14.1} Q ${W - 60} ${H} ${W - 80} ${H} L 24 ${H} Q 0 ${H} 0 ${H - 24} L 0 80 Q 0 60 14.1 45.9 L 45.9 14.1 Q 60 0 80 0 Z')`;
+
+  const measure = useCallback(() => {
+    const l = leftRef.current;
+    const m = middleRef.current;
+    const r = rightRef.current;
+    if (l) {
+      const rect = l.getBoundingClientRect();
+      setLeftClip(buildPath(rect.width, rect.height));
+    }
+    if (m) {
+      const rect = m.getBoundingClientRect();
+      setMiddleClip(buildPath(rect.width, rect.height));
+    }
+    if (r) {
+      const rect = r.getBoundingClientRect();
+      setRightClip(buildPath(rect.width, rect.height));
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    // initial measure
+    requestAnimationFrame(measure);
+
+    // ResizeObserver to react to layout changes
+    let ro: ResizeObserver | null = null;
+    if (typeof window !== 'undefined' && (window as any).ResizeObserver) {
+      const observer = new (window as any).ResizeObserver(() => {
+        requestAnimationFrame(measure);
+      });
+      ro = observer;
+      if (leftRef.current) observer.observe(leftRef.current);
+      if (middleRef.current) observer.observe(middleRef.current);
+      if (rightRef.current) observer.observe(rightRef.current);
+    } else {
+      const onResize = () => requestAnimationFrame(measure);
+      window.addEventListener('resize', onResize);
+      // cleanup for fallback
+      return () => window.removeEventListener('resize', onResize);
+    }
+
+    // image load listeners: attach to any <img> inside the panel refs
+    const imageListeners: Array<() => void> = [];
+    const addImgLoadListeners = (el: HTMLElement | null) => {
+      if (!el) return;
+      const imgs = el.querySelectorAll('img');
+      imgs.forEach((img) => {
+        const handler = () => requestAnimationFrame(measure);
+        img.addEventListener('load', handler);
+        imageListeners.push(() => img.removeEventListener('load', handler));
+      });
+    };
+
+    addImgLoadListeners(leftRef.current);
+    addImgLoadListeners(middleRef.current);
+    addImgLoadListeners(rightRef.current);
+
+    // re-measure on CSS transition end (panels expand/contract)
+    const addTransitionHandlers = (el: HTMLElement | null) => {
+      if (!el) return;
+      const onTrans = () => requestAnimationFrame(measure);
+      el.addEventListener('transitionend', onTrans);
+      el.addEventListener('webkitTransitionEnd', onTrans as any);
+      // also measure on hover enter/leave after a short delay to catch class-based changes
+      const onEnter = () => window.setTimeout(() => requestAnimationFrame(measure), 60);
+      const onLeave = () => window.setTimeout(() => requestAnimationFrame(measure), 60);
+      el.addEventListener('mouseenter', onEnter as any);
+      el.addEventListener('mouseleave', onLeave as any);
+      imageListeners.push(() => el.removeEventListener('transitionend', onTrans));
+      imageListeners.push(() => el.removeEventListener('webkitTransitionEnd', onTrans as any));
+      imageListeners.push(() => el.removeEventListener('mouseenter', onEnter as any));
+      imageListeners.push(() => el.removeEventListener('mouseleave', onLeave as any));
+    };
+
+    addTransitionHandlers(leftRef.current);
+    addTransitionHandlers(middleRef.current);
+    addTransitionHandlers(rightRef.current);
+
+    // also re-measure once after window load to catch any late resources
+    const onWindowLoad = () => requestAnimationFrame(measure);
+    window.addEventListener('load', onWindowLoad);
+    imageListeners.push(() => window.removeEventListener('load', onWindowLoad));
+
+    // slight delayed re-measure to allow images/styles to settle
+    const timeoutId = window.setTimeout(() => requestAnimationFrame(measure), 120);
+
+    return () => {
+      // cleanup ResizeObserver
+      if (ro) {
+        try {
+          if (leftRef.current) ro.unobserve(leftRef.current);
+          if (middleRef.current) ro.unobserve(middleRef.current);
+          if (rightRef.current) ro.unobserve(rightRef.current);
+        } catch (e) {}
+        try { ro.disconnect(); } catch (e) {}
+      }
+      // cleanup image listeners
+      imageListeners.forEach((cleanup) => {
+        try { cleanup(); } catch (e) {}
+      });
+      window.clearTimeout(timeoutId);
+    };
+  }, [measure]);
 
   const handleTouchStart = (e: React.TouchEvent) =>   {
     touchStartX.current = e.touches[0].clientX;
@@ -51,6 +167,9 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       >
       {/* Left big panel */}
       <div 
+        ref={leftRef}
+        data-panel="0"
+        style={{ clipPath: leftClip, WebkitClipPath: leftClip }}
         className={`rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
           hoveredPanel === null 
             ? 'flex-1' 
@@ -141,17 +260,20 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
 
       {/* Middle tall narrow */}
       <div 
+        ref={middleRef}
+        data-panel="1"
+        style={{ clipPath: middleClip, WebkitClipPath: middleClip }}
         className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
           hoveredPanel === 1 
             ? 'flex-1' 
             : hoveredPanel === null
             ? 'flex-[0_0_80px] md:flex-[0_0_200px] lg:flex-[0_0_260px]'
              : 'flex-[0_0_80px] md:flex-[0_0_200px] lg:flex-[0_0_260px]'
-            
         }`}
         onMouseEnter={() => setHoveredPanel(1)}
         onMouseLeave={() => setHoveredPanel(null)}
       >
+      
         <Image
           src={images[1]}
           alt="Banner Image 2"
@@ -176,6 +298,9 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
 
       {/* Right narrow */}
       <div 
+        ref={rightRef}
+        data-panel="2"
+        style={{ clipPath: rightClip, WebkitClipPath: rightClip }}
         className={`hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
           hoveredPanel === 2 
             ? 'flex-1' 

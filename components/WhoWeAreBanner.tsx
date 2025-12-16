@@ -101,7 +101,8 @@ export default function WhoWeAreBanner() {
     <div className="relative w-full">
       {/* Hero Banner Section */}
       <div 
-        className="relative h-[400px] md:h-[550px] rounded-lg mx-4 md:mx-8 mb-8 md:mb-16 overflow-hidden"
+        data-clip="big"
+        className="clip-card relative h-[400px] md:h-[550px] rounded-lg mx-4 md:mx-8 mb-8 md:mb-16 overflow-hidden"
       >
         {/* Video Background */}
         <video
@@ -140,25 +141,25 @@ export default function WhoWeAreBanner() {
       <div ref={statsRef} className="max-w-6xl mx-auto px-8 mt-4 md:-mt-8 relative z-20">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           {/* Projects Delivered */}
-          <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="clip-card bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
             <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.projects.toLocaleString()}+</div>
             <div className="text-xs md:text-lg opacity-90">Projects Delivered</div>
           </div>
 
           {/* Clients Served */}
-          <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="clip-card bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
             <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.clients.toLocaleString()}+</div>
             <div className="text-xs md:text-lg opacity-90">Clients Served</div>
           </div>
 
           {/* Average NPS */}
-          <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="clip-card bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
             <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.nps}+</div>
             <div className="text-xs md:text-lg opacity-90">Average NPS</div>
           </div>
 
           {/* Countries Served */}
-          <div className="bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
+          <div className="clip-card bg-orange-500 rounded-lg p-4 md:p-8 text-center text-white shadow-lg transform hover:scale-105 transition-transform duration-300">
             <div className="text-xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2">{counters.countries}+</div>
             <div className="text-xs md:text-lg opacity-90">Countries Served</div>
           </div>

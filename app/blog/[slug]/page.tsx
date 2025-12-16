@@ -1,10 +1,12 @@
 'use client';
 
 import { useParams } from "next/navigation";
+import { useLayoutEffect } from 'react';
 import Link from "next/link";
 import { ArrowLeft, Clock, User, Calendar, Share2, Bookmark, ThumbsUp } from "lucide-react";
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
+import { buildPathMedium } from '../../../lib/clipPath';
 
 const allPosts = [
   {
@@ -588,6 +590,50 @@ export default function BlogPost() {
     .filter((p) => p.category === post.category && p.id !== post.id)
     .slice(0, 2);
 
+  useLayoutEffect(() => {
+    function applyClip() {
+      const els = Array.from(document.querySelectorAll('.clip-card')) as HTMLElement[];
+      els.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const W = Math.max(0, rect.width || el.offsetWidth);
+        const H = Math.max(0, rect.height || el.offsetHeight);
+        try {
+          const path = buildPathMedium(W, H);
+          el.style.clipPath = path;
+          (el.style as any).webkitClipPath = path;
+        } catch (e) {
+          // ignore if buildPath fails
+        }
+      });
+    }
+
+    applyClip();
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(applyClip) : null;
+    const els = Array.from(document.querySelectorAll('.clip-card')) as HTMLElement[];
+    if (ro) els.forEach((el) => ro.observe(el));
+
+    const imgLoadHandlers: Array<{ img: HTMLImageElement; fn: () => void }> = [];
+    document.querySelectorAll('img').forEach((img) => {
+      if (!(img as HTMLImageElement).complete) {
+        const fn = () => applyClip();
+        img.addEventListener('load', fn);
+        imgLoadHandlers.push({ img: img as HTMLImageElement, fn });
+      }
+    });
+
+    const timeout = window.setTimeout(applyClip, 500);
+
+    return () => {
+      if (ro) {
+        els.forEach((el) => ro.unobserve(el));
+        ro.disconnect();
+      }
+      imgLoadHandlers.forEach(({ img, fn }) => img.removeEventListener('load', fn));
+      clearTimeout(timeout);
+    };
+  }, [post?.image]);
+
   return (
     <div className="min-h-screen bg-[#F6F1EB]">
       <Header />
@@ -641,7 +687,7 @@ export default function BlogPost() {
               <img
                 src={post.image}
                 alt={post.title}
-                className="w-full h-[300px] md:h-[400px] object-cover"
+                className="clip-card w-full h-[300px] md:h-[400px] object-cover"
               />
             </div>
 

@@ -1,10 +1,11 @@
-'use client';
+ 'use client';
 
-import { useState } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import { buildPathMedium } from '../../lib/clipPath';
 
 const categories = ["All", "Cloud", "Security", "AI/ML", "Web Apps", "Mobile"];
 
@@ -84,6 +85,50 @@ export default function Portfolio() {
     ? projects
     : projects.filter((p) => p.category === activeCategory);
 
+  useLayoutEffect(() => {
+    function applyClip() {
+      const els = Array.from(document.querySelectorAll('.clip-card')) as HTMLElement[];
+      els.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const W = Math.max(0, rect.width || el.offsetWidth);
+        const H = Math.max(0, rect.height || el.offsetHeight);
+        try {
+          const path = buildPathMedium(W, H);
+          el.style.clipPath = path;
+          (el.style as any).webkitClipPath = path;
+        } catch (e) {
+          // ignore
+        }
+      });
+    }
+
+    applyClip();
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(applyClip) : null;
+    const els = Array.from(document.querySelectorAll('.clip-card')) as HTMLElement[];
+    if (ro) els.forEach((el) => ro.observe(el));
+
+    const imgLoadHandlers: Array<{ img: HTMLImageElement; fn: () => void }> = [];
+    document.querySelectorAll('img').forEach((img) => {
+      if (!(img as HTMLImageElement).complete) {
+        const fn = () => applyClip();
+        img.addEventListener('load', fn);
+        imgLoadHandlers.push({ img: img as HTMLImageElement, fn });
+      }
+    });
+
+    const timeout = window.setTimeout(applyClip, 500);
+
+    return () => {
+      if (ro) {
+        els.forEach((el) => ro.unobserve(el));
+        ro.disconnect();
+      }
+      imgLoadHandlers.forEach(({ img, fn }) => img.removeEventListener('load', fn));
+      clearTimeout(timeout);
+    };
+  }, [activeCategory]);
+
   return (
     <div className="min-h-screen bg-[#F6F1EB]">
       <Header />
@@ -143,7 +188,7 @@ export default function Portfolio() {
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
+                className="clip-card bg-white rounded-2xl overflow-hidden shadow-lg group cursor-pointer"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}

@@ -68,9 +68,9 @@ const Footer = () => {
                       </svg>
                       {item && typeof item === 'object' ? (
                         item.href ? (
-                          <Link href={item.href} className="text-gray-700 text-sm md:text-base">{item.label}</Link>
+                          <Link href={item.href} className="text-gray-700 text-sm md:text-base hover:text-[#F97316] transition-colors">{item.label}</Link>
                         ) : (
-                          <span className="text-gray-700 text-sm md:text-base">{item.label}</span>
+                          <span className="text-gray-700 text-sm md:text-base hover:text-[#F97316] transition-colors">{item.label}</span>
                         )
                       ) : (
                         <span className="text-gray-700 text-sm md:text-base">{String(item)}</span>
@@ -80,7 +80,7 @@ const Footer = () => {
                 </ul>
                 {section.viewMore && (
                   <div className="mt-3 md:mt-4 flex items-center">
-                    <Link href={section.viewMore.href} className="text-gray-700 underline flex items-center text-sm md:text-base min-h-[44px] md:min-h-0">
+                    <Link href={section.viewMore.href} className="text-gray-700 underline flex items-center text-sm md:text-base min-h-[44px] md:min-h-0 hover:text-[#F97316] transition-colors">
                       {section.viewMore.label}
                       <svg 
                         className="w-2 h-2 md:w-3 md:h-3 ml-2 flex-shrink-0"

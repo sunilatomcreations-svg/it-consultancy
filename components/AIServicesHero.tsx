@@ -1,6 +1,9 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname, useSearchParams } from 'next/navigation';
+// clip-paths are handled globally via `clip-card` and ClipCardsClient
+
 
 const AIServicesHero = () => {
   const [selectedService, setSelectedService] = useState("AI Development");
@@ -177,9 +180,140 @@ const AIServicesHero = () => {
   const handleServiceClick = (service: string) => {
     setSelectedService(service);
   };
+  
+  // If the user navigates with a hash (e.g. #autonomous-agents) or ?service=...,
+  // pick the corresponding service on mount and on hash/popstate changes.
+  useEffect(() => {
+    const mapHashToService = (hash: string | undefined) => {
+      if (!hash) return null;
+      const id = decodeURIComponent(hash.replace('#', ''));
+      const mapping: Record<string, string> = {
+        'ai': 'AI Development',
+        'autonomous-agents': 'Autonomous Agents',
+        'mlops': 'Operational AI & MLOps',
+        'visual-intelligence': 'Visual Intelligence',
+        'ethical-ai': 'Ethical AI Governance'
+      };
+      return mapping[id] ?? null;
+    };
+
+    const applyFromLocation = () => {
+      if (typeof window === 'undefined') return;
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const serviceParam = params.get('service');
+        if (serviceParam) {
+          const candidate = decodeURIComponent(serviceParam);
+          if (aiServices.includes(candidate)) {
+            setSelectedService(candidate);
+            return;
+          }
+        }
+
+        const fromHash = mapHashToService(window.location.hash);
+        if (fromHash && aiServices.includes(fromHash)) {
+          setSelectedService(fromHash);
+          const id = window.location.hash.replace('#', '');
+          if (id) {
+            const el = document.getElementById(id);
+            if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+          }
+        }
+      } catch (e) {
+        // ignore malformed URLs
+      }
+    };
+
+    applyFromLocation();
+    const onChange = () => applyFromLocation();
+    window.addEventListener('hashchange', onChange);
+    window.addEventListener('popstate', onChange);
+    return () => {
+      window.removeEventListener('hashchange', onChange);
+      window.removeEventListener('popstate', onChange);
+    };
+  }, []);
+  
+  // Also respond to Next.js route/search changes to handle client-side navigation
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!pathname || !pathname.startsWith('/ai')) return;
+    try {
+      const params = new URLSearchParams(searchParams?.toString() ?? '');
+      const serviceParam = params.get('service');
+      if (serviceParam) {
+        const candidate = decodeURIComponent(serviceParam);
+        if (aiServices.includes(candidate)) {
+          setSelectedService(candidate);
+          return;
+        }
+      }
+
+      const id = window.location.hash ? decodeURIComponent(window.location.hash.replace('#', '')) : '';
+      if (id) {
+        const mapping: Record<string, string> = {
+          'ai': 'AI Development',
+          'autonomous-agents': 'Autonomous Agents',
+          'mlops': 'Operational AI & MLOps',
+          'visual-intelligence': 'Visual Intelligence',
+          'ethical-ai': 'Ethical AI Governance'
+        };
+        const mapped = mapping[id];
+        if (mapped && aiServices.includes(mapped)) {
+          setSelectedService(mapped);
+          const el = document.getElementById(id);
+          if (el) setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
+        }
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [pathname, searchParams]);
+
+  // Handle same-page anchor clicks handled by Next's Link (pushState) which
+  // doesn't always emit `hashchange`/`popstate`. Use delegated click listener
+  // to catch anchors with hashes and apply the mapped service immediately.
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    const onDocClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (!target || !target.closest) return;
+      const a = target.closest('a');
+      if (!a) return;
+      const href = a.getAttribute('href') || a.href || '';
+      if (!href.includes('#')) return;
+      try {
+        const url = new URL(href, window.location.href);
+        const hash = url.hash.replace('#', '');
+        if (!hash) return;
+        const mapping: Record<string, string> = {
+          'ai': 'AI Development',
+          'autonomous-agents': 'Autonomous Agents',
+          'mlops': 'Operational AI & MLOps',
+          'visual-intelligence': 'Visual Intelligence',
+          'ethical-ai': 'Ethical AI Governance'
+        };
+        const mapped = mapping[hash];
+        if (mapped && aiServices.includes(mapped)) {
+          // defer slightly so Next navigation can update URL first
+          setTimeout(() => setSelectedService(mapped), 50);
+        }
+      } catch (err) {
+        // ignore
+      }
+    };
+    document.addEventListener('click', onDocClick, true);
+    return () => document.removeEventListener('click', onDocClick, true);
+  }, []);
+  // clip-path helper is imported from lib/clipPath
+
+  // clip-paths are applied globally by the ClipCardsClient; this component only
+  // ensures elements include the `clip-card` class. No local clip logic here.
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-orange-50 to-purple-50 overflow-hidden">
+    <section className="relative min-h-screen bg-[#F6F1EB] overflow-hidden">
       {/* Anchor targets for footer/links */}
       <div id="ai" />
       <div id="autonomous-agents" />
@@ -203,7 +337,7 @@ const AIServicesHero = () => {
             <div
               key={index}
               onClick={() => handleServiceClick(service)}
-              className={`px-4 py-3 rounded-lg text-center font-medium text-sm md:text-base transition-colors cursor-pointer shadow-md ${
+              className={`clip-card px-4 py-3 md:py-4 rounded-lg text-center font-medium text-sm md:text-base transition-colors cursor-pointer shadow-md ${
                 selectedService === service 
                   ? 'bg-orange-600 text-white' 
                   : 'bg-orange-500 text-white hover:bg-orange-600'
@@ -221,7 +355,7 @@ const AIServicesHero = () => {
         {/* Main Content Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 items-stretch">
           {/* Left Side - Background Pattern */}
-          <div className="relative h-96 lg:h-full min-h-[400px] rounded-2xl overflow-hidden">
+          <div className="clip-card relative h-80 lg:h-full min-h-[320px] rounded-2xl overflow-hidden">
             {/* Geometric Pattern Background */}
             <div 
               className="absolute inset-0 bg-gradient-to-br from-orange-200 via-yellow-100 to-gray-100"
@@ -241,7 +375,7 @@ const AIServicesHero = () => {
               <img
                 src={serviceImages[selectedService] ?? aiImages[0]}
                 alt={selectedService}
-                className="w-full h-full object-cover transition-transform duration-700 ease-in-out transform"
+                className="clip-path w-full h-full object-cover transition-transform duration-700 ease-in-out transform"
                 style={{ filter: 'contrast(1.02) saturate(0.95)' }}
               />
             </div>
@@ -270,16 +404,19 @@ const AIServicesHero = () => {
                       fill="none" 
                       opacity="0.08"
                     />
-                  </pattern>
+                    </pattern>
                 </defs>
                 <rect width="100%" height="100%" fill="url(#waves-hero)" />
               </svg>
+              {/* Tagline */}
+
             </div>
           </div>
-
+          {/* Right Side - Service Details */}
+          
           {/* Right Side - Dynamic AI Content */}
           <div 
-            className="bg-purple-700 text-white p-8 rounded-2xl shadow-xl"
+            className="clip-card relative overflow-hidden bg-purple-700 text-white p-8 rounded-2xl shadow-xl"
             style={{ backgroundColor: '#6B2259' }}
           >
             <div className="space-y-6">
@@ -305,7 +442,8 @@ const AIServicesHero = () => {
                 {serviceContent[selectedService as keyof typeof serviceContent].description}
               </p>
 
-              {/* Tagline */}
+
+              
               <p 
                 className="text-orange-300 text-sm md:text-lg font-medium italic"
                 style={{
@@ -378,7 +516,7 @@ const AIServicesHero = () => {
         <div className="absolute inset-0 flex items-center">
           {/* Moving divs animation */}
           <div 
-            className="flex space-x-6"
+            className="flex space-x-2"
             style={{
               animation: 'slideLeftInfinite 40s linear infinite',
               width: '9333px'
@@ -386,10 +524,10 @@ const AIServicesHero = () => {
           >
             {[...movingCards, ...movingCards].map((card, idx) => (
               <div
-                key={idx}
-                className="rounded-2xl bg-white flex-shrink-0 shadow-lg overflow-hidden"
-                style={{ width: '365.22px', height: '200px' }}
-              >
+                  key={idx}
+                  className="clip-card rounded-2xl bg-white flex-shrink-0 shadow-lg overflow-hidden"
+                  style={{ width: '365.22px', height: '200px' }}
+                >
                 <div className="p-4 h-full flex flex-col" style={{ boxSizing: 'border-box' }}>
                   <div className="flex items-start gap-3">
                     <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden p-1">
@@ -445,14 +583,14 @@ const AIServicesHero = () => {
           {/* Grid of Solutions */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center max-w-6xl mx-auto">
             {/* FinTech Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="FinTech AI Solutions"
                 className="w-20 h-20 rounded-lg object-cover"
               />
-              <div>
-                <h3 
+              <div className="">
+                <h3
                   className="text-xl md:text-2xl font-semibold text-gray-900 mb-3"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
@@ -461,7 +599,7 @@ const AIServicesHero = () => {
                 >
                   FinTech
                 </h3>
-                <p 
+                <p
                   className="text-gray-600 text-sm md:text-base"
                   style={{
                     fontFamily: 'DM Sans, sans-serif',
@@ -475,7 +613,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* HealthTech Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/4386466/pexels-photo-4386466.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="HealthTech AI Solutions"
@@ -505,7 +643,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Retail Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/5632402/pexels-photo-5632402.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Retail AI Solutions"
@@ -535,7 +673,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Manufacturing Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Manufacturing AI Solutions"
@@ -565,7 +703,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Education Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Education AI Solutions"
@@ -595,7 +733,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Transportation Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/2127733/pexels-photo-2127733.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Transportation AI Solutions"
@@ -625,7 +763,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Energy Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/159304/network-cable-ethernet-computer-159304.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Energy AI Solutions"
@@ -655,7 +793,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Real Estate Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/1396122/pexels-photo-1396122.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Real Estate AI Solutions"
@@ -685,7 +823,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Entertainment Solutions */}
-            <div className="space-y-2 mb-8">
+            <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
                 src="https://images.pexels.com/photos/1763075/pexels-photo-1763075.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Entertainment AI Solutions"
@@ -715,7 +853,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Insurance Solutions - Mobile Only */}
-            <div className="space-y-2 mb-8 block md:hidden">
+            <div className="clip-card overflow-hidden space-y-2 mb-8 block md:hidden">
               <img
                 src="https://images.pexels.com/photos/3184293/pexels-photo-3184293.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Insurance AI Solutions"
@@ -749,7 +887,7 @@ const AIServicesHero = () => {
 
       {/* AI Amplified Section */}
       <div className="py-16 px-4" style={{ backgroundColor: '#F6F1EB' }}>
-        <div className="max-w-9xl mx-auto">
+        <div className="max-w-screen-2xl mx-auto">
           {/* Title */}
           <h2 
             className="text-center mb-12 text-gray-900 text-2xl md:text-[48px]"
@@ -778,18 +916,18 @@ const AIServicesHero = () => {
           `}</style>
 
           {/* Grid Layout */}
-          <div className="flex flex-col lg:flex-row justify-center items-center gap-4 ai-amplified-grid">
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-1 ai-amplified-grid">
             {/* Left Column - Two stacked rectangles */}
-            <div className="flex flex-col gap-2 left-col">
+            <div className=" flex flex-col gap-2 left-col">
               <img
                 src="/Screenshot 2025-12-10 234726.png"
                 alt="AI Amplified 1"
-                className="rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
+                className=" clip-card rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
               />
               <img
                 src="/Screenshot 2025-12-10 234811.png"
                 alt="AI Amplified 2"
-                className="rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
+                className=" clip-card rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
               />
             </div>
 
@@ -797,14 +935,14 @@ const AIServicesHero = () => {
             <img
               src="/Screenshot 2025-12-10 234832.png"
               alt="AI Amplified 3"
-              className="rounded-2xl object-cover w-116 h-80 lg:w-[600px] lg:h-[600px] center-img"
+              className="clip-card rounded-2xl object-cover w-full md:w-[420px] lg:w-[700px] h-80 lg:h-[600px] center-img"
             />
 
             {/* Right Rectangle - Tall */}
             <img
               src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400"
               alt="AI Amplified 4"
-              className="rounded-2xl object-cover w-64 h-128 lg:w-[300px] lg:h-[600px] right-img"
+              className="clip-card rounded-2xl object-cover w-64 h-128 lg:w-[300px] lg:h-[600px] right-img"
             />
           </div>
         </div>

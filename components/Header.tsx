@@ -53,7 +53,7 @@ const Header = () => {
           <div className="flex items-center gap-45 md:gap-4 lg:gap-6 px-2 md:px-4">
             {/* Logo */}
             <Link href="/ai" className="flex items-center">
-              <div className="relative w-6 h-6">
+              <div className="relative w-6 h-8">
                 <svg 
                   className="absolute inset-0 w-full h-full" 
                   viewBox="0 0 32 32" 
