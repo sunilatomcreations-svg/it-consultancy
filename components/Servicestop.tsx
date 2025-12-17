@@ -7,7 +7,7 @@ const ServicesTop = () => {
             <div className="max-w-9xl mx-auto text-center">
                 {/* Three divs with images in the same line */}
                 <div className="flex justify-between items-center mb-8 gap-6">
-                    <div style={{ width: '307px', height: '703px' }} className="hidden md:block">
+                    <div style={{ width: '307px', height: '703px' }} className="hidden xl:block">
                         <img 
                             src="/pexels-brett-sayles-5408005.jpg" 
                             alt="Service 1"
@@ -49,7 +49,7 @@ const ServicesTop = () => {
                         </div>
                     </div>
                     
-                    <div style={{ width: '307px', height: '703px' }} className="hidden md:block">
+                    <div style={{ width: '307px', height: '703px' }} className="hidden xl:block">
                         <img 
                             src="/pexels-tara-winstead-8386437.jpg" 
                             alt="Service 3"
@@ -58,7 +58,7 @@ const ServicesTop = () => {
                     </div>
                 </div>
                 
-                <div className="mx-4 md:mx-[120px] py-8 md:py-[60px] px-4 md:px-0">
+                <div className="mx-4 lg:mx-[120px] py-4 lg:py-[60px] px-4 md:px-0">
                     <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold text-gray-900 mb-4 md:mb-8" style={{ fontSize: 'clamp(1.25rem, 5vw, 3.75rem)' }}>
                         Discover | Develop | Deploy
                     </h1>

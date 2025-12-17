@@ -1,10 +1,18 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import "../styles/servicetestimonial-mobile.css";
 
 const ServiceTestimonial = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(typeof window !== 'undefined' ? window.innerWidth <= 640 : false);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   
   const testimonials = [
     {
@@ -61,12 +69,12 @@ const ServiceTestimonial = () => {
           >
             {/* Title */}
             <h2 
-              className="text-center text-white mb-12 servicetestimonial-heading-mobile"
+              className="text-center text-white mb-6 servicetestimonial-heading-mobile"
               style={{
                 fontFamily: 'DM Sans, sans-serif',
                 fontSize: '48px',
                 fontWeight: '500',
-                lineHeight: '1.2'
+                lineHeight: '1.2' 
               }}
             >
               What Our Clients Say About Us
@@ -91,8 +99,8 @@ const ServiceTestimonial = () => {
                     scale = 1;
                     opacity = 1;
                     zIndex = 3;
-                    width = '700px';
-                    height = '500px';
+                    width = isMobile ? '660px' : '700px';
+                    height = isMobile ? '620px' : '500px';
                   }
                   // Left position  
                   else if (position === testimonials.length - 1) {
@@ -137,10 +145,10 @@ const ServiceTestimonial = () => {
                         WebkitFontSmoothing: 'antialiased',
                         // Center the middle card for mobile screens
                         ...(position === 0 ? {
-                          transform: typeof window !== 'undefined' && window.innerWidth <= 640
+                          transform: isMobile
                             ? 'translate(-50%, -50%) scale(1)'
                             : `translateX(${translateX}px) scale(${scale})`,
-                          marginLeft: typeof window !== 'undefined' && window.innerWidth <= 640
+                          marginLeft: isMobile
                             ? '0'
                             : '-350px',
                         } : {
@@ -163,7 +171,7 @@ const ServiceTestimonial = () => {
                           WebkitFontSmoothing: 'antialiased'
                         }}
                       >
-                        {typeof window !== 'undefined' && window.innerWidth <= 640
+                        {isMobile
                           ? `"${testimonial.quote.slice(0, Math.floor(testimonial.quote.length * 0.75))}..."`
                           : `"${testimonial.quote}"`}
                       </p>

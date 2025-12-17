@@ -20,7 +20,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
+    const check = () => setIsMobile(window.innerWidth < 1024);
     // run once on mount
     check();
     window.addEventListener('resize', check);
@@ -55,22 +55,22 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
   };
 
   return (
-    <div className="bg-[#f6f1eb ] w-full p-4 md:p-6 lg:p-8 mt-14 md:mt-12 mb-2 md:mb-2 relative">
+    <div className="bg-F6F1EB w-full md:mt-20 p-4 mt-17 lg:p-6 lg:p-8 mt-14 lg:mt-12 lg:mb-10 relative">
       {/* Image Panels Container */}
       <div
-        className="flex items-stretch gap-2 md:gap-2 h-[500px] md:h-[680px] relative"
+        className="flex items-stretch gap-2 lg:gap-2 h-[500px] lg:h-[680px] relative"
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-      >
+      > 
       {/* Left big panel */}
       <div
         data-clip="big"
-        className={`clip-card rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] md:h-[680px] ${
-            // On mobile keep the left panel full width     (carousel). On md+ collapse when not active.
+        className={`clip-card rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] lg:h-[680px] ${
+            // On mobile keep the left panel full width     (carousel). On lg+ collapse when not active.
             active === 0
               ? 'flex-1'
-              : 'flex-1 md:flex-[0_0_130px] lg:flex-[0_0_180px]'
+              : 'flex-1 lg:flex-[0_0_130px] lg:flex-[0_0_180px]'
         }`}
         onMouseEnter={() => setHoveredPanel(0)}
         onMouseLeave={() => setHoveredPanel(null)}
@@ -80,14 +80,14 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
           src={images[mobileActiveImage]}
           alt="Banner Image mobile"
           fill
-          className="object-cover opacity-90 md:hidden"
+          className="object-cover opacity-90 lg:hidden"
           priority
         />
         <Image
           src={images[0]}
           alt="Banner Image desktop"
           fill
-          className="object-cover opacity-90 hidden md:block"
+          className="object-cover opacity-90 hidden lg:block"
           priority
         />
         
@@ -95,7 +95,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         {mobileActiveImage < images.length - 1 && (
           <button
             onClick={() => setMobileActiveImage(mobileActiveImage + 1)}
-            className="md:hidden absolute right-4 bottom-14 z-20 bg-white bg-opacity-60 hover:bg-opacity-80 rounded-lg p-2 transition-all duration-300"
+            className="lg:hidden absolute right-4 bottom-14 z-20 bg-white bg-opacity-60 hover:bg-opacity-80 rounded-lg p-2 transition-all duration-300"
             aria-label="Next image"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gray-800">
@@ -107,7 +107,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         {mobileActiveImage > 0 && (
           <button
             onClick={() => setMobileActiveImage(mobileActiveImage - 1)}
-            className="md:hidden absolute left-4 bottom-14 z-20 bg-white bg-opacity-60 hover:bg-opacity-80 rounded-lg p-2 transition-all duration-300"
+            className="lg:hidden absolute left-4 bottom-14 z-20 bg-white bg-opacity-60 hover:bg-opacity-80 rounded-lg p-2 transition-all duration-300"
             aria-label="Previous image"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-gray-800">
@@ -117,7 +117,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
         )}
         
         {/* Overlapping Text Section - First Image */}
-        <div className={`absolute bottom-16 md:bottom-12 lg:bottom-16 left-8 md:left-12 lg:left-16 z-10 max-w-xl md:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
+        <div className={`absolute bottom-16 lg:bottom-12 lg:bottom-16 left-8 lg:left-12 lg:left-16 z-10 max-w-xl lg:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
           active === 0 && (!isMobile || mobileActiveImage === 0) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6">
@@ -125,13 +125,13 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
             <br />
             <span className="text-white">Ethical, secure, and auditable models.</span>
           </h1>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-3 md:px-8 rounded-md transition-colors duration-300 text-sm md:text-base">
+          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 lg:py-3 lg:px-8 rounded-md transition-colors duration-300 text-sm lg:text-base">
             Learn About Our AI Practices
           </button>
         </div>
         
         {/* Overlapping Text Section - Second Image (Mobile) */}
-        <div className={`md:hidden absolute inset-0 flex flex-col items-center justify-center px-6 md:px-8 z-10 transition-opacity duration-700 ${
+        <div className={`lg:hidden absolute inset-0 flex flex-col items-center justify-center px-6 lg:px-8 z-10 transition-opacity duration-700 ${
           mobileActiveImage === 1 ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
@@ -139,13 +139,13 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
             <br />
             <span className="text-white">From pilot to production — faster and safer.</span>
           </h1>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-3 md:px-8 rounded-md transition-colors duration-300 text-sm md:text-base">
+          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 lg:py-3 lg:px-8 rounded-md transition-colors duration-300 text-sm lg:text-base">
             Discover AI Use Cases
           </button>
         </div>
         
         {/* Overlapping Text Section - Third Image (Mobile) */}
-        <div className={`md:hidden absolute bottom-16 right-8 z-10 max-w-xl transition-opacity duration-700 ${
+        <div className={`lg:hidden absolute bottom-16 right-8 z-10 max-w-xl transition-opacity duration-700 ${
           mobileActiveImage === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl font-bold leading-tight mb-4 text-right">
@@ -154,7 +154,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
             <span className="text-white">Production-grade AI solutions that scale.</span>
           </h1>
           <div className="flex justify-end">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 md:py-2 md:px-6 rounded-md transition-colors duration-300 text-sm md:text-base">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1.5 px-4 lg:py-2 lg:px-6 rounded-md transition-colors duration-300 text-sm lg:text-base">
               Request AI Consultation
             </button>
           </div>
@@ -164,10 +164,10 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
       {/* Middle tall narrow */}
       <div
         data-clip="big"
-        className={`clip-card hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] md:h-[680px] ${
+        className={`clip-card hidden lg:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
             active === 1
               ? 'flex-1'
-                : 'flex-[0_0_80px] md:flex-[0_0_200px] lg:flex-[0_0_260px]'
+                : 'flex-[0_0_80px] lg:flex-[0_0_200px] lg:flex-[0_0_260px]'
         }`}
         onMouseEnter={() => setHoveredPanel(1)}
         onMouseLeave={() => setHoveredPanel(null)}
@@ -180,15 +180,15 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
           priority
         />
         {/* Centered Overlapping Text Section */}
-        <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 md:px-8 z-10 transition-opacity duration-700 ${
+        <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 lg:px-8 z-10 transition-opacity duration-700 ${
           active === 1 || (isMobile && mobileActiveImage === 1) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
-          <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-center">
+          <h1 className="text-2xl lg:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 lg:mb-6 text-center">
             <span className="text-white">Transform with AI</span>
             <br />
             <span className="text-white">From pilot to production — faster and safer.</span>
           </h1>
-          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-md transition-colors duration-300">
+          <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 lg:py-3 lg:px-8 rounded-md transition-colors duration-300">
             Discover AI Use Cases
           </button>
         </div>
@@ -197,10 +197,10 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
       {/* Right narrow */}
       <div
         data-clip="big"
-        className={`clip-card hidden md:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml:auto h-[450px] md:h-[680px] ${
+        className={`clip-card hidden lg:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml:auto h-[450px] lg:h-[680px] ${
             active === 2
               ? 'flex-1'
-              : 'flex-[0_0_60px] md:flex-[0_0_100px] lg:flex-[0_0_120px]'
+              : 'flex-[0_0_60px] lg:flex-[0_0_100px] lg:flex-[0_0_120px]'
         }`}
         onMouseEnter={() => setHoveredPanel(2)}
         onMouseLeave={() => setHoveredPanel(null)}
@@ -213,7 +213,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
           priority
         />
         {/* Right Corner Overlapping Text Section */}
-        <div className={`absolute bottom-8 md:bottom-12 lg:bottom-16 right-8 md:right-12 lg:right-16 z-10 max-w-xl md:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
+        <div className={`absolute bottom-8 lg:bottom-12 lg:bottom-16 right-8 lg:right-12 lg:right-16 z-10 max-w-xl lg:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
            active === 2 ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 md:mb-6 text-right">
@@ -222,7 +222,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
             <span className="text-white">Ethical, secure, and auditable models.</span>
           </h1>
           <div className="flex justify-end">
-            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 md:py-3 md:px-8 rounded-md transition-colors duration-300">
+            <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-6 lg:py-3 lg:px-8 rounded-md transition-colors duration-300">
               Learn About Our AI Practices
             </button>
           </div>
@@ -230,7 +230,7 @@ export default function Airippleapnnel({ images = DEFAULT_IMAGES }) {
       </div>
       
       {/* Mobile Carousel Indicators - Only visible on mobile */}
-      <div className="md:hidden absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+      <div className="lg:hidden absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
         {images.map((_, index) => (
           <button
             key={index}

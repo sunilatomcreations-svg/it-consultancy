@@ -14,13 +14,13 @@ const Footer = () => {
   };
 
   return (
-    <div className="relative mx-0 md:mx-4 lg:mx-6 my-0 md:my-2 min-h-[500px] bg-[#F6F1EB]">
+    <div className="relative mx-0 xl:mx-4 xl:mx-6 my-0 xl:my-2 min-h-[500px] bg-[#F6F1EB]">
       {/* Purple background for mobile */}
-      <div className="md:hidden absolute inset-0 bg-[#6B2259]"></div>
+      <div className="xl:hidden absolute inset-0 bg-[#6B2259]"></div>
       
       {/* Background with smooth chamfer clip-path - Desktop only */}
       <svg 
-        className="hidden md:block absolute top-0 left-0 right-0 w-full"
+        className="hidden xl:block absolute top-0 left-0 right-0 w-full"
         style={{
           maxWidth: '100%',
           height: '620px',
@@ -34,16 +34,16 @@ const Footer = () => {
         />
       </svg>
       
-      <div className="relative z-10 p-2 md:p-3 lg:p-6">
-        <div className="max-w-7xl mt-5 md:mt-20 mb-5 md:mb-22 mx-0 md:mx-auto">
+      <div className="relative z-10 p-2 xl:p-3 xl:p-6">
+        <div className="max-w-7xl mt-5 xl:mt-20 mb-5 xl:mb-22 mx-0 xl:mx-auto">
         <div 
           style={{ 
             backgroundColor: '#F6F1EB',
             borderRadius: `${settings.borderRadius}px`
           }} 
-          className="mx-2 md:mx-0 p-2 md:p-6 lg:py-5 lg:px-8"
+          className="mx-2 xl:mx-0 p-2 xl:p-6 xl:py-5 xl:px-8"
         >
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-6 lg:gap-6">
+          <div className="grid grid-cols-2 xl:grid-cols-3 xl:grid-cols-5 gap-3 xl:gap-6 xl:gap-6">
             
             {settings.sections.map((section) => (
               <div key={section.id}>
@@ -51,15 +51,15 @@ const Footer = () => {
                   style={{ 
                     backgroundColor: '#F97316'
                   }} 
-                  className="w-full md:w-auto min-h-[44px] md:h-[50px] inline-flex items-center justify-center px-2 md:px-4 py-2 rounded text-white font-semibold mb-3 md:mb-4 text-xs md:text-base"
+                  className="w-full xl:w-auto min-h-[44px] xl:h-[50px] inline-flex items-center justify-center px-2 xl:px-4 py-2 rounded text-white font-semibold mb-3 xl:mb-4 text-xs xl:text-base"
                 >
                   {section.title}
                 </div>
-                <ul className="space-y-1 md:space-y-2">
+                <ul className="space-y-1 xl:space-y-2">
                   {section.items && section.items.map((item: any, index: number) => (
-                    <li key={index} className="flex items-center min-h-[44px] md:min-h-0">
+                    <li key={index} className="flex items-center min-h-[44px] xl:min-h-0">
                       <svg 
-                        className="w-2 h-2 md:w-3 md:h-3 mr-2 md:mr-3 flex-shrink-0"
+                        className="w-2 h-2 xl:w-3 xl:h-3 mr-2 xl:mr-3 flex-shrink-0"
                         viewBox="0 0 24 24"
                         fill="#F97316"
                         style={{ transform: 'rotate(45deg)' }}
@@ -68,22 +68,22 @@ const Footer = () => {
                       </svg>
                       {item && typeof item === 'object' ? (
                         item.href ? (
-                          <Link href={item.href} className="text-gray-700 text-sm md:text-base hover:text-[#F97316] transition-colors">{item.label}</Link>
+                          <Link href={item.href} className="text-gray-700 text-sm xl:text-base hover:text-[#F97316] transition-colors">{item.label}</Link>
                         ) : (
-                          <span className="text-gray-700 text-sm md:text-base hover:text-[#F97316] transition-colors">{item.label}</span>
+                          <span className="text-gray-700 text-sm xl:text-base hover:text-[#F97316] transition-colors">{item.label}</span>
                         )
                       ) : (
-                        <span className="text-gray-700 text-sm md:text-base">{String(item)}</span>
+                        <span className="text-gray-700 text-sm xl:text-base">{String(item)}</span>
                       )}
                     </li>
                   ))}
                 </ul>
                 {section.viewMore && (
-                  <div className="mt-3 md:mt-4 flex items-center">
-                    <Link href={section.viewMore.href} className="text-gray-700 underline flex items-center text-sm md:text-base min-h-[44px] md:min-h-0 hover:text-[#F97316] transition-colors">
+                  <div className="mt-3 xl:mt-4 flex items-center">
+                    <Link href={section.viewMore.href} className="text-gray-700 underline flex items-center text-sm xl:text-base min-h-[44px] xl:min-h-0 hover:text-[#F97316] transition-colors">
                       {section.viewMore.label}
                       <svg 
-                        className="w-2 h-2 md:w-3 md:h-3 ml-2 flex-shrink-0"
+                        className="w-2 h-2 xl:w-3 xl:h-3 ml-2 flex-shrink-0"
                         viewBox="0 0 24 24"
                         fill="#F97316"
                         style={{ transform: 'rotate(45deg)' }}
@@ -98,11 +98,11 @@ const Footer = () => {
           </div>
 
           {settings.showGetInTouch && (
-            <div className="mt-6 md:mt-8">
+            <div className="mt-6 xl:mt-8">
               <Link 
                 href="/contact"
                 style={{ backgroundColor: '#6B2259' }} 
-                className="w-full md:w-auto px-6 py-3 text-white font-semibold rounded hover:opacity-90 transition-opacity block md:inline-block cursor-pointer text-center text-sm md:text-base"
+                className="w-full xl:w-auto px-6 py-3 text-white font-semibold rounded hover:opacity-90 transition-opacity block xl:inline-block cursor-pointer text-center text-sm xl:text-base"
               >
                 Get In Touch
               </Link>

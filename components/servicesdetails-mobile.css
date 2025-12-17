@@ -12,13 +12,14 @@
       opacity: 1;
     }
   }
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .servicesdetails-mobile {
     padding-left: 24px !important;
   }
   .servicesdetails-mobile-right {
-    text-align: right !important;
+    text-align: right;
     overflow: hidden;
+      padding-right: -64px !important;
   }
   .servicesdetails-mobile-btn {
     justify-content: flex-end !important;
@@ -49,6 +50,21 @@
   100% {
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+/* Shift right column further on medium screens (md: 768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .servicesdetails-mobile-right {
+    text-align: right !important;
+    padding-left: 240px !important;
+    overflow: visible !important;
+  }
+  .servicesdetails-mobile-left {
+    padding-right: 0 !important;
+  }
+  .servicesdetails-mobile-btn {
+    justify-content: flex-end !important;
   }
 }
   

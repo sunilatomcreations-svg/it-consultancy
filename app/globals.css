@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @import "tailwindcss";
+@import "../styles/tab-styles/ai_page.css";
 
 @theme {
   --color-border: hsl(var(--border));
@@ -22,6 +23,14 @@
   --color-card-foreground: hsl(var(--card-foreground));
   --color-popover: hsl(var(--popover));
   --color-popover-foreground: hsl(var(--popover-foreground));
+}
+
+/* Tablet: force header/nav to mobile layout (show mobile menu, hide desktop nav) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  header nav .md\:hidden { display: block !important; }
+  header nav .md\:flex { display: none !important; }
+  /* tighten spacing for mobile-style header on tablets */
+  header nav .flex.items-center { gap: 35rem !important; }
 }
 
 :root {

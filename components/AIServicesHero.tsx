@@ -330,7 +330,7 @@ const AIServicesHero = () => {
         }}
       />
 
-      <div className="relative z-10 max-w-8xl mx-auto px-4 py-12">
+      <div className="relative z-10 max-w-9xl mx-auto px-4 py-12">
         {/* Service Tags Section */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
           {aiServices.map((service, index) => (
@@ -581,7 +581,7 @@ const AIServicesHero = () => {
           </h2>
 
           {/* Grid of Solutions */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-16 justify-items-center max-w-6xl mx-auto">
             {/* FinTech Solutions */}
             <div className="clip-card overflow-hidden space-y-2 mb-8">
               <img
@@ -853,7 +853,7 @@ const AIServicesHero = () => {
             </div>
 
             {/* Insurance Solutions - Mobile Only */}
-            <div className="clip-card overflow-hidden space-y-2 mb-8 block md:hidden">
+            <div className="clip-card overflow-hidden space-y-2 mb-8 block lg:hidden">
               <img
                 src="https://images.pexels.com/photos/3184293/pexels-photo-3184293.jpeg?auto=compress&cs=tinysrgb&w=400"
                 alt="Insurance AI Solutions"
@@ -922,12 +922,12 @@ const AIServicesHero = () => {
               <img
                 src="/Screenshot 2025-12-10 234726.png"
                 alt="AI Amplified 1"
-                className=" clip-card rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
+className="clip-card rounded-2xl object-cover w-64 h-64 md:w-[416px] md:h-[266px]  lg:w-[300px] lg:h-[300px]"
               />
               <img
                 src="/Screenshot 2025-12-10 234811.png"
                 alt="AI Amplified 2"
-                className=" clip-card rounded-2xl object-cover w-64 h-64 lg:w-[300px] lg:h-[300px]"
+                className=" clip-card rounded-2xl object-cover w-64 h-64 md:w-[416px] md:h-[266px]  lg:w-[300px] lg:h-[300px]"
               />
             </div>
 
@@ -935,14 +935,14 @@ const AIServicesHero = () => {
             <img
               src="/Screenshot 2025-12-10 234832.png"
               alt="AI Amplified 3"
-              className="clip-card rounded-2xl object-cover w-full md:w-[420px] lg:w-[700px] h-80 lg:h-[600px] center-img"
+              className="clip-card rounded-2xl object-cover w-full sm:w-[420px] md:w-[720px] lg:w-[700px] h-80 lg:h-[600px] center-img"
             />
 
             {/* Right Rectangle - Tall */}
             <img
               src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400"
               alt="AI Amplified 4"
-              className="clip-card rounded-2xl object-cover w-64 h-128 lg:w-[300px] lg:h-[600px] right-img"
+              className="clip-card rounded-2xl object-cover w-64 h-128 md:h-[536px]  lg:w-[300px] lg:h-[600px] right-img"
             />
           </div>
         </div>

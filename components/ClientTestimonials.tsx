@@ -6,6 +6,7 @@ const ClientTestimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
+  const [isLaptop, setIsLaptop] = useState<boolean>(false);
   
   const testimonials = [
     {
@@ -53,6 +54,13 @@ const ClientTestimonials = () => {
     };
   }, [isAutoScrolling, testimonials.length]);
 
+  useEffect(() => {
+    const check = () => setIsLaptop(typeof window !== 'undefined' ? window.innerWidth >= 1024 : false);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
   const nextSlide = () => {
     setIsAutoScrolling(false);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
@@ -96,10 +104,10 @@ const ClientTestimonials = () => {
             {/* Testimonials Container */}
             <div className="relative overflow-hidden">
               <div 
-                className="flex gap-1 md:gap-3 transition-transform duration-700 ease-in-out" 
+                className="flex gap-30 md:gap-3 transition-transform duration-700 ease-in-out" 
                 style={{ 
                   width: '100%',
-                  transform: `translateX(-${currentIndex * 10}px)`
+                  transform: isLaptop ? `translateX(-${currentIndex * 10}px)` : 'translateX(0px)'
                 }}
               >
                 {/* Half-visible first testimonial */}
@@ -139,7 +147,7 @@ const ClientTestimonials = () => {
 
                 {/* First fully visible testimonial */}
                 <div
-                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[180px] md:w-[500px] h-[300px] md:h-[460px]"
+                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[310px] md:w-[450px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}

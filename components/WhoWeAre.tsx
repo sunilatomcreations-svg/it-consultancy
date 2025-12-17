@@ -96,7 +96,7 @@ const WhoWeAre = () => {
   }, []);
 
   return (
-    <section className="py-2 md:py-30 lg:py-2 px-4 md:px-6 lg:px-8" style={{ backgroundColor: '#F6F1EB' }}>
+    <section className="bg-[F6F1EB] py-2 md:py-8 lg:py-2 px-4 md:px-6 lg:px-8" style={{ backgroundColor: '#F6F1EB' }}>
       <div className="max-w-9xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8 items-center">
           {/* Left Side - Purple Section */}
@@ -235,7 +235,7 @@ const WhoWeAre = () => {
             </div>
 
             {/* Bottom Half - Team Avatars */}
-            <div className="bg-gray-100 rounded-b-3xl p-8 md:p-10 lg:p-12 relative min-h-[300px] overflow-hidden">
+            <div className=" rounded-b-3xl p-8 md:p-10 lg:p-12 relative min-h-[300px] overflow-hidden">
               {/* Title */}
               <h3 
                 className="text-center text-2xl md:text-3xl lg:text-4xl mb-8 text-gray-700 relative z-10"
@@ -251,10 +251,23 @@ const WhoWeAre = () => {
               {/* Foggy Effect Overlays */}
               <div className="absolute inset-0 pointer-events-none z-20">
                 {/* Left Fog */}
-                <div className="absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-gray-100 via-gray-100/90 via-gray-100/60 via-gray-100/30 to-transparent"></div>
+                <div className="who-fog-left absolute left-0 top-0 bottom-0 w-48 bg-gradient-to-r from-gray-100 via-gray-100/90 via-gray-100/60 via-gray-100/30 to-transparent"></div>
                 {/* Right Fog */}
-                <div className="absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-gray-100 via-gray-100/90 via-gray-100/60 via-gray-100/30 to-transparent"></div>
+                <div className="who-fog-right absolute right-0 top-0 bottom-0 w-48 bg-gradient-to-l from-gray-100 via-gray-100/90 via-gray-100/60 via-gray-100/30 to-transparent"></div>
               </div>
+
+              <style jsx>{`
+                @media (max-width: 767px) {
+                  .who-fog-left, .who-fog-right {
+                    width: 28px !important;
+                    /* soften the fog gradient on small screens */
+                    background: linear-gradient(to right, rgba(245,245,245,0.95) 0%, rgba(245,245,245,0.6) 45%, rgba(245,245,245,0.3) 70%, rgba(245,245,245,0) 100%) !important;
+                  }
+                  .who-fog-right {
+                    background: linear-gradient(to left, rgba(245,245,245,0.95) 0%, rgba(245,245,245,0.6) 45%, rgba(245,245,245,0.3) 70%, rgba(245,245,245,0) 100%) !important;
+                  }
+                }
+              `}</style>
 
               {/* Sliding Avatars Animation */}
               <style dangerouslySetInnerHTML={{__html: `
