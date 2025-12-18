@@ -103,6 +103,24 @@ const ClientTestimonials = () => {
 
             {/* Testimonials Container */}
             <div className="relative overflow-hidden">
+              <style jsx>{`
+                /* Broadened mobile band and increased width for better visibility */
+                @media (min-width: 377px) and (max-width: 480px) {
+                  .ct-first {
+                    width: 355px !important;
+                  }
+                }
+                   @media (min-width: 350px) and (max-width: 376px) {
+                  .ct-first {
+                    width: 300px !important;
+                  }
+                }
+                   @media (min-width: 300px) and (max-width: 345px) {
+                  .ct-first {
+                    width: 250px !important;
+                  }
+                }
+              `}</style>
               <div 
                 className="flex gap-30 md:gap-3 transition-transform duration-700 ease-in-out" 
                 style={{ 
@@ -145,9 +163,9 @@ const ClientTestimonials = () => {
                   </div>
                 </div>
 
-                {/* First fully visible testimonial */}
+                                {/* First fully visible testimonial */}
                 <div
-                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[310px] md:w-[450px] h-[300px] md:h-[460px]"
+                  className="ct-first clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[310px] md:w-[450px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -182,7 +200,7 @@ const ClientTestimonials = () => {
 
                 {/* Second fully visible testimonial */}
                 <div
-                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[210px] md:w-[500px] h-[300px] md:h-[460px]"
+                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[210px] md:w-[500px] h-[300px] md:h-[460px] "
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
