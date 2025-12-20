@@ -43,7 +43,7 @@ const Servicesdetails = ({ serviceName }: ServicesdetailsProps) => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center servicesdetails-mobile-grid">
           
           {/* Left Side - Content */}
-          <div className="space-y-8 servicesdetails-mobile-left">
+          <div className="space-y-8 servicesdetails-mobile-left order-last lg:order-first">
             {/* Description Text */}
             <div className="space-y-4">
               <p className="text-gray-700 text-base md:text-lg leading-relaxed">
@@ -78,7 +78,7 @@ const Servicesdetails = ({ serviceName }: ServicesdetailsProps) => {
           </div>
           
           {/* Right Side - Title and CTA */}
-          <div className="space-y-6 md:space-y-8 text-center lg:text-right servicesdetails-mobile-right">
+          <div className="space-y-6 md:space-y-8 text-center lg:text-right servicesdetails-mobile-right order-first lg:order-last">
             <div className="space-y-2 md:space-y-4">
               <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-gray-900 slide-in-right-all">
                 <span className={animate ? "slide-in-right-all" : ""}>{service.title}</span>
