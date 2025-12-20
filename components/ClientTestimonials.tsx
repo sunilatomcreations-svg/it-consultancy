@@ -6,6 +6,8 @@ const ClientTestimonials = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const autoScrollRef = useRef<NodeJS.Timeout | null>(null);
+  const [mobileIndex, setMobileIndex] = useState(1);
+  const [isSliding, setIsSliding] = useState(true);
   const [isLaptop, setIsLaptop] = useState<boolean>(false);
   
   const testimonials = [
@@ -44,6 +46,7 @@ const ClientTestimonials = () => {
     if (isAutoScrolling) {
       autoScrollRef.current = setInterval(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+        setMobileIndex((prev) => prev + 1);
       }, 3000); // Move every 3 seconds
     }
 
@@ -53,6 +56,14 @@ const ClientTestimonials = () => {
       }
     };
   }, [isAutoScrolling, testimonials.length]);
+
+  // Slides array with clones for infinite mobile loop
+  const slides = [testimonials[testimonials.length - 1], ...testimonials, testimonials[0]];
+
+  // Ensure mobileIndex resets if testimonials length changes
+  useEffect(() => {
+    setMobileIndex(1);
+  }, [testimonials.length]);
 
   useEffect(() => {
     const check = () => setIsLaptop(typeof window !== 'undefined' ? window.innerWidth >= 1024 : false);
@@ -64,6 +75,7 @@ const ClientTestimonials = () => {
   const nextSlide = () => {
     setIsAutoScrolling(false);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
+    setMobileIndex((prev) => prev + 1);
     // Resume auto-scroll after 5 seconds
     setTimeout(() => setIsAutoScrolling(true), 5000);
   };
@@ -71,6 +83,7 @@ const ClientTestimonials = () => {
   const prevSlide = () => {
     setIsAutoScrolling(false);
     setCurrentIndex((prevIndex) => (prevIndex - 1 + testimonials.length) % testimonials.length);
+    setMobileIndex((prev) => prev - 1);
     // Resume auto-scroll after 5 seconds
     setTimeout(() => setIsAutoScrolling(true), 5000);
   };
@@ -102,7 +115,8 @@ const ClientTestimonials = () => {
             </h2>
 
             {/* Testimonials Container */}
-            <div className="relative overflow-hidden">
+            {/* ================= DESKTOP (md+) ================= */}
+            <div className="relative overflow-hidden hidden md:block">
               <style jsx>{`
                 /* Broadened mobile band and increased width for better visibility */
                 @media (min-width: 377px) and (max-width: 480px) {
@@ -123,10 +137,7 @@ const ClientTestimonials = () => {
               `}</style>
               <div 
                 className="flex gap-30 md:gap-3 transition-transform duration-700 ease-in-out" 
-                style={{ 
-                  width: '100%',
-                  transform: isLaptop ? `translateX(-${currentIndex * 10}px)` : 'translateX(0px)'
-                }}
+                style={{ width: '100%' }}
               >
                 {/* Half-visible first testimonial */}
                 <div
@@ -263,6 +274,58 @@ const ClientTestimonials = () => {
                 </div>
               </div>
             </div>
+
+            {/* ================= MOBILE (< md) ================= */}
+            <div className="md:hidden overflow-hidden relative">
+              <div
+                className="flex"
+                onTransitionEnd={() => {
+                  // When we reach clones, jump without transition to the real slide
+                  if (mobileIndex >= slides.length - 1) {
+                    setIsSliding(false);
+                    setMobileIndex(1);
+                  } else if (mobileIndex <= 0) {
+                    setIsSliding(false);
+                    setMobileIndex(slides.length - 2);
+                  }
+                }}
+                style={{
+                  transform: `translateX(-${mobileIndex * 100}%)`,
+                  transition: isSliding ? 'transform 0.5s ease-in-out' : 'none'
+                }}
+              >
+                {slides.map((t, idx) => (
+                  <div key={idx} className="min-w-full px-2">
+                    <div
+                      className="clip-card rounded-2xl p-4 h-[300px] flex flex-col justify-between"
+                      style={{ backgroundColor: '#F6F1EB' }}
+                    >
+                      <p className="text-sm text-gray-800 leading-relaxed line-clamp-4">
+                        “{t.quote}”
+                      </p>
+
+                      <div className="flex items-center gap-3 mt-4">
+                        <Image
+                          src={t.image}
+                          alt={t.author}
+                          width={44}
+                          height={44}
+                          className="rounded-lg object-cover"
+                        />
+                        <div>
+                          <div className="font-semibold text-sm">{t.author}</div>
+                          <div className="text-xs text-gray-600">{t.position}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            { !isSliding && (
+              (() => { setTimeout(() => setIsSliding(true), 50); return null; })()
+            ) }
 
             {/* Navigation Arrows */}
             <div className="flex justify-center gap-4 mt-8">
