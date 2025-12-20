@@ -141,7 +141,7 @@ const ClientTestimonials = () => {
               >
                 {/* Half-visible first testimonial */}
                 <div
-                  className="clip-card hidden md:flex flex-shrink-0 p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-all duration-700 ease-in-out flex-col w-[80px] md:w-[200px] h-[300px] md:h-[460px]"
+                  className="clip-card hidden md:flex transform md:-translate-x-19 flex-shrink-0 p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-all duration-700 ease-in-out flex-col w-[80px] md:w-[200px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -176,7 +176,7 @@ const ClientTestimonials = () => {
 
                                 {/* First fully visible testimonial */}
                 <div
-                  className="ct-first clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[310px] md:w-[450px] h-[300px] md:h-[460px]"
+                  className="ct-first clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl md:-translate-x-19 opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[310px] md:w-[440px] lg:w-[540px] h-[300px] md:h-[460px]"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -211,7 +211,7 @@ const ClientTestimonials = () => {
 
                 {/* Second fully visible testimonial */}
                 <div
-                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[210px] md:w-[500px] h-[300px] md:h-[460px] "
+                  className="clip-card flex-shrink-0 p-3 md:p-6 rounded-2xl md:rounded-3xl md:-translate-x-19 opacity-100 transition-all duration-700 ease-in-out flex flex-col w-[210px] md:w-[540px] h-[300px] md:h-[460px] "
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
@@ -246,7 +246,7 @@ const ClientTestimonials = () => {
 
                 {/* Half-visible last testimonial */}
                 <div 
-                  className="clip-card flex-shrink-0 w-[80px] md:w-[200px] h-[300px] md:h-[460px] p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-all duration-700 ease-in-out flex flex-col"
+                  className="clip-card flex-shrink-0 w-[80px] md:w-[200px] md:-translate-x-19 h-[300px] md:h-[460px] p-2 md:p-6 rounded-2xl md:rounded-3xl opacity-30 transition-all duration-700 ease-in-out flex flex-col"
                   style={{ 
                     backgroundColor: '#F6F1EB'
                   }}
