@@ -238,14 +238,14 @@ const WhoWeAre = () => {
             <div className=" rounded-b-3xl p-8 md:p-10 lg:p-12 relative min-h-[300px] overflow-hidden">
               {/* Title */}
               <h3 
-                className="text-center text-2xl md:text-3xl lg:text-4xl mb-8 text-gray-700 relative z-10"
+                className="text-center text-xl md:text-3xl lg:text-4xl md:-mt-5 text-black relative z-10"
                 style={{
                   fontFamily: 'DM Sans, sans-serif',
-                  fontWeight: '500',
+                  fontWeight: '200',
                   lineHeight: '1.2'
                 }}
               >
-                Small Team<br />Big Results
+                Small Team  <br /> Big Results
               </h3>
 
               {/* Foggy Effect Overlays */}
