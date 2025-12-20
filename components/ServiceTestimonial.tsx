@@ -159,7 +159,7 @@ const ServiceTestimonial = () => {
               return (
                 <div
                   key={testimonial.id}
-                  className="absolute rounded-2xl transition-all duration-600 ease-in-out overflow-hidden magic-clip-responsive"
+                  className="absolute rounded-2xl transition-all duration-600 ease-in-out overflow-hidden clip-card magic-clip-responsive"
                   style={{
 maxWidth: cardStyle.isCenter
   ? (isXL ? '520px' : '490px')
@@ -240,7 +240,7 @@ maxWidth: cardStyle.isCenter
               return (
                 <div
                   key={testimonial.id}
-                  className="absolute rounded-2xl transition-all duration-600 ease-in-out overflow-hidden magic-clip-responsive"
+                  className="absolute rounded-2xl transition-all duration-600 ease-in-out overflow-hidden clip-card magic-clip-responsive"
                   style={{
                     width: cardStyle.isCenter ? '60%' : '50%',
                     maxWidth: cardStyle.isCenter ? '300px' : '200px',
