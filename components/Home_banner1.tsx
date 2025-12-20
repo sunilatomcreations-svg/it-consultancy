@@ -12,6 +12,7 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
   const [hoveredPanel, setHoveredPanel] = useState<number | null>(null);
   const [mobileActiveImage, setMobileActiveImage] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isMobileSmall, setIsMobileSmall] = useState(false);
   const touchStartX = useRef<number | null>(null);
   const touchCurrentX = useRef<number | null>(null);
   const SWIPE_THRESHOLD = 50; // px
@@ -52,25 +53,17 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
   
 
   useLayoutEffect(() => {
+    // set responsive flags upfront
+    if (typeof window !== 'undefined') {
+      setIsDesktop(window.innerWidth >= 1024);
+      setIsMobileSmall(window.innerWidth < 768);
+    }
+
     // initial measure
     requestAnimationFrame(measure);
 
     // ResizeObserver to react to layout changes
     let ro: ResizeObserver | null = null;
-    if (typeof window !== 'undefined' && (window as any).ResizeObserver) {
-      const observer = new (window as any).ResizeObserver(() => {
-        requestAnimationFrame(measure);
-      });
-      ro = observer;
-      if (leftRef.current) observer.observe(leftRef.current);
-      if (middleRef.current) observer.observe(middleRef.current);
-      if (rightRef.current) observer.observe(rightRef.current);
-    } else {
-      const onResize = () => requestAnimationFrame(measure);
-      window.addEventListener('resize', onResize);
-      // cleanup for fallback
-      return () => window.removeEventListener('resize', onResize);
-    }
 
     // image load listeners: attach to any <img> inside the panel refs
     const imageListeners: Array<() => void> = [];
@@ -84,6 +77,20 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       });
     };
 
+    if (typeof window !== 'undefined' && (window as any).ResizeObserver) {
+      const observer = new (window as any).ResizeObserver(() => {
+        requestAnimationFrame(measure);
+      });
+      ro = observer;
+      if (leftRef.current) observer.observe(leftRef.current);
+      if (middleRef.current) observer.observe(middleRef.current);
+      if (rightRef.current) observer.observe(rightRef.current);
+    } else {
+      const onResize = () => requestAnimationFrame(measure);
+      window.addEventListener('resize', onResize);
+      imageListeners.push(() => window.removeEventListener('resize', onResize));
+    }
+
     addImgLoadListeners(leftRef.current);
     addImgLoadListeners(middleRef.current);
     addImgLoadListeners(rightRef.current);
@@ -94,20 +101,22 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       const onTrans = () => requestAnimationFrame(measure);
       el.addEventListener('transitionend', onTrans);
       el.addEventListener('webkitTransitionEnd', onTrans as any);
-      // also measure on hover enter/leave after a short delay to catch class-based changes
-      const onEnter = () => window.setTimeout(() => requestAnimationFrame(measure), 60);
-      const onLeave = () => window.setTimeout(() => requestAnimationFrame(measure), 60);
-      el.addEventListener('mouseenter', onEnter as any);
-      el.addEventListener('mouseleave', onLeave as any);
       imageListeners.push(() => el.removeEventListener('transitionend', onTrans));
       imageListeners.push(() => el.removeEventListener('webkitTransitionEnd', onTrans as any));
-      imageListeners.push(() => el.removeEventListener('mouseenter', onEnter as any));
-      imageListeners.push(() => el.removeEventListener('mouseleave', onLeave as any));
     };
 
     addTransitionHandlers(leftRef.current);
     addTransitionHandlers(middleRef.current);
     addTransitionHandlers(rightRef.current);
+
+    // responsive flags & re-measure on resize
+    const onResizeFlags = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+      setIsMobileSmall(window.innerWidth < 768);
+      requestAnimationFrame(measure);
+    };
+    window.addEventListener('resize', onResizeFlags);
+    imageListeners.push(() => window.removeEventListener('resize', onResizeFlags));
 
     // also re-measure once after window load to catch any late resources
     const onWindowLoad = () => requestAnimationFrame(measure);
@@ -134,6 +143,20 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       window.clearTimeout(timeoutId);
     };
   }, [measure]);
+
+  // Static wrapper mouse handlers to avoid panels pulling themselves out from under the cursor
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const x = e.clientX;
+    const l = leftRef.current?.getBoundingClientRect();
+    const m = middleRef.current?.getBoundingClientRect();
+    const r = rightRef.current?.getBoundingClientRect();
+    if (l && x >= l.left && x <= l.right) setHoveredPanel(0);
+    else if (m && x >= m.left && x <= m.right) setHoveredPanel(1);
+    else if (r && x >= r.left && x <= r.right) setHoveredPanel(2);
+    else setHoveredPanel(null);
+  };
+
+  const handleMouseLeave = () => setHoveredPanel(null);
 
   const handleTouchStart = (e: React.TouchEvent) =>   {
     touchStartX.current = e.touches[0].clientX;
@@ -168,12 +191,14 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
       >
       {/* Left big panel */}
       <div 
         ref={leftRef}
         data-panel="0"
-        style={{ clipPath: leftClip, WebkitClipPath: leftClip }}
+        style={{ clipPath: leftClip, WebkitClipPath: leftClip, transform: 'translateZ(0)', willChange: 'clip-path' }}
         className={`rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out h-[500px] lg:h-[680px] ${
           hoveredPanel === null 
             ? 'flex-1' 
@@ -181,8 +206,6 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
             ? 'flex-1' 
             : 'flex-[0_0_80px] lg:flex-[0_0_130px] lg:flex-[0_0_180px]'
         }`}
-        onMouseEnter={() => setHoveredPanel(0)}
-        onMouseLeave={() => setHoveredPanel(null)}
       >
         <Image
           src={images[mobileActiveImage]}
@@ -219,7 +242,7 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         
         {/* Overlapping Text Section - First Image */}
         <div className={`absolute bottom-16 lg:bottom-12 lg:bottom-16 left-8 lg:left-12 lg:left-16 z-10 max-w-xl lg:max-w-2xl lg:max-w-3xl transition-opacity duration-700 ${
-          ((hoveredPanel === 0 || hoveredPanel === null) && mobileActiveImage === 0) || (hoveredPanel === 0 && window.innerWidth >= 1024) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          ((hoveredPanel === 0 || hoveredPanel === null) && mobileActiveImage === 0) || (hoveredPanel === 0 && isDesktop) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl lg:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 lg:mb-6">
             <span className="text-white">IT Consultancy Services</span>
@@ -266,16 +289,14 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       <div 
         ref={middleRef}
         data-panel="1"
-        style={{ clipPath: middleClip, WebkitClipPath: middleClip }}
-        className={`hidden lg:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
+        style={{ clipPath: middleClip, WebkitClipPath: middleClip, transform: 'translateZ(0)', willChange: 'clip-path' }}
+        className={`flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
           hoveredPanel === 1 
             ? 'flex-1' 
             : hoveredPanel === null
             ? 'flex-[0_0_80px] lg:flex-[0_0_200px] lg:flex-[0_0_260px]'
              : 'flex-[0_0_80px] lg:flex-[0_0_200px] lg:flex-[0_0_260px]'
         }`}
-        onMouseEnter={() => setHoveredPanel(1)}
-        onMouseLeave={() => setHoveredPanel(null)}
       >
       
         <Image
@@ -287,7 +308,7 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         />
         {/* Centered Overlapping Text Section */}
         <div className={`absolute inset-0 flex flex-col items-center justify-center px-6 lg:px-8 z-10 transition-opacity duration-700 ${
-          hoveredPanel === 1 || (mobileActiveImage === 1 && window.innerWidth < 768) ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          hoveredPanel === 1 || (mobileActiveImage === 1 && isMobileSmall) ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <h1 className="text-2xl lg:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 lg:mb-6 text-center">
             <span className="text-white">Digital Transformation</span>
@@ -304,16 +325,14 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
       <div 
         ref={rightRef}
         data-panel="2"
-        style={{ clipPath: rightClip, WebkitClipPath: rightClip }}
-        className={`hidden lg:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
+        style={{ clipPath: rightClip, WebkitClipPath: rightClip, transform: 'translateZ(0)', willChange: 'clip-path' }}
+        className={`flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
           hoveredPanel === 2 
             ? 'flex-1' 
             : hoveredPanel === null
             ? 'flex-[0_0_60px] lg:flex-[0_0_100px] lg:flex-[0_0_120px]'
             : 'flex-[0_0_60px] lg:flex-[0_0_100px] lg:flex-[0_0_120px]'
         }`}
-        onMouseEnter={() => setHoveredPanel(2)}
-        onMouseLeave={() => setHoveredPanel(null)}
       >
         <Image
           src={images[2]}
