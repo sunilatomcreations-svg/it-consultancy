@@ -153,6 +153,17 @@ body {
     opacity: 0;
   }
 
+  /* Navbar gap that grows with viewport until a cap (approx 760px) */
+  .nav-gap {
+    gap: clamp(0.5rem, 3.5vw, 1.6rem) !important;
+  }
+
+  @media (min-width: 760px) {
+    .nav-gap {
+      gap: 50.6rem !important;
+    }
+  }
+
   @keyframes fadeIn {
     to {
       opacity: 1;
