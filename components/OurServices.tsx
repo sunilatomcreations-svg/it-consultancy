@@ -15,17 +15,20 @@ const serviceCardStyles = `
     aspect-ratio: 1 / 1;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   @media (min-width: 768px) {
     .service-card {
       min-height: 180px;
       aspect-ratio: 1.4 / 1;
+      justify-content: flex-start;
     }
   }
   .service-icon-container {
     height: auto;
-    margin-top: auto;
-    margin-bottom: 10;
+    margin-top: 0;
+    margin-bottom: 12px;
     transition: margin-top 0.3s ease, margin-bottom 0.3s ease;
   }
   .service-card h3 {
@@ -34,6 +37,7 @@ const serviceCardStyles = `
   @media (min-width: 768px) {
     .service-icon-container {
       margin-top: 45px;
+      margin-bottom: 20px;
     }
   }
   @media (min-width: 1024px) {
@@ -43,6 +47,24 @@ const serviceCardStyles = `
     }
     .service-card:hover h3 {
       transform: translateY(40px);
+    }
+  }
+
+  /* Tweak for mid-large screens to prevent content overflow (1024px - 1400px) */
+  @media (min-width: 1024px) and (max-width: 1400px) {
+    .service-card {
+      min-height: 160px;
+    }
+    .service-icon-container {
+      margin-top: 20px;
+      margin-bottom: 12px;
+    }
+    .service-card:hover .service-icon-container {
+      margin-top: 10px;
+      margin-bottom: 12px;
+    }
+    .service-card:hover h3 {
+      transform: translateY(30px);
     }
   }
 `;
