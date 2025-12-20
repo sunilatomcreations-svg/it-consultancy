@@ -290,7 +290,7 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         ref={middleRef}
         data-panel="1"
         style={{ clipPath: middleClip, WebkitClipPath: middleClip, transform: 'translateZ(0)', willChange: 'clip-path' }}
-        className={`flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
+        className={`hidden lg:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
           hoveredPanel === 1 
             ? 'flex-1' 
             : hoveredPanel === null
@@ -326,7 +326,7 @@ export default function RipplePanels({ images = DEFAULT_IMAGES }) {
         ref={rightRef}
         data-panel="2"
         style={{ clipPath: rightClip, WebkitClipPath: rightClip, transform: 'translateZ(0)', willChange: 'clip-path' }}
-        className={`flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
+        className={`hidden lg:flex rounded-2xl overflow-hidden shadow-lg relative transition-all duration-700 ease-in-out ml-auto h-[450px] lg:h-[680px] ${
           hoveredPanel === 2 
             ? 'flex-1' 
             : hoveredPanel === null
