@@ -132,7 +132,7 @@ const ServiceTestimonial = () => {
   className="max-w-7xl mx-auto rounded-3xl  py-10 lg:py-14"
   style={{ backgroundColor: '#5A1E44' }}
 >
-        <h2 className="text-3xl lg:text-4xl text-center mb-8 text-white font-medium">
+        <h2 className="text-2xl lg:text-4xl text-center mb-8 text-white font-medium">
           What Our Clients Say About Us
         </h2>
 
@@ -220,7 +220,7 @@ maxWidth: cardStyle.isCenter
         <div
           className="sm:hidden flex items-center justify-center relative overflow-hidden"
           style={{
-            height: '400px',
+            height: '250px',
             perspective: '1200px',
             perspectiveOrigin: '50% 50%'
           }}
@@ -244,7 +244,7 @@ maxWidth: cardStyle.isCenter
                   style={{
                     width: cardStyle.isCenter ? '60%' : '50%',
                     maxWidth: cardStyle.isCenter ? '300px' : '200px',
-                    height: '320px',
+                    height: '190px',
                     left: '50%',
                     marginLeft: cardStyle.isCenter ? '-30%' : '-25%',
                     transform: cardStyle.transform,
